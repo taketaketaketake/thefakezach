@@ -126,29 +126,58 @@ form.submitted .thank-you-message {
 </style>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-  // Initialize reaction counts from localStorage
-  const saved = JSON.parse(localStorage.getItem("wallReactions") || "{}");
-
-  document.querySelectorAll(".reaction-btn").forEach((btn) => {
-    const postIndex = btn.dataset.index;
-    const emoji = btn.dataset.emoji;
-    const key = `${postIndex}-${emoji}`;
-    const countSpan = btn.querySelector(".count");
-
-    // Load saved count
-    if (saved[key]) countSpan.textContent = saved[key];
-
-    btn.addEventListener("click", () => {
-      const current = parseInt(countSpan.textContent, 10);
-      const newCount = current + 1;
-      countSpan.textContent = newCount;
-      saved[key] = newCount;
-      localStorage.setItem("wallReactions", JSON.stringify(saved));
-
-      btn.classList.add("text-pink-400", "scale-125");
-      setTimeout(() => btn.classList.remove("scale-125"), 200);
+    document.addEventListener("DOMContentLoaded", () => {
+      const storageKey = "wallReactions";
+      const saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
+    
+      document.querySelectorAll(".reaction-btn").forEach((btn) => {
+        const postIndex = btn.dataset.index;
+        const emoji = btn.dataset.emoji;
+        const key = `${postIndex}`;
+    
+        const countSpan = btn.querySelector(".count");
+        const savedReaction = saved[key]?.emoji;
+        const savedCount = saved[key]?.counts?.[emoji] || 0;
+    
+        // Load saved counts
+        countSpan.textContent = savedCount;
+    
+        // Highlight chosen emoji if applicable
+        if (savedReaction === emoji) btn.classList.add("text-pink-400");
+    
+        btn.addEventListener("click", () => {
+          const allButtons = document.querySelectorAll(
+            `.reaction-btn[data-index='${postIndex}']`
+          );
+    
+          // Initialize structure if needed
+          if (!saved[key]) saved[key] = { emoji: null, counts: {} };
+          const currentReaction = saved[key].emoji;
+    
+          // Remove previous reaction highlight
+          allButtons.forEach((b) => b.classList.remove("text-pink-400"));
+    
+          if (currentReaction === emoji) {
+            // Undo the reaction
+            saved[key].emoji = null;
+            saved[key].counts[emoji] = Math.max((saved[key].counts[emoji] || 1) - 1, 0);
+            countSpan.textContent = saved[key].counts[emoji];
+          } else {
+            // Switch to new emoji
+            saved[key].emoji = emoji;
+            saved[key].counts[emoji] = (saved[key].counts[emoji] || 0) + 1;
+            countSpan.textContent = saved[key].counts[emoji];
+            btn.classList.add("text-pink-400");
+          }
+    
+          // Save updates
+          localStorage.setItem(storageKey, JSON.stringify(saved));
+    
+          // Subtle bounce
+          btn.classList.add("scale-125");
+          setTimeout(() => btn.classList.remove("scale-125"), 200);
+        });
+      });
     });
-  });
-});
-</script>
+    </script>
+    
