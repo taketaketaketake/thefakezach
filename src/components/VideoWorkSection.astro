@@ -1,0 +1,21 @@
+---
+import VideoCard from "../components/VideoCard.astro";
+
+const { videos = [] } = Astro.props;
+---
+
+<section id="video-work" class="w-full">
+  <h2 class="text-2xl font-bold text-white mb-6">Previous Video Work</h2>
+
+  {videos.length === 0 ? (
+    <p class="text-zinc-400 text-sm md:text-base">
+      No videos added yet — stay tuned for updates.
+    </p>
+  ) : (
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+      {videos.map((video) => (
+        <VideoCard video={video} />
+      ))}
+    </div>
+  )}
+</section>

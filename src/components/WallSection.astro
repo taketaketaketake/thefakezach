@@ -1,0 +1,154 @@
+---
+import posts from "../data/wall.json" assert { type: "json" };
+---
+
+<section id="wall" class="w-full">
+  <h2 class="text-2xl font-bold text-white mb-6">The Wall</h2>
+
+  <!-- ✅ Netlify-powered form -->
+  <form
+    name="wall"
+    method="POST"
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+    onsubmit="event.target.classList.add('submitted')"
+    class="mb-8 bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 sm:p-6 space-y-3 transition-all duration-300"
+  >
+    <input type="hidden" name="form-name" value="wall" />
+    <p class="hidden">
+      <label>
+        Don’t fill this out if you’re human: <input name="bot-field" />
+      </label>
+    </p>
+
+    <div class="form-fields space-y-3">
+      <input
+        type="text"
+        name="name"
+        required
+        placeholder="Your name"
+        class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none focus:ring-2 focus:ring-pink-600"
+      />
+      <textarea
+        name="message"
+        rows="3"
+        required
+        placeholder="Write something..."
+        class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none focus:ring-2 focus:ring-pink-600 resize-none"
+      ></textarea>
+
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="px-5 py-2.5 bg-pink-600 text-white text-sm font-semibold rounded-xl hover:bg-pink-700 transition shadow-md"
+        >
+          Post
+        </button>
+      </div>
+    </div>
+
+    <div class="thank-you-message hidden text-center text-pink-400 font-medium py-2">
+      Thanks for leaving a message! 💬
+    </div>
+  </form>
+
+  <!-- 💬 Posts -->
+  <div class="space-y-4">
+    {posts.map((post, index) => (
+      <div
+        class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 sm:p-6 transition hover:border-pink-500/20"
+      >
+        <div class="flex items-start justify-between mb-2">
+          <div>
+            <p class="text-white font-medium text-sm">{post.name}</p>
+            <p class="text-zinc-500 text-xs">
+              {post.date ||
+                new Date().toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                })}
+            </p>
+          </div>
+        </div>
+
+        <!-- Auto-link URLs -->
+        <p
+          class="text-zinc-300 text-sm leading-relaxed whitespace-pre-line break-words mb-3"
+          set:html={post.message.replace(
+            /(https?:\/\/[^\s]+)/g,
+            '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:underline break-all">$1</a>'
+          )}
+        ></p>
+
+        <!-- 🎉 Emoji Reactions -->
+        <div class="flex gap-3 mt-2 text-lg text-zinc-400">
+          {["👍", "❤️", "🔥", "😂", "💡"].map((emoji) => (
+            <button
+              type="button"
+              class="reaction-btn select-none transition transform hover:scale-110"
+              data-index={index}
+              data-emoji={emoji}
+              aria-label={`React with ${emoji}`}
+            >
+              {emoji}
+              <span class="count text-xs text-zinc-500 ml-1">0</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+/* ✅ Hide form after submission */
+form.submitted .form-fields {
+  display: none;
+}
+form.submitted .thank-you-message {
+  display: block;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+/* ✨ Fade animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize reaction counts from localStorage
+  const saved = JSON.parse(localStorage.getItem("wallReactions") || "{}");
+
+  document.querySelectorAll(".reaction-btn").forEach((btn) => {
+    const postIndex = btn.dataset.index;
+    const emoji = btn.dataset.emoji;
+    const key = `${postIndex}-${emoji}`;
+    const countSpan = btn.querySelector(".count");
+
+    // Load saved count
+    if (saved[key]) countSpan.textContent = saved[key];
+
+    btn.addEventListener("click", () => {
+      const current = parseInt(countSpan.textContent, 10);
+      const newCount = current + 1;
+      countSpan.textContent = newCount;
+      saved[key] = newCount;
+      localStorage.setItem("wallReactions", JSON.stringify(saved));
+
+      btn.classList.add("text-pink-400", "scale-125");
+      setTimeout(() => btn.classList.remove("scale-125"), 200);
+    });
+  });
+});
+</script>

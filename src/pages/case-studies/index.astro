@@ -1,0 +1,67 @@
+---
+import { getCollection } from "astro:content";
+import "../../styles/global.css";
+import Modal from "../../components/Modal.astro";
+
+const caseStudies = await getCollection("case-studies");
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Case Studies | Zachary Lewis</title>
+  </head>
+
+  <body class="bg-zinc-950 text-zinc-50 font-sans">
+    <main class="max-w-4xl mx-auto px-6 py-24">
+      <header class="mb-12">
+        <h1 class="text-4xl font-extrabold text-white mb-2">Case Studies</h1>
+        <p class="text-zinc-400">
+          A few of my favorite projects from the last few years.
+        </p>
+      </header>
+
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {caseStudies.map((study) => (
+          <div>
+            <button id={`open-${study.slug}`}>
+              <div class="bg-zinc-900 p-6 rounded-lg border border-zinc-800 hover:border-pink-400 transition">
+                <div class="text-3xl mb-4">{study.data.emoji}</div>
+                <h2 class="text-xl font-bold text-white mb-2">
+                  {study.data.title}
+                </h2>
+                <p class="text-zinc-400 text-sm">{study.data.summary}</p>
+              </div>
+            </button>
+            <Modal study={study} />
+          </div>
+        ))}
+      </section>
+    </main>
+
+    <footer
+      class="border-t border-zinc-800 mt-16 py-12 text-center text-sm text-zinc-500"
+    >
+      © {new Date().getFullYear()} Zachary Lewis
+    </footer>
+
+    <script define:vars={{ caseStudies }}>
+      caseStudies.forEach(study => {
+        const openButton = document.getElementById(`open-${study.slug}`);
+        const closeButton = document.getElementById(`close-${study.slug}`);
+        const modal = document.getElementById(`modal-${study.slug}`);
+
+        openButton.addEventListener("click", () => {
+          modal.classList.remove("hidden");
+          modal.classList.add("flex");
+        });
+
+        closeButton.addEventListener("click", () => {
+          modal.classList.add("hidden");
+          modal.classList.remove("flex");
+        });
+      });
+    </script>
+  </body>
+</html>

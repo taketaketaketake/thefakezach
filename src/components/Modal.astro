@@ -1,0 +1,90 @@
+---
+import "../styles/global.css";
+const { project } = Astro.props;
+
+// You can use real project data passed from index.astro,
+// or hardcode as a demo until you hook it up dynamically.
+const page = {
+  title: "Detroit Small Business Map",
+  emoji: "🗺️",
+  year: "2025",
+  summary:
+    "A modern web directory built to showcase Detroit’s independent cannabis and small business scene.",
+  problem: `Small businesses often lack visibility online. Detroit's vibrant local scene was fragmented — information was scattered, outdated, or incomplete.`,
+  solution: `We built a central platform using Astro, Supabase, and Mapbox to bring verified business data, maps, and local discovery together.`,
+  tech: ["Astro", "Supabase", "Postgres", "Auth0", "Mapbox", "Netlify"],
+  link: "https://detroitsmallbusinessmap.com",
+};
+
+const slug = project.title.toLowerCase().replace(/ /g, "-");
+---
+
+<!-- 🔲 Backdrop -->
+<div
+  id={`modal-${slug}`}
+  class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50"
+  aria-hidden="true"
+>
+  <!-- 🔳 Modal Content -->
+  <div class="bg-zinc-900 text-zinc-50 p-8 rounded-2xl max-w-4xl w-[90%] shadow-lg overflow-y-auto max-h-[90vh] animate-fadeIn">
+    <header class="flex justify-between items-start mb-8">
+      <div>
+        <div class="text-5xl mb-4">{page.emoji}</div>
+        <h1 class="text-3xl font-extrabold text-white mb-2">{page.title}</h1>
+        <p class="text-zinc-400">{page.summary}</p>
+        <p class="text-xs text-zinc-600 mt-2">{page.year}</p>
+      </div>
+      <button
+        id={`close-${slug}`}
+        aria-label="Close modal"
+        class="text-3xl leading-none text-zinc-400 hover:text-white transition"
+      >
+        &times;
+      </button>
+    </header>
+
+    <section class="space-y-10">
+      <article>
+        <h2 class="text-2xl font-bold text-white mb-3">Problem</h2>
+        <p class="text-zinc-400 leading-relaxed whitespace-pre-line">
+          {page.problem}
+        </p>
+      </article>
+
+      <article>
+        <h2 class="text-2xl font-bold text-white mb-3">Solution</h2>
+        <p class="text-zinc-400 leading-relaxed whitespace-pre-line">
+          {page.solution}
+        </p>
+      </article>
+
+      <article>
+        <h2 class="text-2xl font-bold text-white mb-3">Tech Stack</h2>
+        <ul class="flex flex-wrap gap-3">
+          {page.tech.map((tool) => (
+            <li class="px-3 py-1 text-sm bg-zinc-800 text-zinc-300 rounded-full border border-zinc-700">
+              {tool}
+            </li>
+          ))}
+        </ul>
+      </article>
+
+      {page.link && (
+        <article>
+          <h2 class="text-2xl font-bold text-white mb-3">Live Project</h2>
+          <a
+            href={page.link}
+            target="_blank"
+            class="text-pink-400 hover:underline break-all"
+          >
+            {page.link}
+          </a>
+        </article>
+      )}
+    </section>
+
+    <footer class="border-t border-zinc-800 mt-16 pt-6 text-center text-sm text-zinc-500">
+      © {new Date().getFullYear()} Zachary Lewis
+    </footer>
+  </div>
+</div>

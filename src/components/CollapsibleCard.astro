@@ -1,0 +1,49 @@
+---
+const { title = "Section", open = true } = Astro.props;
+---
+
+<!-- Outer wrapper keeps consistent width -->
+<div class="w-full">
+  <div class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl w-full">
+    <details class="group w-full block overflow-hidden" {...(open ? { open: true } : {})}>
+      <!-- Summary -->
+      <summary
+        class="flex justify-between items-center cursor-pointer list-none px-6 py-4 w-full select-none"
+      >
+        <h2 class="text-2xl font-bold text-white">{title}</h2>
+        <span
+          class="text-zinc-500 transition-transform group-open:rotate-180"
+        >▼</span>
+      </summary>
+
+      <!-- Content -->
+      <div class="px-6 pb-6 space-y-4 text-zinc-300">
+        <slot />
+      </div>
+    </details>
+  </div>
+</div>
+
+<style>
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Make sure details doesn’t recalc layout width */
+details {
+  display: block;
+  width: 100%;
+  position: relative;
+}
+
+/* This prevents the collapse/expand from shrinking surrounding space */
+details:not([open]) > *:not(summary) {
+  display: none;
+}
+
+/* Rotate arrow smoothly */
+.group-open\:rotate-180 {
+  transform: rotate(180deg);
+  transition: transform 0.2s ease;
+}
+</style>
