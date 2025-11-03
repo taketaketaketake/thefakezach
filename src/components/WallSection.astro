@@ -114,12 +114,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   async function fetchPosts() {
     try {
       const response = await fetch("/.netlify/functions/get-wall-posts");
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      if (!response.ok) {
+        // Fallback for local development
+        if (response.status === 404 && window.location.hostname === 'localhost') {
+          console.warn("Running in local mode - functions not available");
+          return [];
+        }
+        throw new Error(`HTTP ${response.status}`);
+      }
       
       const data = await response.json();
       return data.posts || [];
     } catch (error) {
       console.error("Failed to fetch posts:", error);
+      // Return empty array for local development
+      if (window.location.hostname === 'localhost') {
+        return [];
+      }
       throw error;
     }
   }

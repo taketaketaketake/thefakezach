@@ -28,6 +28,14 @@ exports.handler = async (event, context) => {
     const siteId = context.clientContext?.custom?.netlify_site_id || process.env.NETLIFY_SITE_ID;
     
     if (!siteId) {
+      // For local development, return empty posts
+      if (process.env.NODE_ENV === 'development' || !process.env.NETLIFY) {
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ posts: [] }),
+        };
+      }
       throw new Error('Unable to determine site ID');
     }
 
