@@ -11,7 +11,7 @@ import WallSection from "../components/WallSection.astro";
 const zachary = {
   name: "Zachary",
   username: "thefakezach",
-  avatarEmoji: "💡",
+  avatarPhoto: "/profile-photo.jpg",
   joinDate: "Building from Detroit, MI",
   about: `I like to build things, wherever I am. Here is where I share my projects and ideas:`,
   contact: {
@@ -21,12 +21,35 @@ const zachary = {
     email: "mailto:zachary@thefakezach.com"
   },
   projects: [
-    { title: "Detroit Small Business Map", emoji: "🗺️" },
-    { title: "Bags of Laundry", emoji: "🧺" },
-    { title: "Fix My Furnace", emoji: "🤖" },
-    { title: "AI Voice Agents", emoji: "🗣️" },
-    { title: "Take Detroit", emoji: "🚀" },
-    { title: "Cosmic Crew", emoji: "🌌" }
+    { 
+      title: "Detroit Small Business Map", 
+      emoji: "🗺️",
+      image: "/projects/detroit-small-biz-cover-photo.png"
+    },
+    { 
+      title: "Bags of Laundry", 
+      emoji: "🧺",
+      image: "/projects/bags-cover-photo 2.png"
+    },
+    { 
+      title: "Fix My Furnace", 
+      emoji: "🤖",
+      image: "/projects/fix-my-furnace-cover-photo.png"
+    },
+    { 
+      title: "AI Voice Agents", 
+      emoji: "🗣️"
+    },
+    { 
+      title: "Take Detroit", 
+      emoji: "🚀",
+      image: "/projects/take-detroit-cupcakes.jpg"
+    },
+    { 
+      title: "Cosmic Crew", 
+      emoji: "👨‍🚀",
+      image: "/projects/cosmic-crew-image.png"
+    }
   ]
 };
 ---
@@ -116,8 +139,13 @@ const zachary = {
         <div class="bg-zinc-900/80 backdrop-blur-sm rounded-2xl p-6 shadow-2xl border border-zinc-800">
           <div class="flex flex-col sm:flex-row items-center sm:items-end gap-5">
             <!-- Avatar -->
-            <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-zinc-800 border-4 border-zinc-950 flex items-center justify-center text-5xl sm:text-7xl shadow-xl flex-shrink-0">
-              {zachary.avatarEmoji}
+            <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-zinc-800 border-4 border-zinc-950 shadow-xl flex-shrink-0 overflow-hidden">
+              <img 
+                src={zachary.avatarPhoto} 
+                alt={`${zachary.name} profile photo`}
+                class="w-full h-full object-cover"
+                loading="eager"
+              />
             </div>
 
             <!-- Name & Info -->

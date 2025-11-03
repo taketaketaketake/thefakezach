@@ -6,9 +6,32 @@ const id = project.title.toLowerCase().replace(/ /g, "-");
 <div class="group flex flex-col items-center text-center">
   <button id={`open-${id}`} class="w-full">
     <div
-      class="aspect-square w-full bg-zinc-900 rounded-xl flex items-center justify-center border border-zinc-800/50 group-hover:border-pink-500/40 transition-all duration-300"
+      class="aspect-square w-full bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800/50 group-hover:border-pink-500/40 transition-all duration-300 relative"
     >
-      <span class="text-4xl">{project.emoji}</span>
+      {project.image ? (
+        <>
+          <img 
+            src={project.image} 
+            alt={`${project.title} project screenshot`}
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+          />
+          
+          <!-- Fallback emoji when image fails to load -->
+          <div class="w-full h-full flex items-center justify-center bg-zinc-800 hidden">
+            <span class="text-4xl">{project.emoji}</span>
+          </div>
+        </>
+      ) : (
+        <!-- Show emoji when no image URL provided -->
+        <div class="w-full h-full flex items-center justify-center">
+          <span class="text-4xl">{project.emoji}</span>
+        </div>
+      )}
+      
+      <!-- Overlay gradient for better text readability -->
+      <div class="absolute inset-0 bg-gradient-to-t from-zinc-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     </div>
     <p
       class="mt-3 text-sm font-semibold text-white truncate group-hover:text-pink-400 transition-colors"
