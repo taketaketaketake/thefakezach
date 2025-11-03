@@ -1,5 +1,5 @@
 ---
-import posts from "../data/wall.json" assert { type: "json" };
+// No longer importing static data - will be fetched dynamically
 ---
 
 <section id="wall" class="w-full">
@@ -11,6 +11,7 @@ import posts from "../data/wall.json" assert { type: "json" };
     method="POST"
     data-netlify="true"
     netlify-honeypot="bot-field"
+    action="/#wall"
     onsubmit="event.target.classList.add('submitted')"
     class="mb-8 bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 sm:p-6 space-y-3 transition-all duration-300"
   >
@@ -53,51 +54,24 @@ import posts from "../data/wall.json" assert { type: "json" };
   </form>
 
   <!-- 💬 Posts -->
-  <div class="space-y-4">
-    {posts.map((post, index) => (
-      <div
-        class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 sm:p-6 transition hover:border-pink-500/20"
-      >
-        <div class="flex items-start justify-between mb-2">
-          <div>
-            <p class="text-white font-medium text-sm">{post.name}</p>
-            <p class="text-zinc-500 text-xs">
-              {post.date ||
-                new Date().toLocaleDateString("en-US", {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-            </p>
-          </div>
-        </div>
-
-        <!-- Auto-link URLs -->
-        <p
-          class="text-zinc-300 text-sm leading-relaxed whitespace-pre-line break-words mb-3"
-          set:html={post.message.replace(
-            /(https?:\/\/[^\s]+)/g,
-            '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:underline break-all">$1</a>'
-          )}
-        ></p>
-
-        <!-- 🎉 Emoji Reactions -->
-        <div class="flex gap-3 mt-2 text-lg text-zinc-400">
-          {["👍", "❤️", "🔥", "😂", "💡"].map((emoji) => (
-            <button
-              type="button"
-              class="reaction-btn select-none transition transform hover:scale-110"
-              data-index={index}
-              data-emoji={emoji}
-              aria-label={`React with ${emoji}`}
-            >
-              {emoji}
-              <span class="count text-xs text-zinc-500 ml-1">0</span>
-            </button>
-          ))}
-        </div>
-      </div>
-    ))}
+  <div id="posts-container" class="space-y-4">
+    <!-- Loading state -->
+    <div id="loading-state" class="text-center py-8 text-zinc-400">
+      <div class="animate-pulse">Loading posts...</div>
+    </div>
+    
+    <!-- Error state -->
+    <div id="error-state" class="hidden text-center py-8 text-red-400">
+      <p>Failed to load posts. Please try refreshing the page.</p>
+    </div>
+    
+    <!-- Empty state -->
+    <div id="empty-state" class="hidden text-center py-8 text-zinc-500">
+      <p>No posts yet. Be the first to leave a message! 💬</p>
+    </div>
+    
+    <!-- Posts will be populated here -->
+    <div id="posts-list"></div>
   </div>
 </section>
 
@@ -126,58 +100,159 @@ form.submitted .thank-you-message {
 </style>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const storageKey = "wallReactions";
-      const saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
+document.addEventListener("DOMContentLoaded", async () => {
+  let posts = [];
+  let userReactions = JSON.parse(localStorage.getItem("userReactions") || "{}");
+
+  // Elements
+  const loadingState = document.getElementById("loading-state");
+  const errorState = document.getElementById("error-state");
+  const emptyState = document.getElementById("empty-state");
+  const postsList = document.getElementById("posts-list");
+  const form = document.querySelector('form[name="wall"]');
+
+  async function fetchPosts() {
+    try {
+      const response = await fetch("/.netlify/functions/get-wall-posts");
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      
+      const data = await response.json();
+      return data.posts || [];
+    } catch (error) {
+      console.error("Failed to fetch posts:", error);
+      throw error;
+    }
+  }
+
+  async function updateReaction(postId, emoji, action) {
+    try {
+      const response = await fetch("/.netlify/functions/update-reactions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ postId, emoji, action }),
+      });
+      
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      
+      const data = await response.json();
+      return data.reactions;
+    } catch (error) {
+      console.error("Failed to update reaction:", error);
+      throw error;
+    }
+  }
+
+  function autoLinkUrls(text) {
+    return text.replace(
+      /(https?:\/\/[^\s]+)/g,
+      '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:underline break-all">$1</a>'
+    );
+  }
+
+  function renderPosts() {
+    if (posts.length === 0) {
+      loadingState.classList.add("hidden");
+      emptyState.classList.remove("hidden");
+      return;
+    }
+
+    loadingState.classList.add("hidden");
+    emptyState.classList.add("hidden");
     
-      document.querySelectorAll(".reaction-btn").forEach((btn) => {
-        const postIndex = btn.dataset.index;
+    postsList.innerHTML = posts.map(post => `
+      <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-4 sm:p-6 transition hover:border-pink-500/20">
+        <div class="flex items-start justify-between mb-2">
+          <div>
+            <p class="text-white font-medium text-sm">${post.name}</p>
+            <p class="text-zinc-500 text-xs">${post.date}</p>
+          </div>
+        </div>
+        
+        <p class="text-zinc-300 text-sm leading-relaxed whitespace-pre-line break-words mb-3">
+          ${autoLinkUrls(post.message)}
+        </p>
+        
+        <div class="flex gap-3 mt-2 text-lg text-zinc-400">
+          ${["👍", "❤️", "🔥", "😂", "💡"].map(emoji => `
+            <button
+              type="button"
+              class="reaction-btn select-none transition transform hover:scale-110 ${userReactions[post.id] === emoji ? 'text-pink-400' : ''}"
+              data-post-id="${post.id}"
+              data-emoji="${emoji}"
+              aria-label="React with ${emoji}"
+            >
+              ${emoji}
+              <span class="count text-xs text-zinc-500 ml-1">${post.reactions[emoji] || 0}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+
+    // Add event listeners to reaction buttons
+    document.querySelectorAll(".reaction-btn").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const postId = btn.dataset.postId;
         const emoji = btn.dataset.emoji;
-        const key = `${postIndex}`;
-    
-        const countSpan = btn.querySelector(".count");
-        const savedReaction = saved[key]?.emoji;
-        const savedCount = saved[key]?.counts?.[emoji] || 0;
-    
-        // Load saved counts
-        countSpan.textContent = savedCount;
-    
-        // Highlight chosen emoji if applicable
-        if (savedReaction === emoji) btn.classList.add("text-pink-400");
-    
-        btn.addEventListener("click", () => {
-          const allButtons = document.querySelectorAll(
-            `.reaction-btn[data-index='${postIndex}']`
-          );
-    
-          // Initialize structure if needed
-          if (!saved[key]) saved[key] = { emoji: null, counts: {} };
-          const currentReaction = saved[key].emoji;
-    
-          // Remove previous reaction highlight
-          allButtons.forEach((b) => b.classList.remove("text-pink-400"));
-    
-          if (currentReaction === emoji) {
-            // Undo the reaction
-            saved[key].emoji = null;
-            saved[key].counts[emoji] = Math.max((saved[key].counts[emoji] || 1) - 1, 0);
-            countSpan.textContent = saved[key].counts[emoji];
+        const currentUserReaction = userReactions[postId];
+        
+        try {
+          let action, newUserReaction;
+          
+          if (currentUserReaction === emoji) {
+            // Remove reaction
+            action = "decrement";
+            newUserReaction = null;
           } else {
-            // Switch to new emoji
-            saved[key].emoji = emoji;
-            saved[key].counts[emoji] = (saved[key].counts[emoji] || 0) + 1;
-            countSpan.textContent = saved[key].counts[emoji];
-            btn.classList.add("text-pink-400");
+            // Add new reaction (and remove old one if exists)
+            if (currentUserReaction) {
+              await updateReaction(postId, currentUserReaction, "decrement");
+            }
+            action = "increment";
+            newUserReaction = emoji;
           }
-    
-          // Save updates
-          localStorage.setItem(storageKey, JSON.stringify(saved));
-    
-          // Subtle bounce
-          btn.classList.add("scale-125");
-          setTimeout(() => btn.classList.remove("scale-125"), 200);
-        });
+          
+          const updatedReactions = await updateReaction(postId, emoji, action);
+          
+          // Update local state
+          userReactions[postId] = newUserReaction;
+          localStorage.setItem("userReactions", JSON.stringify(userReactions));
+          
+          // Update post reactions and re-render
+          const post = posts.find(p => p.id === postId);
+          if (post) {
+            post.reactions = updatedReactions;
+            renderPosts();
+          }
+          
+        } catch (error) {
+          console.error("Failed to update reaction:", error);
+        }
       });
     });
-    </script>
+  }
+
+  // Load posts
+  try {
+    posts = await fetchPosts();
+    renderPosts();
+  } catch (error) {
+    loadingState.classList.add("hidden");
+    errorState.classList.remove("hidden");
+  }
+
+  // Handle form submission
+  if (form) {
+    form.addEventListener("submit", () => {
+      // Refresh posts after a delay to allow form processing
+      setTimeout(() => {
+        fetchPosts().then(newPosts => {
+          posts = newPosts;
+          renderPosts();
+        }).catch(console.error);
+      }, 2000);
+    });
+  }
+});
+</script>
     
