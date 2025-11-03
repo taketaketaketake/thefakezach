@@ -8,19 +8,17 @@ if (!project) {
   return null;
 }
 
-// Static fallback data for demo modals
+// Use project data directly
 const page = {
   title: project.title || "Untitled Project",
   emoji: project.emoji || "💡",
-  year: "2025",
-  summary:
-    "A modern web directory built to showcase Detroit’s independent small business scene.",
-  problem:
-    "Small businesses often lack visibility online. Detroit's vibrant local scene was fragmented — information was scattered, outdated, or incomplete.",
-  solution:
-    "We built a central platform using Astro, Supabase, and Mapbox to bring verified business data, maps, and local discovery together.",
-  tech: ["Astro", "Supabase", "Postgres", "Auth0", "Mapbox", "Netlify"],
-  link: "https://detroitsmallbusinessmap.com",
+  year: project.year || "2024",
+  summary: project.summary || "Project description not available.",
+  problem: project.problem || "Problem description not available.",
+  solution: project.solution || "Solution description not available.",
+  tech: project.tech || ["Coming Soon"],
+  link: project.link && project.link !== "#" ? project.link : null,
+  github: project.github && project.github !== "#" ? project.github : null,
 };
 
 const slug = project.title.toLowerCase().replace(/ /g, "-");
@@ -80,18 +78,40 @@ const slug = project.title.toLowerCase().replace(/ /g, "-");
         </ul>
       </article>
 
-      {page.link && (
-        <article>
-          <h2 class="text-2xl font-bold text-white mb-3">Live Project</h2>
-          <a
-            href={page.link}
-            target="_blank"
-            class="text-pink-400 hover:underline break-all"
-          >
-            {page.link}
-          </a>
-        </article>
-      )}
+      <article class="space-y-4">
+        <h2 class="text-2xl font-bold text-white mb-3">Links</h2>
+        <div class="space-y-2">
+          {page.link && (
+            <div>
+              <span class="text-zinc-400 text-sm">Live Project: </span>
+              <a
+                href={page.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-pink-400 hover:underline break-all"
+              >
+                {page.link}
+              </a>
+            </div>
+          )}
+          {page.github && (
+            <div>
+              <span class="text-zinc-400 text-sm">Source Code: </span>
+              <a
+                href={page.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-pink-400 hover:underline break-all"
+              >
+                {page.github}
+              </a>
+            </div>
+          )}
+          {!page.link && !page.github && (
+            <p class="text-zinc-500 text-sm">Project links coming soon...</p>
+          )}
+        </div>
+      </article>
     </section>
 
     <footer
