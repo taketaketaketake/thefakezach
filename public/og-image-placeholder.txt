@@ -1,0 +1,23 @@
+SOCIAL SHARING IMAGE NEEDED
+========================
+
+Required specifications:
+- Size: 1200px × 630px 
+- Format: JPG or PNG
+- Max file size: 8MB
+- Filename: og-image.jpg
+
+Suggested content:
+- Your name "Zachary Lewis"
+- Title "Developer & Designer" 
+- Location "Detroit, MI"
+- Background: Detroit skyline or tech-themed
+- Color scheme: Match your site (pink/purple gradient)
+
+Tools you can use:
+- Canva (canva.com) - has social media templates
+- Figma - professional design tool
+- Adobe Photoshop/Illustrator
+- Online OG image generators
+
+Once created, save as /public/og-image.jpg and it will automatically work with the meta tags I've added.

@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://thefakezach.com/sitemap.xml
+
+# Crawl delay (optional - 1 second between requests)
+Crawl-delay: 1
+
+# Block crawling of functions and admin areas
+Disallow: /.netlify/
+Disallow: /admin/
+Disallow: /_redirects
+Disallow: /.env*
