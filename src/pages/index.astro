@@ -207,43 +207,90 @@ const zachary = {
       </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 py-10 space-y-12 w-full">
-
-      <!-- About & Links (Collapsible on Mobile) -->
-      <CollapsibleCard title="About" open={true}>
-        <div class="prose prose-invert max-w-none text-zinc-300 text-base md:text-lg leading-relaxed">
-          {zachary.about.split('\n').map(line =>
-            line.trim() && <p class="mb-3">{line}</p>
-          )}
+    <!-- Tab Navigation -->
+    <nav class="sticky top-0 z-10 bg-zinc-950/95 backdrop-blur-sm border-b border-zinc-800">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="flex justify-center gap-1">
+          <button
+            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative"
+            data-tab="0"
+            aria-label="About tab"
+          >
+            About
+            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
+          </button>
+          <button
+            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative active"
+            data-tab="1"
+            aria-label="Wall tab"
+          >
+            Wall
+            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform transition-transform"></span>
+          </button>
+          <button
+            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative"
+            data-tab="2"
+            aria-label="Projects tab"
+          >
+            Projects
+            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
+          </button>
         </div>
-      </CollapsibleCard>
+      </div>
+    </nav>
 
-      <WallSection
-        posts={[
-          {
-            name: "Chris P.",
-            date: "October 28, 2025",
-            message: "Loved your Detroit Small Business Map project. Super inspiring!"
-          },
-          {
-            name: "Avery",
-            date: "October 27, 2025",
-            message: "That Bags of Laundry campaign is genius 💡. Keep it up!"
-          },
-          {
-            name: "Jamie L.",
-            date: "October 25, 2025",
-            message: "Your AI Voice Concierge concept is 🔥. Excited to see where it goes!"
-          }
-        ]}
-      />
+    <!-- Swipeable Container -->
+    <div class="swipe-wrapper overflow-hidden">
+      <div class="swipe-container flex transition-transform duration-300 ease-out" style="transform: translateX(-100%)">
 
-      <!-- Projects Section -->
-      <ProjectsSection projects={zachary.projects} />
-      
+        <!-- Panel 1: About -->
+        <div class="swipe-panel flex-shrink-0 w-full">
+          <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+            <div class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-6">
+              <h2 class="text-2xl font-bold text-white mb-4">About</h2>
+              <div class="prose prose-invert max-w-none text-zinc-300 text-base md:text-lg leading-relaxed">
+                {zachary.about.split('\n').map(line =>
+                  line.trim() && <p class="mb-3">{line}</p>
+                )}
+              </div>
+            </div>
+          </main>
+        </div>
 
-    </main>
+        <!-- Panel 2: Wall -->
+        <div class="swipe-panel flex-shrink-0 w-full">
+          <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+            <WallSection
+              posts={[
+                {
+                  name: "Chris P.",
+                  date: "October 28, 2025",
+                  message: "Loved your Detroit Small Business Map project. Super inspiring!"
+                },
+                {
+                  name: "Avery",
+                  date: "October 27, 2025",
+                  message: "That Bags of Laundry campaign is genius 💡. Keep it up!"
+                },
+                {
+                  name: "Jamie L.",
+                  date: "October 25, 2025",
+                  message: "Your AI Voice Concierge concept is 🔥. Excited to see where it goes!"
+                }
+              ]}
+            />
+          </main>
+        </div>
+
+        <!-- Panel 3: Projects -->
+        <div class="swipe-panel flex-shrink-0 w-full">
+          <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+            <ProjectsSection projects={zachary.projects} />
+          </main>
+        </div>
+
+      </div>
+    </div>
 
     <!-- Footer -->
     <footer class="mt-auto border-t border-zinc-800 py-8 text-center text-xs text-zinc-500">
@@ -291,5 +338,194 @@ const zachary = {
         });
       }
     </script>
+
+    <!-- Swipe Functionality Script -->
+    <script>
+      let currentTab = 1; // Start with Wall (index 1)
+      const container = document.querySelector('.swipe-container');
+      const tabButtons = document.querySelectorAll('.tab-button');
+      const totalTabs = 3;
+
+      let touchStartX = 0;
+      let touchEndX = 0;
+      let isDragging = false;
+      let startX = 0;
+      let currentTranslate = 0;
+      let prevTranslate = 0;
+
+      // Update active tab and position
+      function switchToTab(index) {
+        if (index < 0 || index >= totalTabs) return;
+
+        currentTab = index;
+        const offset = -index * 100;
+        container.style.transform = `translateX(${offset}%)`;
+
+        // Update tab button states
+        tabButtons.forEach((btn, i) => {
+          if (i === index) {
+            btn.classList.add('active');
+            btn.classList.remove('text-zinc-400');
+            btn.classList.add('text-white');
+            btn.querySelector('.tab-indicator').style.transform = 'scaleX(1)';
+          } else {
+            btn.classList.remove('active');
+            btn.classList.add('text-zinc-400');
+            btn.classList.remove('text-white');
+            btn.querySelector('.tab-indicator').style.transform = 'scaleX(0)';
+          }
+        });
+      }
+
+      // Tab button clicks
+      tabButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+          switchToTab(index);
+        });
+      });
+
+      // Touch events for mobile swipe
+      const wrapper = document.querySelector('.swipe-wrapper');
+
+      wrapper.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        isDragging = true;
+        container.style.transition = 'none';
+      });
+
+      wrapper.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+
+        touchEndX = e.touches[0].clientX;
+        const diff = touchEndX - touchStartX;
+        const maxTranslate = 0;
+        const minTranslate = -(totalTabs - 1) * 100;
+        const baseTranslate = -currentTab * 100;
+        const movePercent = (diff / window.innerWidth) * 100;
+
+        let newTranslate = baseTranslate + movePercent;
+        newTranslate = Math.max(minTranslate, Math.min(maxTranslate, newTranslate));
+
+        container.style.transform = `translateX(${newTranslate}%)`;
+      });
+
+      wrapper.addEventListener('touchend', () => {
+        if (!isDragging) return;
+
+        isDragging = false;
+        container.style.transition = 'transform 0.3s ease-out';
+
+        const diff = touchEndX - touchStartX;
+        const threshold = 50; // minimum swipe distance
+
+        if (Math.abs(diff) > threshold) {
+          if (diff > 0 && currentTab > 0) {
+            // Swipe right - go to previous tab
+            switchToTab(currentTab - 1);
+          } else if (diff < 0 && currentTab < totalTabs - 1) {
+            // Swipe left - go to next tab
+            switchToTab(currentTab + 1);
+          } else {
+            // Not enough distance, snap back
+            switchToTab(currentTab);
+          }
+        } else {
+          // Not enough distance, snap back
+          switchToTab(currentTab);
+        }
+
+        touchStartX = 0;
+        touchEndX = 0;
+      });
+
+      // Mouse drag for desktop
+      wrapper.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        container.style.transition = 'none';
+        wrapper.style.cursor = 'grabbing';
+      });
+
+      wrapper.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+
+        e.preventDefault();
+        const currentX = e.clientX;
+        const diff = currentX - startX;
+        const maxTranslate = 0;
+        const minTranslate = -(totalTabs - 1) * 100;
+        const baseTranslate = -currentTab * 100;
+        const movePercent = (diff / window.innerWidth) * 100;
+
+        let newTranslate = baseTranslate + movePercent;
+        newTranslate = Math.max(minTranslate, Math.min(maxTranslate, newTranslate));
+
+        container.style.transform = `translateX(${newTranslate}%)`;
+      });
+
+      wrapper.addEventListener('mouseup', (e) => {
+        if (!isDragging) return;
+
+        isDragging = false;
+        container.style.transition = 'transform 0.3s ease-out';
+        wrapper.style.cursor = 'grab';
+
+        const diff = e.clientX - startX;
+        const threshold = 50;
+
+        if (Math.abs(diff) > threshold) {
+          if (diff > 0 && currentTab > 0) {
+            switchToTab(currentTab - 1);
+          } else if (diff < 0 && currentTab < totalTabs - 1) {
+            switchToTab(currentTab + 1);
+          } else {
+            switchToTab(currentTab);
+          }
+        } else {
+          switchToTab(currentTab);
+        }
+      });
+
+      wrapper.addEventListener('mouseleave', () => {
+        if (isDragging) {
+          isDragging = false;
+          container.style.transition = 'transform 0.3s ease-out';
+          wrapper.style.cursor = 'grab';
+          switchToTab(currentTab);
+        }
+      });
+
+      // Keyboard navigation (arrow keys)
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft' && currentTab > 0) {
+          switchToTab(currentTab - 1);
+        } else if (e.key === 'ArrowRight' && currentTab < totalTabs - 1) {
+          switchToTab(currentTab + 1);
+        }
+      });
+
+      // Initialize
+      wrapper.style.cursor = 'grab';
+      switchToTab(currentTab);
+    </script>
+
+    <style>
+      .tab-button.active {
+        color: white;
+      }
+
+      .swipe-wrapper {
+        min-height: 60vh;
+        touch-action: pan-y; /* Allow vertical scrolling within panels */
+      }
+
+      .swipe-container {
+        will-change: transform;
+      }
+
+      .swipe-panel {
+        min-height: 60vh;
+      }
+    </style>
   </body>
 </html>
