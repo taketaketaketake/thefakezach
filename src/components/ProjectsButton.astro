@@ -2,10 +2,10 @@
 const { href = "#projects", label = "Projects" } = Astro.props;
 ---
 
-<a
-  href={href}
+<button
+  onclick="switchToTab && switchToTab(2)"
   class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium rounded-xl
          text-zinc-300 border border-zinc-600 hover:bg-zinc-800 transition-colors w-full sm:w-auto"
 >
   {label}
-</a>
+</button>
