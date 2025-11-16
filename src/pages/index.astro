@@ -13,7 +13,22 @@ const zachary = {
   username: "thefakezach",
   avatarPhoto: "/profile-photo.jpg",
   joinDate: "Building from Detroit, MI",
-  about: `I like to build things, wherever I am. Here is where I share my projects and ideas:`,
+  about: `I like to build things, wherever I am. Here is where I share my projects and ideas:
+
+I've always been fascinated by how things work — and why people care.
+
+I started in video production and marketing, telling stories that made people stop scrolling and pay attention. Over time, I realized the best marketing isn't a campaign — it's a product that actually works. Something that solves a problem so well, it doesn't need explaining.
+
+That realization became the foundation for Take Detroit, which began in 2014 as a small social media production company and grew into one of the city's most recognizable creative brands. Over the years, we produced content that helped define Detroit's modern food and culture scene — amassing more than 25 million organic video views and turning a Facebook page into a full-fledged business discovery platform.
+
+That experience shaped how I build today.
+Marketing taught me how people think; development lets me build what they need.
+
+Now, I design and build tools, platforms, and systems that merge storytelling, design, and technology — from business discovery platforms and service marketplaces to voice-powered customer tools and AI-driven applications. Each project starts with a human insight and ends with something real: a system that feels natural to use, looks beautiful, and actually works.
+
+I like to think of it as vibe coding — building by intuition, creativity, and context, not just convention. It's equal parts strategy, story, and system design.
+
+When I'm not deep in a code editor or sketching product flows, I'm probably exploring new ways to merge technology and culture — experimenting with AI tools, rethinking how local economies connect, or finding new ways to make digital things feel more human.`,
   contact: {
     twitter: "#",
     github: "#",
@@ -214,20 +229,20 @@ const zachary = {
             <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
           </button>
           <button
-            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative active"
+            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative"
             data-tab="1"
             aria-label="Wall tab"
           >
             Wall
-            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform transition-transform"></span>
+            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
           </button>
           <button
-            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative"
+            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative active"
             data-tab="2"
             aria-label="Projects tab"
           >
             Projects
-            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
+            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform transition-transform"></span>
           </button>
         </div>
       </div>
@@ -235,7 +250,7 @@ const zachary = {
 
     <!-- Swipeable Container -->
     <div class="swipe-wrapper overflow-hidden">
-      <div class="swipe-container flex transition-transform duration-300 ease-out" style="transform: translateX(-100%)">
+      <div class="swipe-container flex transition-transform duration-300 ease-out" style="transform: translateX(-200%)">
 
         <!-- Panel 1: About -->
         <div class="swipe-panel flex-shrink-0 w-full">
@@ -335,7 +350,7 @@ const zachary = {
 
     <!-- Swipe Functionality Script -->
     <script>
-      let currentTab = 1; // Start with Wall (index 1)
+      let currentTab = 2; // Start with Projects (index 2)
       const container = document.querySelector('.swipe-container');
       const tabButtons = document.querySelectorAll('.tab-button');
       const totalTabs = 3;
