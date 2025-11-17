@@ -28,15 +28,17 @@
         type="text"
         name="name"
         required
+        maxlength="50"
         placeholder="Your name"
         class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none focus:ring-2 focus:ring-pink-600"
       />
       <textarea
         name="message"
-        rows="3"
+        rows="8"
         required
-        placeholder="Write something..."
-        class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none focus:ring-2 focus:ring-pink-600 resize-none"
+        maxlength="2000"
+        placeholder="Write something... (up to 2000 characters - perfect for longer thoughts, stories, or blog-style posts)"
+        class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 focus:outline-none focus:ring-2 focus:ring-pink-600 resize-y min-h-[120px]"
       ></textarea>
 
       <div class="flex justify-end">
@@ -261,11 +263,16 @@ document.addEventListener("DOMContentLoaded", async () => {
       try {
         // Submit form data via fetch to prevent page navigation
         const formData = new FormData(form);
-        const response = await fetch("/", {
+        const response = await fetch("/.netlify/functions/submit-wall-post", {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
           body: new URLSearchParams(formData).toString()
         });
+        
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || errorData.error || 'Submission failed');
+        }
         
         // Show success message
         form.classList.add('submitted');
@@ -280,6 +287,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         
       } catch (error) {
         console.error("Form submission failed:", error);
+        alert(`Submission failed: ${error.message}`);
       }
     });
   }
