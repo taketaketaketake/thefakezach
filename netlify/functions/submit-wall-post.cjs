@@ -45,7 +45,7 @@ function validateInput(name, message) {
     errors.push('Name is required');
   }
   if (name && name.length > LIMITS.name.max) {
-    errors.push(`Name must be less than ${LIMITS.name.max} characters`);
+    errors.push('Name must be less than ' + LIMITS.name.max + ' characters');
   }
   
   // Validate message
@@ -53,11 +53,11 @@ function validateInput(name, message) {
     errors.push('Message is required');
   }
   if (message && message.length > LIMITS.message.max) {
-    errors.push(`Message must be less than ${LIMITS.message.max} characters`);
+    errors.push('Message must be less than ' + LIMITS.message.max + ' characters');
   }
   
   // Content filtering
-  const combinedText = `${name} ${message}`.toLowerCase();
+  const combinedText = (name + ' ' + message).toLowerCase();
   for (const word of BLOCKED_WORDS) {
     if (combinedText.includes(word.toLowerCase())) {
       errors.push('Content contains inappropriate language');
@@ -69,16 +69,19 @@ function validateInput(name, message) {
 }
 
 function getClientIP(event) {
-  return event.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
-         event.headers['x-real-ip'] ||
-         event.headers['cf-connecting-ip'] ||
+  const forwarded = event.headers['x-forwarded-for'];
+  if (forwarded) {
+    return forwarded.split(',')[0].trim();
+  }
+  return event.headers['x-real-ip'] || 
+         event.headers['cf-connecting-ip'] || 
          'unknown';
 }
 
 function isRateLimited(ip, contentHash) {
   const now = Date.now();
-  const ipKey = `ip:${ip}`;
-  const contentKey = `content:${contentHash}`;
+  const ipKey = 'ip:' + ip;
+  const contentKey = 'content:' + contentHash;
   
   // Clean old entries
   for (const [key, data] of rateLimitStore.entries()) {
@@ -110,8 +113,8 @@ function isRateLimited(ip, contentHash) {
 
 function updateRateLimit(ip, contentHash) {
   const now = Date.now();
-  const ipKey = `ip:${ip}`;
-  const contentKey = `content:${contentHash}`;
+  const ipKey = 'ip:' + ip;
+  const contentKey = 'content:' + contentHash;
   
   // Update IP counter
   const ipData = rateLimitStore.get(ipKey);
@@ -230,7 +233,7 @@ exports.handler = async (event, context) => {
     const clientIP = getClientIP(event);
     const contentHash = crypto
       .createHash('sha256')
-      .update(`${name}:${message}`)
+      .update(name + ':' + message)
       .digest('hex');
     
     const rateLimitCheck = isRateLimited(clientIP, contentHash);
