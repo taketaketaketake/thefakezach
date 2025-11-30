@@ -1,0 +1,82 @@
+---
+interface Props {
+  mainTitle: string;
+  subtitle: string;
+  paragraph: string;
+  buttonText: string;
+  buttonHref?: string;
+  buttonTarget?: string;
+  features: Array<{
+    icon: string;
+    title: string;
+    subtitle: string;
+  }>;
+  fullHeight?: boolean;
+}
+
+const { 
+  mainTitle, 
+  subtitle, 
+  paragraph, 
+  buttonText, 
+  buttonHref = "#", 
+  buttonTarget = "_self",
+  features,
+  fullHeight = true 
+} = Astro.props;
+---
+
+<section class={`w-full bg-transparent flex items-center justify-center ${fullHeight ? 'h-screen' : 'min-h-screen py-16'}`}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      
+      <!-- Left Column: Main Content -->
+      <div class="space-y-6 text-center lg:text-left">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+          {mainTitle}
+        </h1>
+        <h2 class="text-2xl md:text-3xl text-cyan-400 font-semibold">
+          {subtitle}
+        </h2>
+        <p class="text-lg md:text-xl text-gray-300 leading-relaxed">
+          {paragraph}
+        </p>
+        <div class="pt-4">
+          <a 
+            href={buttonHref}
+            target={buttonTarget}
+            class="inline-block bg-gradient-to-r from-pink-500 to-cyan-400 text-white font-bold py-4 px-8 rounded-lg text-lg hover:scale-105 hover:shadow-lg hover:shadow-pink-500/25 transition-all duration-300 uppercase tracking-wide"
+          >
+            {buttonText}
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Features Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-8">
+        {features.map((feature) => (
+          <div class="text-center space-y-4">
+            <!-- Icon -->
+            <div class="flex justify-center">
+              <img 
+                src={feature.icon} 
+                alt={feature.title}
+                class="w-16 h-16 md:w-20 md:h-20"
+                loading="lazy"
+              />
+            </div>
+            <!-- Title -->
+            <h3 class="text-xl md:text-2xl font-bold text-white">
+              {feature.title}
+            </h3>
+            <!-- Subtitle -->
+            <p class="text-sm md:text-base text-gray-400">
+              {feature.subtitle}
+            </p>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>

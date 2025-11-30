@@ -1,0 +1,860 @@
+---
+import HeroHeader from "../components/HeroHeader.astro";
+import HeroSection from "../components/HeroSection.astro";
+import HeroFeatures from "../components/HeroFeatures.astro";
+import BlogSection from "../components/BlogSection.astro";
+import ProjectsShowcase from "../components/ProjectsShowcase.astro";
+import TechPhilosophy from "../components/TechPhilosophy.astro";
+import HireMe from "../components/HireMe.astro";
+import TimelineCommand from "../components/TimelineCommand.astro";
+
+const zachary = {
+  projects: [
+    { 
+      title: "Detroit Small Business Map", 
+      emoji: "🗺️",
+      image: "/projects/detroit-small-biz-cover-photo.png",
+      year: "2025",
+      summary: "A comprehensive business discovery platform connecting Detroit's local community with neighborhood businesses through interactive maps, verified data, and social engagement features.",
+      problem: "Detroit's diverse business ecosystem lacked a unified platform for discovery and community engagement. Existing solutions were either too generic, missing cannabis compliance features, or didn't provide the social interaction that builds local connections.",
+      solution: "Built a full-stack platform combining business directory functionality with social features, role-based management, and cannabis industry compliance. Integrated Google Places API for verified business data and Mapbox for location discovery.",
+      tech: ["Astro 5", "TypeScript", "React", "PostgreSQL", "TailwindCSS", "Mapbox GL", "Google Places API", "Netlify"],
+      link: "",
+      github: "https://github.com/taketaketaketake/detroit-small-business-map"
+    },
+    { 
+      title: "Bags of Laundry", 
+      emoji: "🧺",
+      image: "/projects/bags-cover-photo 2.png",
+      year: "2025",
+      summary: "An innovative laundry service platform connecting customers with local providers.",
+      problem: "Most laundromats still operate with manual processes and word-of-mouth communication, missing the digital transformation that customers expect in the modern era.",
+      solution: "Built a full-stack laundry service platform featuring AI-powered voice & messaging ordering, real-time capacity management, photo documentation workflows, and subscription-based pricing. Serves residential customers, Airbnb hosts, and commercial clients across 30+ Detroit suburbs.",
+      tech: ["Astro", "React", "TypeScript", "Tailwind", "PostgreSQL", "Stripe", "Twilio (for now)", "Netlify", "Mapbox API"],
+      link: "https://bagsoflaundry.com",
+      github: "#"
+    },
+    { 
+      title: "Fix My Furnace", 
+      emoji: "🤖",
+      image: "/projects/fix-my-furnace-cover-photo.png",
+      year: "2025",
+      summary: "Comprehensive HVAC service marketplace connecting Michigan homeowners with vetted contractors through photo diagnosis, pricing transparency, and lead generation.",
+      problem: "Michigan homeowners struggle to find trustworthy HVAC contractors and fair pricing, often facing expensive repairs without knowing if they're being overcharged or need professional help.",
+      solution: "Built a robust, multi-funnel lead generation platform that drives homeowners into the right pathway based on intent — from photo-based furnace diagnosis to high-intent repair funnels. The system includes a $125 professional assessment flow, real contract-backed pricing transparency, automated lead routing, and a vetted statewide contractor network. Every funnel is designed to convert, qualify, and deliver better matches for both homeowners and technicians.",
+      tech: ["Astro.js", "TypeScript", "TailwindCSS", "Supabase", "Mapbox API", "Netlify"],
+      link: "https://fixmyfurnacedetroit.com",
+      github: "#"
+    },
+    { 
+      title: "AI Voice Agents", 
+      emoji: "🗣️",
+      year: "2025",
+      summary: "Intelligent voice assistants for businesses to handle customer inquiries automatically with SMS/MMS support.",
+      problem: "HVAC lead generation companies need 24/7 phone support to capture leads but struggle with staffing costs and missed calls during high-demand periods.",
+      solution: "Built AI-powered voice agents using Telnyx's Voice API and Deepgram for ultra-low latency speech recognition. The system collects customer information through natural conversations, supports SMS/MMS inquiries, and automatically saves all interactions to a database for follow-up. This is the newer version with higher quality voice and lower latency.",
+      tech: ["Node.js", "Express", "Telnyx Voice API", "Deepgram", "Supabase", "PostgreSQL", "Telnyx Messaging API"],
+      link: "https://github.com/taketaketaketake/Telnyx-voice-agent",
+      github: "#"
+    },
+    { 
+      title: "Take Detroit", 
+      emoji: "🚀",
+      image: "/projects/take-detroit-cupcakes.jpg",
+      year: "2017",
+      summary: "Community platform celebrating Detroit's entrepreneurial spirit and local initiatives.",
+      problem: "Detroit's entrepreneurial community lacks a central hub to showcase projects and connect like-minded individuals.",
+      solution: "Created a community-driven platform where local entrepreneurs can showcase their projects, find collaborators, and access resources.",
+      tech: ["Vue.js", "Firebase", "Nuxt.js", "Bulma CSS"],
+      link: "https://facebook.com/takedetroitdotcom",
+      github: "#"
+    },
+    { 
+      title: "Cosmic Crew", 
+      emoji: "👨‍🚀",
+      image: "/projects/cosmic-crew-image.png",
+      year: "2025",
+      summary: "Interactive educational web game teaching programming concepts through space exploration.",
+      problem: "Most introductory coding tools feel rigid, uninspired, or too abstract — especially for young kids. I wanted something more personal: a way for my own kids to learn the fundamentals of programming while also getting hands-on exposure to modern AI tools and creative technology.",
+      solution: "Cosmic Crew started as a hands-on project for me and my kids — a way for all of us to explore new creative and technical tools together. In building the first version, I learned generative AI workflows (ComfyUI locally), character design, 3D environments, and Three.js fundamentals. The result is a simple interactive prototype where kids can direct a rocket through space using basic movement commands. More than a finished platform, it's an ongoing learning project that helps us experiment with coding, creativity, and modern AI tools side by side.",
+      tech: ["JavaScript", "Three.js", "WebGL", "CSS3D", "HTML5", "Tailwind CSS", "GLTF/GLB 3D Models"],
+      link: "https://cosmiccrew.club/",
+      github: "#"
+    }
+  ]
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Demo - Interactive Sci-Fi Experience</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #000;
+        font-family: 'Courier New', monospace;
+        color: #00ff00;
+      }
+
+      #canvas-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1;
+      }
+
+      #ui-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        min-height: 200vh;
+        z-index: 10;
+        pointer-events: auto;
+      }
+
+
+      h1 {
+        font-size: 3em;
+        text-shadow: 0 0 10px #00ffff;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        font-size: 1.2em;
+        color: #ffffff;
+        text-shadow: 0 0 5px #ffffff;
+      }
+
+      .project-card {
+        background: rgba(0, 100, 100, 0.2);
+        border: 1px solid #00ffff;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 10px 0;
+        transition: all 0.3s ease;
+      }
+
+      .project-card:hover {
+        background: rgba(0, 150, 150, 0.3);
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+        transform: scale(1.05);
+      }
+
+      .project-title {
+        font-size: 1.3em;
+        margin-bottom: 10px;
+        color: #00ff00;
+      }
+
+      .project-description {
+        color: #cccccc;
+        font-size: 0.9em;
+        line-height: 1.4;
+      }
+
+      .cta-button {
+        background: linear-gradient(45deg, #ff0080, #00ffff);
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 15px;
+        transition: all 0.3s ease;
+      }
+
+      .cta-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px rgba(255, 0, 128, 0.8);
+      }
+
+      .loading-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 2em;
+        text-shadow: 0 0 20px #00ffff;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% { opacity: 0.5; }
+        50% { opacity: 1; }
+        100% { opacity: 0.5; }
+      }
+
+      .glitch {
+        animation: glitch 0.5s infinite;
+      }
+
+      @keyframes glitch {
+        0% { text-shadow: 0 0 10px #00ffff; }
+        25% { text-shadow: -2px 0 10px #ff0080, 2px 0 10px #00ffff; }
+        50% { text-shadow: 2px 0 10px #ff0080, -2px 0 10px #00ffff; }
+        75% { text-shadow: -2px 0 10px #00ffff, 2px 0 10px #ff0080; }
+        100% { text-shadow: 0 0 10px #00ffff; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Canvas Container for Three.js -->
+    <div id="canvas-container"></div>
+    
+    <!-- UI Overlay -->
+    <div id="ui-overlay">
+      <div class="loading-text" id="loading">INITIALIZING SPACE OPERA...</div>
+      
+      <!-- Hero Header -->
+      <div id="hero-content" style="display: none;">
+        <HeroHeader 
+          title="ZACHARY LEWIS"
+          paragraph="Detroit-based developer and designer building the future with cutting-edge technology. Specializing in AI-powered platforms, interactive experiences, and innovative web solutions."
+          imageUrl="/profile-photo.jpg"
+          imageAlt="Zachary Lewis profile photo"
+          fullHeight={true}
+        />
+        
+        
+        <!-- Tech Philosophy -->
+        <TechPhilosophy 
+          techStacks={[
+            {
+              category: "Frontend Arsenal",
+              icon: "⚡",
+              description: "Crafting interactive experiences with modern frameworks and cutting-edge UI libraries.",
+              technologies: ["React", "TypeScript", "Astro", "Three.js", "TailwindCSS", "Next.js", "Vue"],
+              level: 95
+            },
+            {
+              category: "Backend Infrastructure", 
+              icon: "🚀",
+              description: "Building scalable APIs and robust server architectures for high-performance applications.",
+              technologies: ["Node.js", "PostgreSQL", "Supabase", "Express", "Netlify", "Firebase"],
+              level: 88
+            },
+            {
+              category: "AI & Voice Systems",
+              icon: "🤖",
+              description: "Integrating intelligent automation and ultra-low latency speech recognition systems.",
+              technologies: ["Deepgram", "OpenAI", "Telnyx API", "ComfyUI", "Python", "ML Workflows"],
+              level: 82
+            },
+            {
+              category: "Developer Tools",
+              icon: "🛠️", 
+              description: "Streamlined development workflows and automation for rapid iteration and deployment.",
+              technologies: ["Git", "VS Code", "Docker", "GitHub Actions", "Figma", "Linear"],
+              level: 90
+            },
+            {
+              category: "Creative Tech",
+              icon: "🎨",
+              description: "Blending art and technology through generative AI, 3D graphics, and interactive media.",
+              technologies: ["Blender", "GLTF", "WebGL", "Canvas API", "Video Production", "AI Art"],
+              level: 75
+            },
+            {
+              category: "Business Systems",
+              icon: "📊",
+              description: "End-to-end platforms connecting customers, payments, and analytics for real business impact.",
+              technologies: ["Stripe", "Mapbox", "Google APIs", "Analytics", "CRM Integration", "SEO"],
+              level: 85
+            }
+          ]}
+        />
+        
+        <!-- Divider Line -->
+        <div class="w-full flex justify-center py-8">
+          <div class="w-full max-w-4xl h-px bg-white opacity-20"></div>
+        </div>
+        
+        <!-- Projects Showcase -->
+        <ProjectsShowcase projects={zachary.projects} />
+        
+        <!-- Divider Line -->
+        <div class="w-full flex justify-center py-8">
+          <div class="w-full max-w-4xl h-px bg-white opacity-20"></div>
+        </div>
+        
+        <!-- Divider Line -->
+        <div class="w-full flex justify-center py-8">
+          <div class="w-full max-w-4xl h-px bg-white opacity-20"></div>
+        </div>
+        
+        <!-- Timeline Command -->
+        <TimelineCommand 
+          events={[
+            {
+              year: "2025",
+              title: "AI Voice Agent Revolution",
+              description: "Launched ultra-low latency voice agents using Telnyx and Deepgram APIs. Achieved sub-200ms response times for business automation, revolutionizing customer support workflows.",
+              type: "launch",
+              status: "active",
+              tech: ["Telnyx API", "Deepgram", "Node.js", "PostgreSQL"]
+            },
+            {
+              year: "2025",
+              title: "Detroit Small Business Platform",
+              description: "Built comprehensive business discovery platform with social features and cannabis compliance. Integrated Google Places API and Mapbox for verified local business data.",
+              type: "project", 
+              status: "completed",
+              tech: ["Astro 5", "TypeScript", "React", "PostgreSQL", "Mapbox"]
+            },
+            {
+              year: "2024",
+              title: "Full-Stack Development Mastery",
+              description: "Achieved expertise across modern development stack. Specialized in AI integration, interactive experiences, and scalable web architecture.",
+              type: "milestone",
+              status: "completed",
+              tech: ["React", "Three.js", "AI/ML", "Cloud Architecture"]
+            },
+            {
+              year: "2023",
+              title: "Interactive 3D Experiences",
+              description: "Mastered Three.js and WebGL for creating immersive digital experiences. Built Cosmic Crew educational platform combining 3D graphics with AI workflows.",
+              type: "achievement",
+              status: "completed", 
+              tech: ["Three.js", "WebGL", "GLTF", "ComfyUI"]
+            },
+            {
+              year: "2017-2023",
+              title: "Take Detroit Media Empire",
+              description: "Built Detroit's most recognized creative brand from simple Facebook page to full business discovery platform. Generated 25M+ organic video views and shaped the city's modern culture scene.",
+              type: "project",
+              status: "completed",
+              tech: ["Vue.js", "Firebase", "Video Production", "Social Media"]
+            },
+            {
+              year: "2026",
+              title: "Next-Gen Platform Architecture",
+              description: "Developing revolutionary platform combining AI, blockchain, and immersive technologies. Will redefine how businesses connect with customers in the digital age.",
+              type: "project",
+              status: "upcoming",
+              tech: ["AI/ML", "Blockchain", "VR/AR", "Quantum Computing"]
+            }
+          ]}
+        />
+        
+        <!-- Divider Line -->
+        <div class="w-full flex justify-center py-8">
+          <div class="w-full max-w-4xl h-px bg-white opacity-20"></div>
+        </div>
+        
+        <!-- Hire Me Section -->
+        <HireMe 
+          email="zach@takedetroit.com"
+          calendlyUrl="https://calendly.com/zachlewis"
+          services={[
+            {
+              icon: "🚀",
+              title: "Full-Stack Development",
+              description: "End-to-end web applications with modern frameworks and scalable architecture.",
+              timeline: "4-12 weeks"
+            },
+            {
+              icon: "🤖",
+              title: "AI Integration",
+              description: "Voice agents, automation systems, and intelligent user experiences.",
+              timeline: "2-8 weeks"
+            },
+            {
+              icon: "⚡",
+              title: "Interactive Experiences",
+              description: "3D graphics, animations, and cutting-edge user interfaces.",
+              timeline: "3-10 weeks"
+            },
+            {
+              icon: "🛠️",
+              title: "Technical Consulting",
+              description: "Architecture reviews, performance optimization, and strategic guidance.",
+              timeline: "1-4 weeks"
+            }
+          ]}
+        />
+        
+        
+      </div>
+    </div>
+
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Three.js Script -->
+    <script>
+
+      let scene, camera, renderer, starField, planets = [], rockets = [];
+      let mouseX = 0, mouseY = 0;
+      let time = 0;
+      let mouseTrail = [];
+      let raycaster, mouse;
+
+      // Initialize the scene
+      function init() {
+        console.log('Initializing Three.js scene...');
+        
+        // Scene setup
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x000000, 1);
+        
+        const container = document.getElementById('canvas-container');
+        if (!container) {
+          throw new Error('Canvas container not found');
+        }
+        container.appendChild(renderer.domElement);
+        console.log('Renderer added to DOM');
+
+        // Initialize raycaster and mouse
+        raycaster = new THREE.Raycaster();
+        mouse = new THREE.Vector2();
+
+        // Camera position
+        camera.position.z = 50;
+
+        // Create starfield
+        createStarField();
+        
+        // Create planets
+        createPlanets();
+        
+        // Create rockets
+        createRockets();
+        
+        // Create mouse trail effect
+        createMouseTrail();
+        
+        // Mouse tracking
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('click', onMouseClick);
+        
+        // Window resize
+        window.addEventListener('resize', onWindowResize);
+        
+        // Start animation
+        animate();
+        
+        // Show UI immediately for debugging
+        showUI();
+      }
+
+      function createStarField() {
+        const starGeometry = new THREE.BufferGeometry();
+        const starMaterial = new THREE.PointsMaterial({
+          color: 0xffffff,
+          size: 1.5,
+          sizeAttenuation: true,
+          transparent: true,
+          opacity: 0.8,
+          map: createStarTexture()
+        });
+
+        const starVertices = [];
+        for (let i = 0; i < 10000; i++) {
+          const x = (Math.random() - 0.5) * 2000;
+          const y = (Math.random() - 0.5) * 2000;
+          const z = (Math.random() - 0.5) * 2000;
+          starVertices.push(x, y, z);
+        }
+
+        starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+        starField = new THREE.Points(starGeometry, starMaterial);
+        scene.add(starField);
+      }
+
+      function createStarTexture() {
+        const canvas = document.createElement('canvas');
+        canvas.width = 64;
+        canvas.height = 64;
+        const ctx = canvas.getContext('2d');
+        
+        // Create a radial gradient for a glowing star effect
+        const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        gradient.addColorStop(0.2, 'rgba(255, 255, 255, 1)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 64, 64);
+        
+        const texture = new THREE.CanvasTexture(canvas);
+        return texture;
+      }
+
+      function createPlanets() {
+        // Create multiple planets at different distances
+        const planetData = [
+          { size: 20, distance: 200, color: 0x8B4513, speed: 0.001 },
+          { size: 15, distance: 300, color: 0xFF4500, speed: 0.0007 },
+          { size: 25, distance: 450, color: 0x4169E1, speed: 0.0005 },
+          { size: 12, distance: 600, color: 0x9400D3, speed: 0.0003 }
+        ];
+
+        planetData.forEach(data => {
+          const geometry = new THREE.SphereGeometry(data.size, 32, 32);
+          const material = new THREE.MeshBasicMaterial({ 
+            color: data.color,
+            transparent: true,
+            opacity: 0.7
+          });
+          const planet = new THREE.Mesh(geometry, material);
+          
+          // Position planet randomly around a circle
+          const angle = Math.random() * Math.PI * 2;
+          planet.position.x = Math.cos(angle) * data.distance;
+          planet.position.y = Math.sin(angle) * data.distance;
+          planet.position.z = (Math.random() - 0.5) * 100;
+          
+          planet.userData = {
+            distance: data.distance,
+            speed: data.speed,
+            angle: angle
+          };
+          
+          planets.push(planet);
+          scene.add(planet);
+        });
+      }
+
+      function createRockets() {
+        // Create simple rocket shapes using basic geometry
+        for (let i = 0; i < 20; i++) {
+          const rocketGroup = new THREE.Group();
+          
+          // Rocket body
+          const bodyGeometry = new THREE.CylinderGeometry(0.5, 1, 4, 8);
+          const bodyMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+          const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+          
+          // Rocket nose
+          const noseGeometry = new THREE.ConeGeometry(0.5, 2, 8);
+          const noseMaterial = new THREE.MeshBasicMaterial({ color: 0xff4444 });
+          const nose = new THREE.Mesh(noseGeometry, noseMaterial);
+          nose.position.y = 3;
+          
+          // Rocket flames
+          const flameGeometry = new THREE.ConeGeometry(0.8, 3, 8);
+          const flameMaterial = new THREE.MeshBasicMaterial({ 
+            color: 0xff8800,
+            transparent: true,
+            opacity: 0.8
+          });
+          const flame = new THREE.Mesh(flameGeometry, flameMaterial);
+          flame.position.y = -3.5;
+          
+          rocketGroup.add(body);
+          rocketGroup.add(nose);
+          rocketGroup.add(flame);
+          
+          // Random starting position
+          rocketGroup.position.x = (Math.random() - 0.5) * 500;
+          rocketGroup.position.y = (Math.random() - 0.5) * 500;
+          rocketGroup.position.z = (Math.random() - 0.5) * 200;
+          
+          // Random rotation for variety
+          rocketGroup.rotation.z = Math.random() * Math.PI * 2;
+          
+          rocketGroup.userData = {
+            speed: 0.2 + Math.random() * 0.3,
+            direction: new THREE.Vector3(
+              (Math.random() - 0.5) * 2,
+              (Math.random() - 0.5) * 2,
+              (Math.random() - 0.5) * 2
+            ).normalize()
+          };
+          
+          rockets.push(rocketGroup);
+          scene.add(rocketGroup);
+        }
+      }
+
+      function createMouseTrail() {
+        // Create particle system for mouse trail
+        const trailGeometry = new THREE.BufferGeometry();
+        const trailMaterial = new THREE.PointsMaterial({
+          color: 0x00ffff,
+          size: 3,
+          transparent: true,
+          opacity: 0.8,
+          map: createStarTexture()
+        });
+
+        // Initialize empty trail
+        const maxTrailPoints = 50;
+        const positions = new Float32Array(maxTrailPoints * 3);
+        const colors = new Float32Array(maxTrailPoints * 3);
+        
+        trailGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        trailGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        
+        const trail = new THREE.Points(trailGeometry, trailMaterial);
+        scene.add(trail);
+        
+        window.mouseTrailSystem = trail;
+      }
+
+      function onMouseMove(event) {
+        // Convert to normalized device coordinates
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        
+        // Convert to world coordinates
+        const vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+        vector.unproject(camera);
+        const dir = vector.sub(camera.position).normalize();
+        const distance = -camera.position.z / dir.z;
+        const pos = camera.position.clone().add(dir.multiplyScalar(distance));
+        
+        // Add to mouse trail
+        mouseTrail.push({
+          position: pos.clone(),
+          life: 1.0,
+          time: Date.now()
+        });
+        
+        // Limit trail length
+        if (mouseTrail.length > 50) {
+          mouseTrail.shift();
+        }
+        
+        // Smooth camera movement
+        mouseX = mouse.x * 0.1;
+        mouseY = mouse.y * 0.1;
+      }
+
+      function onMouseClick(event) {
+        // Update raycaster
+        raycaster.setFromCamera(mouse, camera);
+        
+        // Check for planet intersections
+        const intersects = raycaster.intersectObjects(planets);
+        if (intersects.length > 0) {
+          const planet = intersects[0].object;
+          explodePlanet(planet);
+        } else {
+          // Spawn rocket at click position
+          spawnRocketAtMouse(event);
+        }
+      }
+
+      function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+
+        // Rotate starfield slowly
+        if (starField) {
+          starField.rotation.x += 0.0001;
+          starField.rotation.y += 0.0002;
+        }
+
+        // Animate planets orbiting
+        planets.forEach(planet => {
+          planet.userData.angle += planet.userData.speed;
+          planet.position.x = Math.cos(planet.userData.angle) * planet.userData.distance;
+          planet.position.y = Math.sin(planet.userData.angle) * planet.userData.distance;
+          planet.rotation.x += 0.01;
+          planet.rotation.y += 0.005;
+        });
+
+        // Animate rockets
+        rockets.forEach(rocket => {
+          rocket.position.add(rocket.userData.direction.clone().multiplyScalar(rocket.userData.speed));
+          rocket.rotation.y += 0.02;
+          
+          // Reset rocket position if it goes too far
+          if (rocket.position.length() > 300) {
+            rocket.position.set(
+              (Math.random() - 0.5) * 100,
+              (Math.random() - 0.5) * 100,
+              (Math.random() - 0.5) * 100
+            );
+          }
+        });
+
+        // Update mouse trail
+        updateMouseTrail();
+        
+        // Smooth orbital camera movement
+        camera.position.x += (mouseX * 5 - camera.position.x) * 0.02;
+        camera.position.y += (mouseY * 5 - camera.position.y) * 0.02;
+        
+        // Gentle orbital rotation
+        const radius = 50;
+        camera.position.x += Math.cos(time * 0.1) * 0.1;
+        camera.position.z += Math.sin(time * 0.1) * 0.1;
+        camera.lookAt(scene.position);
+
+        renderer.render(scene, camera);
+      }
+      
+      function updateMouseTrail() {
+        if (!window.mouseTrailSystem) return;
+        
+        const positions = window.mouseTrailSystem.geometry.attributes.position;
+        const colors = window.mouseTrailSystem.geometry.attributes.color;
+        
+        // Update trail particles
+        mouseTrail.forEach((point, index) => {
+          point.life -= 0.02;
+          
+          if (index < 50) {
+            positions.array[index * 3] = point.position.x;
+            positions.array[index * 3 + 1] = point.position.y;
+            positions.array[index * 3 + 2] = point.position.z;
+            
+            // Fade color based on life
+            colors.array[index * 3] = 0;       // R
+            colors.array[index * 3 + 1] = point.life; // G (cyan)
+            colors.array[index * 3 + 2] = point.life; // B
+          }
+        });
+        
+        // Remove dead particles
+        mouseTrail = mouseTrail.filter(point => point.life > 0);
+        
+        positions.needsUpdate = true;
+        colors.needsUpdate = true;
+      }
+      
+      function explodePlanet(planet) {
+        // Create explosion effect
+        const explosionGeometry = new THREE.SphereGeometry(planet.geometry.parameters.radius * 2, 16, 16);
+        const explosionMaterial = new THREE.MeshBasicMaterial({
+          color: 0xff4400,
+          transparent: true,
+          opacity: 0.8
+        });
+        const explosion = new THREE.Mesh(explosionGeometry, explosionMaterial);
+        explosion.position.copy(planet.position);
+        scene.add(explosion);
+        
+        // Animate explosion
+        let scale = 1;
+        const explode = () => {
+          scale += 0.1;
+          explosion.scale.set(scale, scale, scale);
+          explosion.material.opacity -= 0.05;
+          
+          if (explosion.material.opacity <= 0) {
+            scene.remove(explosion);
+          } else {
+            requestAnimationFrame(explode);
+          }
+        };
+        explode();
+        
+        // Reset planet position
+        setTimeout(() => {
+          const angle = Math.random() * Math.PI * 2;
+          planet.position.x = Math.cos(angle) * planet.userData.distance;
+          planet.position.y = Math.sin(angle) * planet.userData.distance;
+          planet.userData.angle = angle;
+        }, 2000);
+      }
+      
+      function spawnRocketAtMouse(event) {
+        // Convert mouse position to world coordinates
+        const vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+        vector.unproject(camera);
+        const dir = vector.sub(camera.position).normalize();
+        const distance = -camera.position.z / dir.z;
+        const pos = camera.position.clone().add(dir.multiplyScalar(distance));
+        
+        // Create new rocket at mouse position
+        const rocketGroup = new THREE.Group();
+        
+        const bodyGeometry = new THREE.CylinderGeometry(0.5, 1, 4, 8);
+        const bodyMaterial = new THREE.MeshBasicMaterial({ color: 0xcccccc });
+        const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+        
+        const noseGeometry = new THREE.ConeGeometry(0.5, 2, 8);
+        const noseMaterial = new THREE.MeshBasicMaterial({ color: 0xff4444 });
+        const nose = new THREE.Mesh(noseGeometry, noseMaterial);
+        nose.position.y = 3;
+        
+        const flameGeometry = new THREE.ConeGeometry(0.8, 3, 8);
+        const flameMaterial = new THREE.MeshBasicMaterial({ 
+          color: 0xff8800,
+          transparent: true,
+          opacity: 0.8
+        });
+        const flame = new THREE.Mesh(flameGeometry, flameMaterial);
+        flame.position.y = -3.5;
+        
+        rocketGroup.add(body);
+        rocketGroup.add(nose);
+        rocketGroup.add(flame);
+        
+        rocketGroup.position.copy(pos);
+        rocketGroup.userData = {
+          speed: 0.5,
+          direction: new THREE.Vector3(
+            (Math.random() - 0.5) * 2,
+            (Math.random() - 0.5) * 2,
+            (Math.random() - 0.5) * 2
+          ).normalize(),
+          life: 10000 // 10 seconds
+        };
+        
+        rockets.push(rocketGroup);
+        scene.add(rocketGroup);
+      }
+
+      function showUI() {
+        console.log('Showing hero content...');
+        const loading = document.getElementById('loading');
+        const heroContent = document.getElementById('hero-content');
+        
+        if (loading) loading.style.display = 'none';
+        if (heroContent) heroContent.style.display = 'block';
+        
+        console.log('Hero content shown');
+      }
+
+      // Wait for DOM and Three.js
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM loaded');
+        
+        // Wait for Three.js to load
+        function waitForThree() {
+          if (typeof THREE !== 'undefined') {
+            console.log('THREE.js loaded, initializing...');
+            try {
+              init();
+            } catch (error) {
+              console.error('Initialization failed:', error);
+              showUI(); // Show UI even if 3D fails
+            }
+          } else {
+            console.log('Waiting for THREE.js...');
+            setTimeout(waitForThree, 100);
+          }
+        }
+        
+        waitForThree();
+      });
+    </script>
+  </body>
+</html>

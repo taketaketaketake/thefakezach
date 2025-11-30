@@ -1,0 +1,39 @@
+---
+interface Props {
+  title: string;
+  paragraph: string;
+  buttonText: string;
+  buttonHref?: string;
+  buttonTarget?: string;
+  fullHeight?: boolean;
+}
+
+const { title, paragraph, buttonText, buttonHref = "#", buttonTarget = "_self", fullHeight = true } = Astro.props;
+---
+
+<section class={`w-full bg-transparent flex items-center justify-center ${fullHeight ? 'h-screen' : 'min-h-screen py-16'}`}>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="space-y-8">
+      <!-- Main Title -->
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
+        {title}
+      </h1>
+      
+      <!-- Paragraph -->
+      <p class="text-xl md:text-2xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
+        {paragraph}
+      </p>
+      
+      <!-- Button -->
+      <div class="pt-4">
+        <a 
+          href={buttonHref}
+          target={buttonTarget}
+          class="inline-block bg-gradient-to-r from-pink-500 to-cyan-400 text-white font-bold py-4 px-8 rounded-lg text-lg hover:scale-105 hover:shadow-lg hover:shadow-pink-500/25 transition-all duration-300 uppercase tracking-wide"
+        >
+          {buttonText}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
