@@ -1,0 +1,470 @@
+---
+const pageTitle = "Cosmic Garage – Cosmic Crew Universe";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{pageTitle}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --aqua: #0EF2D4;
+        --chartreuse: #CEF64D;
+        --amber: #FFD55A;
+        --navy: #0A214B;
+        --indigo: #2B1A55;
+      }
+
+      body {
+        overflow: hidden;
+        background: linear-gradient(180deg, var(--navy), var(--indigo));
+        color: white;
+        font-family: Arial, sans-serif;
+      }
+
+      #canvas-container {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+      }
+
+      #content-overlay {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="canvas-container"></div>
+    <div id="content-overlay"></div>
+
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Cosmic Garage Script -->
+    <script>
+      let scene, camera, renderer, particles, time = 0;
+      const groups = {};
+
+      // Cosmic Crew colors
+      const COLORS = {
+        navy: 0x0A214B,
+        indigo: 0x2B1A55,
+        aqua: 0x0EF2D4,
+        chartreuse: 0xCEF64D,
+        amber: 0xFFD55A,
+      };
+
+      function init() {
+        console.log('Initializing Cosmic Garage...');
+        
+        if (typeof THREE === 'undefined') {
+          console.error('THREE.js not loaded');
+          return;
+        }
+        
+        scene = new THREE.Scene();
+
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(COLORS.navy, 1);
+
+        // Three.js r128 compatible
+        renderer.outputEncoding = THREE.sRGBEncoding;
+
+        const container = document.getElementById("canvas-container");
+        if (!container) {
+          console.error('Canvas container not found');
+          return;
+        }
+        container.appendChild(renderer.domElement);
+        console.log('Renderer added to DOM');
+
+        camera = new THREE.PerspectiveCamera(
+          60,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          2000
+        );
+
+        camera.position.set(0, 20, 120);
+        camera.lookAt(0, 10, 0);
+
+        createEnvironment();
+        createRocket();
+        createCharacters();
+        createHolograms();
+        createParticles();
+        createLights();
+
+        window.addEventListener("resize", onResize);
+        animate();
+        
+        console.log('Initialization complete');
+      }
+
+      /* -------------------------
+         Detailed Environment
+      --------------------------*/
+      function createEnvironment() {
+        groups.env = new THREE.Group();
+
+        // Detailed back wall with panels
+        const backWall = new THREE.Mesh(
+          new THREE.PlaneGeometry(300, 100),
+          new THREE.MeshStandardMaterial({
+            color: 0x2a2a2a,
+            metalness: 0.3,
+            roughness: 0.7,
+          })
+        );
+        backWall.position.set(0, 20, -80);
+        groups.env.add(backWall);
+
+        // Wall panels
+        for (let x = -6; x <= 6; x++) {
+          for (let y = 0; y < 4; y++) {
+            const panel = new THREE.Mesh(
+              new THREE.BoxGeometry(20, 20, 2),
+              new THREE.MeshStandardMaterial({
+                color: x % 2 === y % 2 ? 0x1a1a1a : 0x333333,
+                metalness: 0.8,
+                roughness: 0.2,
+              })
+            );
+            panel.position.set(x * 22, y * 22 - 10, -79);
+            groups.env.add(panel);
+          }
+        }
+
+        // Floor with grid pattern
+        const floor = new THREE.Mesh(
+          new THREE.PlaneGeometry(400, 300),
+          new THREE.MeshStandardMaterial({
+            color: 0x111122,
+            metalness: 0.9,
+            roughness: 0.1,
+          })
+        );
+        floor.rotation.x = -Math.PI / 2;
+        floor.position.y = -20;
+        groups.env.add(floor);
+
+        // Floor grid lines
+        for (let i = -10; i <= 10; i++) {
+          const lineX = new THREE.Mesh(
+            new THREE.BoxGeometry(400, 0.5, 1),
+            new THREE.MeshBasicMaterial({ color: COLORS.aqua, transparent: true, opacity: 0.3 })
+          );
+          lineX.position.set(0, -19.5, i * 15);
+          groups.env.add(lineX);
+
+          const lineZ = new THREE.Mesh(
+            new THREE.BoxGeometry(1, 0.5, 300),
+            new THREE.MeshBasicMaterial({ color: COLORS.aqua, transparent: true, opacity: 0.3 })
+          );
+          lineZ.position.set(i * 20, -19.5, 0);
+          groups.env.add(lineZ);
+        }
+
+        // Ceiling with support beams
+        const ceiling = new THREE.Mesh(
+          new THREE.PlaneGeometry(400, 300),
+          new THREE.MeshStandardMaterial({
+            color: 0x0a0a0a,
+            metalness: 0.5,
+            roughness: 0.8,
+          })
+        );
+        ceiling.rotation.x = Math.PI / 2;
+        ceiling.position.y = 80;
+        groups.env.add(ceiling);
+
+        // Support beams
+        for (let i = -4; i <= 4; i++) {
+          const beam = new THREE.Mesh(
+            new THREE.BoxGeometry(8, 100, 8),
+            new THREE.MeshStandardMaterial({
+              color: COLORS.amber,
+              metalness: 0.9,
+              roughness: 0.1,
+            })
+          );
+          beam.position.set(i * 80, 30, -40);
+          groups.env.add(beam);
+        }
+
+        scene.add(groups.env);
+      }
+
+      /* -------------------------
+         Detailed Rocket
+      --------------------------*/
+      function createRocket() {
+        groups.rocket = new THREE.Group();
+
+        // Main rocket body with panels
+        const body = new THREE.Mesh(
+          new THREE.CylinderGeometry(8, 10, 50, 16),
+          new THREE.MeshStandardMaterial({
+            color: 0xcccccc,
+            metalness: 0.8,
+            roughness: 0.2,
+          })
+        );
+        body.position.y = 10;
+        groups.rocket.add(body);
+
+        // Body panels and details
+        for (let i = 0; i < 8; i++) {
+          const panel = new THREE.Mesh(
+            new THREE.BoxGeometry(2, 40, 0.5),
+            new THREE.MeshStandardMaterial({
+              color: COLORS.amber,
+              metalness: 0.9,
+              roughness: 0.1,
+            })
+          );
+          const angle = (i / 8) * Math.PI * 2;
+          panel.position.set(
+            Math.cos(angle) * 9,
+            10,
+            Math.sin(angle) * 9
+          );
+          panel.rotation.y = angle;
+          groups.rocket.add(panel);
+        }
+
+        // Nose cone with details
+        const nose = new THREE.Mesh(
+          new THREE.ConeGeometry(8, 20, 12),
+          new THREE.MeshStandardMaterial({ 
+            color: COLORS.chartreuse,
+            metalness: 0.7,
+            roughness: 0.3,
+          })
+        );
+        nose.position.y = 45;
+        groups.rocket.add(nose);
+
+        // Engine nozzles
+        for (let i = 0; i < 4; i++) {
+          const nozzle = new THREE.Mesh(
+            new THREE.CylinderGeometry(2, 3, 8, 12),
+            new THREE.MeshStandardMaterial({
+              color: 0x444444,
+              metalness: 0.9,
+              roughness: 0.1,
+            })
+          );
+          const angle = (i / 4) * Math.PI * 2;
+          nozzle.position.set(
+            Math.cos(angle) * 6,
+            -18,
+            Math.sin(angle) * 6
+          );
+          groups.rocket.add(nozzle);
+
+          // Engine glow
+          const glow = new THREE.Mesh(
+            new THREE.ConeGeometry(2.5, 12, 8),
+            new THREE.MeshBasicMaterial({
+              color: COLORS.amber,
+              transparent: true,
+              opacity: 0.8,
+            })
+          );
+          glow.position.set(
+            Math.cos(angle) * 6,
+            -30,
+            Math.sin(angle) * 6
+          );
+          groups.rocket.add(glow);
+        }
+
+        // Fins
+        for (let i = 0; i < 4; i++) {
+          const fin = new THREE.Mesh(
+            new THREE.BoxGeometry(1, 15, 8),
+            new THREE.MeshStandardMaterial({
+              color: 0x666666,
+              metalness: 0.8,
+              roughness: 0.2,
+            })
+          );
+          const angle = (i / 4) * Math.PI * 2;
+          fin.position.set(
+            Math.cos(angle) * 11,
+            -10,
+            Math.sin(angle) * 11
+          );
+          fin.rotation.y = angle;
+          groups.rocket.add(fin);
+        }
+
+        scene.add(groups.rocket);
+      }
+
+      /* -------------------------
+         Character Glow Orbs
+      --------------------------*/
+      function createCharacters() {
+        groups.characters = new THREE.Group();
+
+        function addOrb(name, color, pos) {
+          const orb = new THREE.Mesh(
+            new THREE.SphereGeometry(7, 32, 32),
+            new THREE.MeshStandardMaterial({
+              color,
+              emissive: color,
+              emissiveIntensity: 0.8,
+              transparent: true,
+              opacity: 0.95,
+            })
+          );
+          orb.position.copy(pos);
+          orb.userData.name = name;
+          groups.characters.add(orb);
+        }
+
+        addOrb("Space Dog", COLORS.amber, new THREE.Vector3(-40, -10, 20));
+        addOrb("Chompy", 0xFF66B3, new THREE.Vector3(30, -5, -10));
+
+        // ❗ FIXED TYPO — correct constructor
+        addOrb("Buzzo", COLORS.aqua, new THREE.Vector3(0, 10, 40));
+
+        scene.add(groups.characters);
+      }
+
+      /* -------------------------
+         Hologram Panels
+      --------------------------*/
+      function createHolograms() {
+        groups.holos = new THREE.Group();
+
+        for (let i = 0; i < 6; i++) {
+          const panel = new THREE.Mesh(
+            new THREE.PlaneGeometry(25, 18),
+            new THREE.MeshBasicMaterial({
+              color: i % 2 ? COLORS.aqua : COLORS.chartreuse,
+              transparent: true,
+              opacity: 0.25,
+            })
+          );
+
+          const angle = (i / 6) * Math.PI * 2;
+          panel.position.set(Math.cos(angle) * 70, 20, Math.sin(angle) * 70);
+          panel.lookAt(0, 20, 0);
+          groups.holos.add(panel);
+        }
+
+        scene.add(groups.holos);
+      }
+
+      /* -------------------------
+         Particle Field
+      --------------------------*/
+      function createParticles() {
+        const count = 1500;
+        const pos = new Float32Array(count * 3);
+
+        for (let i = 0; i < count; i++) {
+          pos[i * 3] = (Math.random() - 0.5) * 800;
+          pos[i * 3 + 1] = (Math.random() - 0.5) * 400;
+          pos[i * 3 + 2] = (Math.random() - 0.5) * 800;
+        }
+
+        particles = new THREE.Points(
+          new THREE.BufferGeometry().setAttribute(
+            "position",
+            new THREE.BufferAttribute(pos, 3)
+          ),
+          new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: 2,
+            opacity: 0.6,
+            transparent: true
+          })
+        );
+
+        scene.add(particles);
+      }
+
+      /* -------------------------
+         Lights
+      --------------------------*/
+      function createLights() {
+        scene.add(new THREE.AmbientLight(COLORS.aqua, 0.35));
+
+        const main = new THREE.DirectionalLight(0xffffff, 1);
+        main.position.set(0, 100, 40);
+        scene.add(main);
+
+        const rim1 = new THREE.DirectionalLight(COLORS.chartreuse, 0.4);
+        rim1.position.set(-120, 10, 0);
+        scene.add(rim1);
+
+        const rim2 = new THREE.DirectionalLight(COLORS.amber, 0.4);
+        rim2.position.set(120, 10, 0);
+        scene.add(rim2);
+      }
+
+      /* -------------------------
+         Animation Loop
+      --------------------------*/
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+
+        // Orbit camera
+        camera.position.x = Math.sin(time * 0.2) * 90;
+        camera.position.z = Math.cos(time * 0.2) * 90;
+        camera.lookAt(0, 10, 0);
+
+        // Rocket bounce
+        if (groups.rocket) {
+          groups.rocket.position.y = Math.sin(time) * 2;
+        }
+
+        renderer.render(scene, camera);
+      }
+
+      function onResize() {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+      }
+
+      // Initialize when DOM and Three.js are ready
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM loaded');
+        
+        function waitForThree() {
+          if (typeof THREE !== 'undefined') {
+            console.log('THREE.js loaded, initializing...');
+            init();
+          } else {
+            console.log('Waiting for THREE.js...');
+            setTimeout(waitForThree, 100);
+          }
+        }
+        
+        waitForThree();
+      });
+    </script>
+  </body>
+</html>

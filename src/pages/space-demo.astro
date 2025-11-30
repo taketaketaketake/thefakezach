@@ -110,6 +110,7 @@ const zachary = {
         width: 100vw;
         height: 100vh;
         z-index: 1;
+        opacity: 0.7;
       }
 
       #ui-overlay {
@@ -120,6 +121,7 @@ const zachary = {
         min-height: 200vh;
         z-index: 10;
         pointer-events: auto;
+        background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
       }
 
 
@@ -283,72 +285,9 @@ const zachary = {
           <div class="w-full max-w-4xl h-px bg-white opacity-20"></div>
         </div>
         
+        
         <!-- Projects Showcase -->
         <ProjectsShowcase projects={zachary.projects} />
-        
-        <!-- Divider Line -->
-        <div class="w-full flex justify-center py-8">
-          <div class="w-full max-w-4xl h-px bg-white opacity-20"></div>
-        </div>
-        
-        <!-- Divider Line -->
-        <div class="w-full flex justify-center py-8">
-          <div class="w-full max-w-4xl h-px bg-white opacity-20"></div>
-        </div>
-        
-        <!-- Timeline Command -->
-        <TimelineCommand 
-          events={[
-            {
-              year: "2025",
-              title: "AI Voice Agent Revolution",
-              description: "Launched ultra-low latency voice agents using Telnyx and Deepgram APIs. Achieved sub-200ms response times for business automation, revolutionizing customer support workflows.",
-              type: "launch",
-              status: "active",
-              tech: ["Telnyx API", "Deepgram", "Node.js", "PostgreSQL"]
-            },
-            {
-              year: "2025",
-              title: "Detroit Small Business Platform",
-              description: "Built comprehensive business discovery platform with social features and cannabis compliance. Integrated Google Places API and Mapbox for verified local business data.",
-              type: "project", 
-              status: "completed",
-              tech: ["Astro 5", "TypeScript", "React", "PostgreSQL", "Mapbox"]
-            },
-            {
-              year: "2024",
-              title: "Full-Stack Development Mastery",
-              description: "Achieved expertise across modern development stack. Specialized in AI integration, interactive experiences, and scalable web architecture.",
-              type: "milestone",
-              status: "completed",
-              tech: ["React", "Three.js", "AI/ML", "Cloud Architecture"]
-            },
-            {
-              year: "2023",
-              title: "Interactive 3D Experiences",
-              description: "Mastered Three.js and WebGL for creating immersive digital experiences. Built Cosmic Crew educational platform combining 3D graphics with AI workflows.",
-              type: "achievement",
-              status: "completed", 
-              tech: ["Three.js", "WebGL", "GLTF", "ComfyUI"]
-            },
-            {
-              year: "2017-2023",
-              title: "Take Detroit Media Empire",
-              description: "Built Detroit's most recognized creative brand from simple Facebook page to full business discovery platform. Generated 25M+ organic video views and shaped the city's modern culture scene.",
-              type: "project",
-              status: "completed",
-              tech: ["Vue.js", "Firebase", "Video Production", "Social Media"]
-            },
-            {
-              year: "2026",
-              title: "Next-Gen Platform Architecture",
-              description: "Developing revolutionary platform combining AI, blockchain, and immersive technologies. Will redefine how businesses connect with customers in the digital age.",
-              type: "project",
-              status: "upcoming",
-              tech: ["AI/ML", "Blockchain", "VR/AR", "Quantum Computing"]
-            }
-          ]}
-        />
         
         <!-- Divider Line -->
         <div class="w-full flex justify-center py-8">
@@ -402,6 +341,13 @@ const zachary = {
       let time = 0;
       let mouseTrail = [];
       let raycaster, mouse;
+      
+      // Section-specific backgrounds
+      let galacticCore = null;
+      let neuralNetwork = null;
+      let quantumClock = null;
+      let constructionYard = null;
+      let commArray = null;
 
       // Initialize the scene
       function init() {
@@ -440,12 +386,22 @@ const zachary = {
         // Create mouse trail effect
         createMouseTrail();
         
+        // Create section-specific backgrounds
+        createGalacticCore();
+        createNeuralNetwork();
+        createQuantumClock();
+        createConstructionYard();
+        createCommArray();
+        
         // Mouse tracking
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('click', onMouseClick);
         
         // Window resize
         window.addEventListener('resize', onWindowResize);
+        
+        // Scroll detection for section backgrounds
+        window.addEventListener('scroll', onScroll);
         
         // Start animation
         animate();
@@ -458,15 +414,15 @@ const zachary = {
         const starGeometry = new THREE.BufferGeometry();
         const starMaterial = new THREE.PointsMaterial({
           color: 0xffffff,
-          size: 1.5,
+          size: 1,
           sizeAttenuation: true,
           transparent: true,
-          opacity: 0.8,
+          opacity: 0.5,
           map: createStarTexture()
         });
 
         const starVertices = [];
-        for (let i = 0; i < 10000; i++) {
+        for (let i = 0; i < 6000; i++) {
           const x = (Math.random() - 0.5) * 2000;
           const y = (Math.random() - 0.5) * 2000;
           const z = (Math.random() - 0.5) * 2000;
@@ -498,12 +454,10 @@ const zachary = {
       }
 
       function createPlanets() {
-        // Create multiple planets at different distances
+        // Create fewer planets at greater distances
         const planetData = [
-          { size: 20, distance: 200, color: 0x8B4513, speed: 0.001 },
-          { size: 15, distance: 300, color: 0xFF4500, speed: 0.0007 },
-          { size: 25, distance: 450, color: 0x4169E1, speed: 0.0005 },
-          { size: 12, distance: 600, color: 0x9400D3, speed: 0.0003 }
+          { size: 15, distance: 400, color: 0x8B4513, speed: 0.0005 },
+          { size: 20, distance: 600, color: 0x4169E1, speed: 0.0003 }
         ];
 
         planetData.forEach(data => {
@@ -533,8 +487,8 @@ const zachary = {
       }
 
       function createRockets() {
-        // Create simple rocket shapes using basic geometry
-        for (let i = 0; i < 20; i++) {
+        // Create fewer rockets for less visual noise
+        for (let i = 0; i < 8; i++) {
           const rocketGroup = new THREE.Group();
           
           // Rocket body
@@ -571,7 +525,7 @@ const zachary = {
           rocketGroup.rotation.z = Math.random() * Math.PI * 2;
           
           rocketGroup.userData = {
-            speed: 0.2 + Math.random() * 0.3,
+            speed: 0.1 + Math.random() * 0.15,
             direction: new THREE.Vector3(
               (Math.random() - 0.5) * 2,
               (Math.random() - 0.5) * 2,
@@ -589,14 +543,14 @@ const zachary = {
         const trailGeometry = new THREE.BufferGeometry();
         const trailMaterial = new THREE.PointsMaterial({
           color: 0x00ffff,
-          size: 3,
+          size: 2,
           transparent: true,
-          opacity: 0.8,
+          opacity: 0.4,
           map: createStarTexture()
         });
 
         // Initialize empty trail
-        const maxTrailPoints = 50;
+        const maxTrailPoints = 20;
         const positions = new Float32Array(maxTrailPoints * 3);
         const colors = new Float32Array(maxTrailPoints * 3);
         
@@ -628,8 +582,8 @@ const zachary = {
           time: Date.now()
         });
         
-        // Limit trail length
-        if (mouseTrail.length > 50) {
+        // Limit trail length to reduce visual noise
+        if (mouseTrail.length > 20) {
           mouseTrail.shift();
         }
         
@@ -657,6 +611,54 @@ const zachary = {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+
+      function onScroll() {
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+        
+        // Simplified scroll-based background switching
+        // Hide all backgrounds first
+        if (galacticCore) galacticCore.visible = false;
+        if (neuralNetwork) neuralNetwork.visible = false;
+        if (quantumClock) quantumClock.visible = false;
+        if (constructionYard) constructionYard.visible = false;
+        if (commArray) commArray.visible = false;
+        
+        console.log('Scroll position:', scrollY, 'Window height:', windowHeight);
+        
+        // Show background based on scroll position
+        if (scrollY < windowHeight * 0.8) {
+          // Hero section
+          if (galacticCore) {
+            galacticCore.visible = true;
+            console.log('Showing galactic core');
+          }
+        } else if (scrollY < windowHeight * 1.8) {
+          // Tech Philosophy section
+          if (neuralNetwork) {
+            neuralNetwork.visible = true;
+            console.log('Showing neural network');
+          }
+        } else if (scrollY < windowHeight * 2.8) {
+          // Timeline section
+          if (quantumClock) {
+            quantumClock.visible = true;
+            console.log('Showing quantum clock');
+          }
+        } else if (scrollY < windowHeight * 3.8) {
+          // Projects section
+          if (constructionYard) {
+            constructionYard.visible = true;
+            console.log('Showing construction yard');
+          }
+        } else {
+          // Hire Me section
+          if (commArray) {
+            commArray.visible = true;
+            console.log('Showing comm array');
+          }
+        }
       }
 
       function animate() {
@@ -695,6 +697,9 @@ const zachary = {
 
         // Update mouse trail
         updateMouseTrail();
+        
+        // Animate section-specific backgrounds
+        animateSectionBackgrounds();
         
         // Smooth orbital camera movement
         camera.position.x += (mouseX * 5 - camera.position.x) * 0.02;
@@ -855,6 +860,312 @@ const zachary = {
         
         waitForThree();
       });
+
+      // Section-specific background functions
+      function createGalacticCore() {
+        galacticCore = new THREE.Group();
+        
+        // Bright galactic center
+        const coreGeometry = new THREE.SphereGeometry(50, 32, 32);
+        const coreMaterial = new THREE.MeshBasicMaterial({
+          color: 0xffaa00,
+          transparent: true,
+          opacity: 0.6
+        });
+        const core = new THREE.Mesh(coreGeometry, coreMaterial);
+        core.position.set(0, 0, -100);
+        galacticCore.add(core);
+
+        // Spiral arms
+        for (let arm = 0; arm < 3; arm++) {
+          const spiralGeometry = new THREE.BufferGeometry();
+          const spiralVertices = [];
+          const armOffset = (arm * Math.PI * 2) / 3;
+          
+          for (let i = 0; i < 200; i++) {
+            const t = i * 0.1;
+            const radius = 50 + t * 2;
+            const angle = armOffset + t * 0.3;
+            
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius * 0.3;
+            const z = -100 + (Math.random() - 0.5) * 30;
+            
+            spiralVertices.push(x, y, z);
+          }
+          
+          spiralGeometry.setAttribute('position', new THREE.Float32BufferAttribute(spiralVertices, 3));
+          const spiralMaterial = new THREE.PointsMaterial({
+            color: 0x4488ff,
+            size: 3,
+            transparent: true,
+            opacity: 0.8
+          });
+          
+          const spiral = new THREE.Points(spiralGeometry, spiralMaterial);
+          galacticCore.add(spiral);
+        }
+        
+        galacticCore.visible = true;  // Start with hero background visible
+        scene.add(galacticCore);
+      }
+
+      function createNeuralNetwork() {
+        neuralNetwork = new THREE.Group();
+        
+        // Network nodes
+        const nodes = [];
+        for (let i = 0; i < 50; i++) {
+          const nodeGeometry = new THREE.SphereGeometry(2, 8, 8);
+          const nodeMaterial = new THREE.MeshBasicMaterial({
+            color: 0x00ffff,
+            transparent: true,
+            opacity: 0.7
+          });
+          const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+          
+          node.position.set(
+            (Math.random() - 0.5) * 200,
+            (Math.random() - 0.5) * 150,
+            -50 + (Math.random() - 0.5) * 100
+          );
+          
+          nodes.push(node);
+          neuralNetwork.add(node);
+        }
+        
+        // Connections between nodes
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            if (nodes[i].position.distanceTo(nodes[j].position) < 60) {
+              const geometry = new THREE.BufferGeometry().setFromPoints([
+                nodes[i].position,
+                nodes[j].position
+              ]);
+              const material = new THREE.LineBasicMaterial({
+                color: 0x44ff44,
+                transparent: true,
+                opacity: 0.3
+              });
+              const connection = new THREE.Line(geometry, material);
+              neuralNetwork.add(connection);
+            }
+          }
+        }
+        
+        neuralNetwork.visible = false;
+        scene.add(neuralNetwork);
+      }
+
+      function createQuantumClock() {
+        quantumClock = new THREE.Group();
+        
+        // Clock rings
+        for (let ring = 0; ring < 5; ring++) {
+          const ringGeometry = new THREE.RingGeometry(20 + ring * 10, 22 + ring * 10, 64);
+          const ringMaterial = new THREE.MeshBasicMaterial({
+            color: 0xff6600,
+            transparent: true,
+            opacity: 0.7,
+            side: THREE.DoubleSide
+          });
+          const clockRing = new THREE.Mesh(ringGeometry, ringMaterial);
+          clockRing.rotation.x = Math.PI / 2;
+          clockRing.rotation.z = ring * 0.5;
+          clockRing.position.z = -30;
+          quantumClock.add(clockRing);
+        }
+        
+        // Temporal markers
+        for (let i = 0; i < 12; i++) {
+          const markerGeometry = new THREE.BoxGeometry(1, 6, 1);
+          const markerMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffff00,
+            transparent: true,
+            opacity: 0.8
+          });
+          const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+          const angle = (i / 12) * Math.PI * 2;
+          marker.position.x = Math.cos(angle) * 80;
+          marker.position.z = Math.sin(angle) * 80 - 30;
+          quantumClock.add(marker);
+        }
+        
+        quantumClock.visible = false;
+        scene.add(quantumClock);
+      }
+
+      function createConstructionYard() {
+        constructionYard = new THREE.Group();
+        
+        // Scaffolding structures
+        for (let i = 0; i < 8; i++) {
+          const scaffoldGeometry = new THREE.BoxGeometry(20, 60, 5);
+          const scaffoldMaterial = new THREE.MeshBasicMaterial({
+            color: 0x888888,
+            transparent: true,
+            opacity: 0.6
+          });
+          const scaffold = new THREE.Mesh(scaffoldGeometry, scaffoldMaterial);
+          
+          scaffold.position.set(
+            (Math.random() - 0.5) * 150,
+            (Math.random() - 0.5) * 100,
+            -50 + (Math.random() - 0.5) * 80
+          );
+          scaffold.rotation.set(
+            Math.random() * Math.PI,
+            Math.random() * Math.PI,
+            Math.random() * Math.PI
+          );
+          
+          constructionYard.add(scaffold);
+        }
+        
+        // Welding sparks
+        for (let i = 0; i < 100; i++) {
+          const sparkGeometry = new THREE.SphereGeometry(0.5, 4, 4);
+          const sparkMaterial = new THREE.MeshBasicMaterial({
+            color: 0xffaa00
+          });
+          const spark = new THREE.Mesh(sparkGeometry, sparkMaterial);
+          
+          spark.position.set(
+            (Math.random() - 0.5) * 120,
+            (Math.random() - 0.5) * 80,
+            -40 + (Math.random() - 0.5) * 60
+          );
+          
+          constructionYard.add(spark);
+        }
+        
+        constructionYard.visible = false;
+        scene.add(constructionYard);
+      }
+
+      function createCommArray() {
+        commArray = new THREE.Group();
+        
+        // Satellite dishes
+        for (let i = 0; i < 6; i++) {
+          const dishGeometry = new THREE.CylinderGeometry(8, 10, 2, 16);
+          const dishMaterial = new THREE.MeshBasicMaterial({
+            color: 0xcccccc,
+            transparent: true,
+            opacity: 0.8
+          });
+          const dish = new THREE.Mesh(dishGeometry, dishMaterial);
+          
+          dish.position.set(
+            (Math.random() - 0.5) * 100,
+            (Math.random() - 0.5) * 60,
+            -30 + (Math.random() - 0.5) * 80
+          );
+          dish.rotation.set(
+            Math.random() * Math.PI * 0.5,
+            Math.random() * Math.PI * 2,
+            0
+          );
+          
+          commArray.add(dish);
+        }
+        
+        // Transmission beams
+        for (let i = 0; i < 12; i++) {
+          const beamGeometry = new THREE.CylinderGeometry(0.5, 0.5, 100, 8);
+          const beamMaterial = new THREE.MeshBasicMaterial({
+            color: 0x00ff88,
+            transparent: true,
+            opacity: 0.3
+          });
+          const beam = new THREE.Mesh(beamGeometry, beamMaterial);
+          
+          beam.position.set(
+            (Math.random() - 0.5) * 120,
+            Math.random() * 60,
+            -20 + (Math.random() - 0.5) * 100
+          );
+          beam.rotation.set(
+            Math.random() * Math.PI * 0.3,
+            Math.random() * Math.PI * 2,
+            0
+          );
+          
+          commArray.add(beam);
+        }
+        
+        commArray.visible = false;
+        scene.add(commArray);
+      }
+
+      function animateSectionBackgrounds() {
+        // Animate Galactic Core
+        if (galacticCore && galacticCore.visible) {
+          galacticCore.rotation.z += 0.001;
+          const core = galacticCore.children[0];
+          if (core) {
+            core.material.opacity = 0.8 + Math.sin(time * 2) * 0.2;
+          }
+          // Rotate spiral arms
+          for (let i = 1; i < galacticCore.children.length; i++) {
+            galacticCore.children[i].rotation.z += 0.002 * i;
+          }
+        }
+
+        // Animate Neural Network
+        if (neuralNetwork && neuralNetwork.visible) {
+          neuralNetwork.children.forEach((child, index) => {
+            if (child.geometry && child.geometry.type === 'SphereGeometry') {
+              child.material.opacity = 0.7 + Math.sin(time * 3 + index) * 0.3;
+              child.scale.setScalar(1 + Math.sin(time * 4 + index * 0.5) * 0.2);
+            }
+          });
+        }
+
+        // Animate Quantum Clock
+        if (quantumClock && quantumClock.visible) {
+          quantumClock.children.forEach((child, index) => {
+            if (child.geometry && child.geometry.type === 'RingGeometry') {
+              child.rotation.z += 0.01 * (index + 1);
+            } else {
+              // Temporal markers
+              child.material.opacity = 0.8 + Math.sin(time * 5 + index) * 0.2;
+            }
+          });
+        }
+
+        // Animate Construction Yard
+        if (constructionYard && constructionYard.visible) {
+          constructionYard.children.forEach((child, index) => {
+            if (child.geometry && child.geometry.type === 'BoxGeometry') {
+              // Scaffolding sway
+              child.rotation.x += 0.001;
+              child.rotation.y += 0.002;
+            } else {
+              // Welding sparks flicker
+              child.material.opacity = Math.random() * 0.8 + 0.2;
+              child.scale.setScalar(0.5 + Math.random() * 0.5);
+            }
+          });
+        }
+
+        // Animate Communication Array
+        if (commArray && commArray.visible) {
+          commArray.children.forEach((child, index) => {
+            if (child.geometry && child.geometry.type === 'CylinderGeometry') {
+              if (index < 6) {
+                // Satellite dishes tracking
+                child.rotation.y += 0.005;
+                child.rotation.x = Math.sin(time + index) * 0.3;
+              } else {
+                // Transmission beams pulse
+                child.material.opacity = 0.3 + Math.sin(time * 4 + index) * 0.2;
+                child.scale.y = 1 + Math.sin(time * 6 + index * 0.8) * 0.3;
+              }
+            }
+          });
+        }
+      }
     </script>
   </body>
 </html>
