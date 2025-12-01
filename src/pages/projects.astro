@@ -1,0 +1,708 @@
+---
+const zachary = {
+  projects: [
+    { 
+      title: "Detroit Small Business Map", 
+      emoji: "🗺️",
+      image: "/projects/detroit-small-biz-cover-photo.png",
+      year: "2025",
+      summary: "A comprehensive business discovery platform connecting Detroit's local community with neighborhood businesses through interactive maps, verified data, and social engagement features.",
+      problem: "Detroit's diverse business ecosystem lacked a unified platform for discovery and community engagement. Existing solutions were either too generic, missing cannabis compliance features, or didn't provide the social interaction that builds local connections.",
+      solution: "Built a full-stack platform combining business directory functionality with social features, role-based management, and cannabis industry compliance. Integrated Google Places API for verified business data and Mapbox for location discovery.",
+      tech: ["Astro 5", "TypeScript", "React", "PostgreSQL", "TailwindCSS", "Mapbox GL", "Google Places API", "Netlify"],
+      link: "",
+      github: "https://github.com/taketaketaketake/detroit-small-business-map",
+      status: "In Development",
+      featured: true
+    },
+    { 
+      title: "Bags of Laundry", 
+      emoji: "🧺",
+      image: "/projects/bags-cover-photo 2.png",
+      year: "2025",
+      summary: "An innovative laundry service platform connecting customers with local providers.",
+      problem: "Most laundromats still operate with manual processes and word-of-mouth communication, missing the digital transformation that customers expect in the modern era.",
+      solution: "Built a full-stack laundry service platform featuring AI-powered voice & messaging ordering, real-time capacity management, photo documentation workflows, and subscription-based pricing. Serves residential customers, Airbnb hosts, and commercial clients across 30+ Detroit suburbs.",
+      tech: ["Astro", "React", "TypeScript", "Tailwind", "PostgreSQL", "Stripe", "Twilio (for now)", "Netlify", "Mapbox API"],
+      link: "https://bagsoflaundry.com",
+      github: "#",
+      status: "Live",
+      featured: true
+    },
+    { 
+      title: "Fix My Furnace", 
+      emoji: "🤖",
+      image: "/projects/fix-my-furnace-cover-photo.png",
+      year: "2025",
+      summary: "Comprehensive HVAC service marketplace connecting Michigan homeowners with vetted contractors through photo diagnosis, pricing transparency, and lead generation.",
+      problem: "Michigan homeowners struggle to find trustworthy HVAC contractors and fair pricing, often facing expensive repairs without knowing if they're being overcharged or need professional help.",
+      solution: "Built a robust, multi-funnel lead generation platform that drives homeowners into the right pathway based on intent — from photo-based furnace diagnosis to high-intent repair funnels. The system includes a $125 professional assessment flow, real contract-backed pricing transparency, automated lead routing, and a vetted statewide contractor network. Every funnel is designed to convert, qualify, and deliver better matches for both homeowners and technicians.",
+      tech: ["Astro.js", "TypeScript", "TailwindCSS", "Supabase", "Mapbox API", "Netlify"],
+      link: "https://fixmyfurnacedetroit.com",
+      github: "#",
+      status: "Live",
+      featured: true
+    },
+    { 
+      title: "AI Voice Agents", 
+      emoji: "🗣️",
+      year: "2025",
+      summary: "Intelligent voice assistants for businesses to handle customer inquiries automatically with SMS/MMS support.",
+      problem: "HVAC lead generation companies need 24/7 phone support to capture leads but struggle with staffing costs and missed calls during high-demand periods.",
+      solution: "Built AI-powered voice agents using Telnyx's Voice API and Deepgram for ultra-low latency speech recognition. The system collects customer information through natural conversations, supports SMS/MMS inquiries, and automatically saves all interactions to a database for follow-up. This is the newer version with higher quality voice and lower latency.",
+      tech: ["Node.js", "Express", "Telnyx Voice API", "Deepgram", "Supabase", "PostgreSQL", "Telnyx Messaging API"],
+      link: "https://github.com/taketaketaketake/Telnyx-voice-agent",
+      github: "#",
+      status: "Open Source",
+      featured: false
+    },
+    { 
+      title: "Take Detroit", 
+      emoji: "🚀",
+      image: "/projects/take-detroit-cupcakes.jpg",
+      year: "2017",
+      summary: "Community platform celebrating Detroit's entrepreneurial spirit and local initiatives.",
+      problem: "Detroit's entrepreneurial community lacks a central hub to showcase projects and connect like-minded individuals.",
+      solution: "Created a community-driven platform where local entrepreneurs can showcase their projects, find collaborators, and access resources.",
+      tech: ["Vue.js", "Firebase", "Nuxt.js", "Bulma CSS"],
+      link: "https://facebook.com/takedetroitdotcom",
+      github: "#",
+      status: "Legacy",
+      featured: false
+    },
+    { 
+      title: "Cosmic Crew", 
+      emoji: "👨‍🚀",
+      image: "/projects/cosmic-crew-image.png",
+      year: "2025",
+      summary: "Interactive educational web game teaching programming concepts through space exploration.",
+      problem: "Most introductory coding tools feel rigid, uninspired, or too abstract — especially for young kids. I wanted something more personal: a way for my own kids to learn the fundamentals of programming while also getting hands-on exposure to modern AI tools and creative technology.",
+      solution: "Cosmic Crew started as a hands-on project for me and my kids — a way for all of us to explore new creative and technical tools together. In building the first version, I learned generative AI workflows (ComfyUI locally), character design, 3D environments, and Three.js fundamentals. The result is a simple interactive prototype where kids can direct a rocket through space using basic movement commands. More than a finished platform, it's an ongoing learning project that helps us experiment with coding, creativity, and modern AI tools side by side.",
+      tech: ["JavaScript", "Three.js", "WebGL", "CSS3D", "HTML5", "Tailwind CSS", "GLTF/GLB 3D Models"],
+      link: "https://cosmiccrew.club/",
+      github: "#",
+      status: "Demo",
+      featured: true
+    }
+  ]
+};
+
+const pageTitle = "PROJECT ARCHIVE – Cosmic Crew Universe";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --aqua: #0EF2D4;
+        --chartreuse: #CEF64D;
+        --amber: #FFD55A;
+        --navy: #0A214B;
+        --indigo: #2B1A55;
+        --pink: #FF0080;
+        --cyan: #00FFFF;
+      }
+
+      body {
+        background: linear-gradient(180deg, var(--navy), var(--indigo));
+        color: white;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      #canvas-container {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+      }
+
+      .content-wrapper {
+        position: relative;
+        z-index: 10;
+        min-height: 100vh;
+      }
+
+      .hero-section {
+        text-align: center;
+        padding: 6rem 2rem 4rem;
+        background: linear-gradient(135deg, rgba(14, 242, 212, 0.1), rgba(255, 0, 128, 0.1));
+      }
+
+      .hero-title {
+        font-size: clamp(3rem, 8vw, 6rem);
+        font-weight: 900;
+        background: linear-gradient(45deg, var(--aqua), var(--pink), var(--chartreuse));
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradient-flow 3s ease-in-out infinite;
+        margin-bottom: 1rem;
+      }
+
+      .hero-subtitle {
+        font-size: clamp(1.2rem, 3vw, 2rem);
+        color: var(--cyan);
+        margin-bottom: 2rem;
+        font-weight: 600;
+      }
+
+      .hero-description {
+        max-width: 800px;
+        margin: 0 auto;
+        font-size: 1.2rem;
+        color: #e2e8f0;
+        opacity: 0.9;
+      }
+
+      .projects-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem 4rem;
+      }
+
+      .featured-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        margin-bottom: 4rem;
+      }
+
+      .project-card {
+        background: rgba(0, 0, 0, 0.6);
+        border: 2px solid var(--aqua);
+        border-radius: 1rem;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .project-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        border-color: var(--pink);
+        background: rgba(0, 0, 0, 0.8);
+        box-shadow: 0 20px 40px rgba(255, 0, 128, 0.3);
+      }
+
+      .project-card.featured {
+        border-color: var(--chartreuse);
+        background: linear-gradient(135deg, rgba(206, 246, 77, 0.1), rgba(14, 242, 212, 0.1));
+      }
+
+      .project-card.featured:hover {
+        border-color: var(--amber);
+        background: linear-gradient(135deg, rgba(255, 213, 90, 0.2), rgba(255, 0, 128, 0.2));
+      }
+
+      .project-content {
+        padding: 2rem;
+      }
+
+      .project-image-container {
+        padding: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .project-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .project-emoji {
+        font-size: 3rem;
+        line-height: 1;
+      }
+
+      .project-title {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: white;
+        flex: 1;
+      }
+
+      .project-year {
+        background: var(--navy);
+        color: var(--aqua);
+        padding: 0.25rem 0.75rem;
+        border-radius: 2rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .project-image {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 1rem;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .project-summary {
+        color: #e2e8f0;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+      }
+
+      .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .tech-tag {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--aqua);
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+        border: 1px solid var(--aqua);
+      }
+
+      .project-status {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .status-live { background: var(--chartreuse); color: var(--navy); }
+      .status-demo { background: var(--amber); color: var(--navy); }
+      .status-development { background: var(--cyan); color: var(--navy); }
+      .status-opensource { background: var(--pink); color: white; }
+      .status-legacy { background: rgba(255, 255, 255, 0.2); color: white; }
+
+      .project-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .project-link {
+        flex: 1;
+        text-align: center;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .link-primary {
+        background: linear-gradient(45deg, var(--pink), var(--cyan));
+        color: white;
+      }
+
+      .link-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--aqua);
+        border: 1px solid var(--aqua);
+      }
+
+      .project-link:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(255, 0, 128, 0.4);
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--chartreuse);
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .other-projects {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .floating-elements {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .float-icon {
+        position: absolute;
+        font-size: 2rem;
+        opacity: 0.1;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      @keyframes gradient-flow {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(180deg); }
+      }
+
+      @media (max-width: 968px) {
+        .project-card {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto;
+        }
+        
+        .project-content {
+          padding: 1.5rem;
+        }
+
+        .project-image-container {
+          padding: 1.5rem;
+          order: -1;
+        }
+
+        .project-image {
+          width: 100%;
+          height: 200px;
+        }
+
+        .hero-section {
+          padding: 4rem 1rem 3rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Three.js Background -->
+    <div id="canvas-container"></div>
+
+    <div class="content-wrapper">
+      <!-- Floating Elements -->
+      <div class="floating-elements">
+        <div class="float-icon" style="top: 10%; left: 5%; animation-delay: 0s;">🚀</div>
+        <div class="float-icon" style="top: 20%; right: 10%; animation-delay: 2s;">⚡</div>
+        <div class="float-icon" style="top: 60%; left: 8%; animation-delay: 4s;">🤖</div>
+        <div class="float-icon" style="bottom: 30%; right: 15%; animation-delay: 1s;">🗺️</div>
+        <div class="float-icon" style="bottom: 20%; left: 12%; animation-delay: 3s;">🧺</div>
+        <div class="float-icon" style="top: 40%; right: 5%; animation-delay: 5s;">👨‍🚀</div>
+      </div>
+
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <h1 class="hero-title">PROJECT ARCHIVE</h1>
+        <p class="hero-subtitle">Digital Frontiers & Technical Expeditions</p>
+        <p class="hero-description">
+          A collection of full-stack applications, AI experiments, and creative technology projects. 
+          Each mission represents a unique challenge solved through innovative engineering and design.
+        </p>
+      </div>
+
+      <!-- Projects Container -->
+      <div class="projects-container">
+        
+        <!-- Featured Projects -->
+        <div class="section-title">FLAGSHIP MISSIONS</div>
+        <div class="featured-grid">
+          {zachary.projects.filter(p => p.featured).map((project) => (
+            <a 
+              href={project.link || project.github} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="project-card featured"
+            >
+              <div class={`project-status status-${project.status.toLowerCase().replace(' ', '')}`}>
+                {project.status}
+              </div>
+              
+              <!-- Left Column: Content -->
+              <div class="project-content">
+                <div class="project-header">
+                  <div class="project-emoji">{project.emoji}</div>
+                  <div class="project-title">{project.title}</div>
+                  <div class="project-year">{project.year}</div>
+                </div>
+
+                <div class="project-summary">{project.summary}</div>
+
+                <div class="project-tech">
+                  {project.tech.slice(0, 6).map((tech) => (
+                    <span class="tech-tag">{tech}</span>
+                  ))}
+                  {project.tech.length > 6 && (
+                    <span class="tech-tag">+{project.tech.length - 6} more</span>
+                  )}
+                </div>
+
+                <div class="project-links">
+                  {project.link && project.link !== "#" && (
+                    <div class="project-link link-primary">
+                      Launch Project
+                    </div>
+                  )}
+                  {project.github && project.github !== "#" && (
+                    <div class="project-link link-secondary">
+                      View Code
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <!-- Right Column: Image -->
+              <div class="project-image-container">
+                {project.image ? (
+                  <img src={project.image} alt={project.title} class="project-image" />
+                ) : (
+                  <div class="project-image" style="display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); color: #666; font-size: 4rem;">
+                    {project.emoji}
+                  </div>
+                )}
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <!-- Other Projects -->
+        <div class="section-title">ADDITIONAL MISSIONS</div>
+        <div class="other-projects">
+          {zachary.projects.filter(p => !p.featured).map((project) => (
+            <a 
+              href={project.link || project.github} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="project-card"
+            >
+              <div class={`project-status status-${project.status.toLowerCase().replace(' ', '')}`}>
+                {project.status}
+              </div>
+              
+              <!-- Left Column: Content -->
+              <div class="project-content">
+                <div class="project-header">
+                  <div class="project-emoji">{project.emoji}</div>
+                  <div class="project-title">{project.title}</div>
+                  <div class="project-year">{project.year}</div>
+                </div>
+
+                <div class="project-summary">{project.summary}</div>
+
+                <div class="project-tech">
+                  {project.tech.slice(0, 4).map((tech) => (
+                    <span class="tech-tag">{tech}</span>
+                  ))}
+                  {project.tech.length > 4 && (
+                    <span class="tech-tag">+{project.tech.length - 4}</span>
+                  )}
+                </div>
+              </div>
+
+              <!-- Right Column: Image -->
+              <div class="project-image-container">
+                {project.image ? (
+                  <img src={project.image} alt={project.title} class="project-image" />
+                ) : (
+                  <div class="project-image" style="display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); color: #666; font-size: 4rem;">
+                    {project.emoji}
+                  </div>
+                )}
+              </div>
+            </a>
+          ))}
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Three.js Background Script -->
+    <script>
+      let scene, camera, renderer, starField;
+      let time = 0;
+
+      function init() {
+        console.log('Initializing Project Archive background...');
+        
+        if (typeof THREE === 'undefined') {
+          console.error('THREE.js not loaded');
+          return;
+        }
+        
+        scene = new THREE.Scene();
+        
+        camera = new THREE.PerspectiveCamera(
+          60,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          2000
+        );
+        camera.position.set(0, 0, 100);
+
+        renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x0A214B, 1);
+        renderer.outputEncoding = THREE.sRGBEncoding;
+
+        const container = document.getElementById("canvas-container");
+        if (!container) {
+          console.error('Canvas container not found');
+          return;
+        }
+        container.appendChild(renderer.domElement);
+
+        createStarField();
+        createFloatingProjects();
+
+        window.addEventListener("resize", onResize);
+        animate();
+        
+        console.log('Project Archive background initialized');
+      }
+
+      function createStarField() {
+        const starGeometry = new THREE.BufferGeometry();
+        const starVertices = [];
+        const starColors = [];
+        
+        for (let i = 0; i < 600; i++) {
+          const x = (Math.random() - 0.5) * 1000;
+          const y = (Math.random() - 0.5) * 800;
+          const z = -500 + Math.random() * 300;
+          
+          starVertices.push(x, y, z);
+          
+          const brightness = 0.5 + Math.random() * 0.5;
+          starColors.push(brightness, brightness, brightness);
+        }
+        
+        starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+        starGeometry.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
+        
+        const starMaterial = new THREE.PointsMaterial({
+          size: 2,
+          transparent: true,
+          opacity: 0.8,
+          vertexColors: true,
+          sizeAttenuation: true
+        });
+        
+        starField = new THREE.Points(starGeometry, starMaterial);
+        scene.add(starField);
+      }
+
+      function createFloatingProjects() {
+        const projectIcons = ['🚀', '🤖', '🗺️', '🧺', '👨‍🚀'];
+        
+        for (let i = 0; i < 15; i++) {
+          const canvas = document.createElement('canvas');
+          canvas.width = 128;
+          canvas.height = 128;
+          const context = canvas.getContext('2d');
+          
+          context.font = '64px Arial';
+          context.textAlign = 'center';
+          context.textBaseline = 'middle';
+          context.fillText(
+            projectIcons[Math.floor(Math.random() * projectIcons.length)], 
+            64, 64
+          );
+          
+          const texture = new THREE.CanvasTexture(canvas);
+          const material = new THREE.SpriteMaterial({ 
+            map: texture, 
+            transparent: true,
+            opacity: 0.1 
+          });
+          const sprite = new THREE.Sprite(material);
+          
+          sprite.position.set(
+            (Math.random() - 0.5) * 800,
+            (Math.random() - 0.5) * 600,
+            -200 + Math.random() * 100
+          );
+          sprite.scale.set(20, 20, 1);
+          sprite.userData = {
+            speed: 0.001 + Math.random() * 0.002,
+            rotationSpeed: (Math.random() - 0.5) * 0.01
+          };
+          
+          scene.add(sprite);
+        }
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+
+        if (starField) {
+          starField.rotation.y += 0.0001;
+          starField.rotation.x += 0.0002;
+        }
+
+        scene.children.forEach((child) => {
+          if (child instanceof THREE.Sprite) {
+            child.position.y += child.userData.speed * 100;
+            child.rotation.z += child.userData.rotationSpeed;
+            
+            if (child.position.y > 400) {
+              child.position.y = -400;
+            }
+          }
+        });
+
+        renderer.render(scene, camera);
+      }
+
+      function onResize() {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('DOM loaded, initializing...');
+        
+        function waitForThree() {
+          if (typeof THREE !== 'undefined') {
+            console.log('THREE.js loaded, starting init...');
+            init();
+          } else {
+            console.log('Waiting for THREE.js...');
+            setTimeout(waitForThree, 100);
+          }
+        }
+        
+        waitForThree();
+      });
+    </script>
+
+  </body>
+</html>
