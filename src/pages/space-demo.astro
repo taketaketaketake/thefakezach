@@ -6,6 +6,7 @@ import BlogSection from "../components/BlogSection.astro";
 import ProjectsShowcase from "../components/ProjectsShowcase.astro";
 import TechPhilosophy from "../components/TechPhilosophy.astro";
 import HireMe from "../components/HireMe.astro";
+import ContactMission from "../components/ContactMission.astro";
 import TimelineCommand from "../components/TimelineCommand.astro";
 
 const zachary = {
@@ -326,6 +327,16 @@ const zachary = {
           ]}
         />
         
+        <!-- Divider Line -->
+        <div class="w-full flex justify-center py-8">
+          <div class="w-full max-w-4xl h-px bg-white opacity-20"></div>
+        </div>
+        
+        <!-- Contact Mission Section -->
+        <ContactMission 
+          email="zach@takedetroit.com"
+          calendlyUrl="https://calendly.com/zachlewis"
+        />
         
       </div>
     </div>
@@ -635,29 +646,17 @@ const zachary = {
             console.log('Showing galactic core');
           }
         } else if (scrollY < windowHeight * 1.8) {
-          // Tech Philosophy section
-          if (neuralNetwork) {
-            neuralNetwork.visible = true;
-            console.log('Showing neural network');
-          }
+          // Tech Philosophy section - no background
+          console.log('Tech Philosophy section - no background');
         } else if (scrollY < windowHeight * 2.8) {
-          // Timeline section
-          if (quantumClock) {
-            quantumClock.visible = true;
-            console.log('Showing quantum clock');
-          }
+          // Timeline section - no background
+          console.log('Timeline section - no background');
         } else if (scrollY < windowHeight * 3.8) {
-          // Projects section
-          if (constructionYard) {
-            constructionYard.visible = true;
-            console.log('Showing construction yard');
-          }
+          // Projects section - no background
+          console.log('Projects section - no background');
         } else {
-          // Hire Me section
-          if (commArray) {
-            commArray.visible = true;
-            console.log('Showing comm array');
-          }
+          // Hire Me section - no background
+          console.log('Hire Me section - no background');
         }
       }
 
@@ -865,46 +864,67 @@ const zachary = {
       function createGalacticCore() {
         galacticCore = new THREE.Group();
         
-        // Bright galactic center
-        const coreGeometry = new THREE.SphereGeometry(50, 32, 32);
-        const coreMaterial = new THREE.MeshBasicMaterial({
-          color: 0xffaa00,
-          transparent: true,
-          opacity: 0.6
-        });
-        const core = new THREE.Mesh(coreGeometry, coreMaterial);
-        core.position.set(0, 0, -100);
-        galacticCore.add(core);
-
-        // Spiral arms
-        for (let arm = 0; arm < 3; arm++) {
-          const spiralGeometry = new THREE.BufferGeometry();
-          const spiralVertices = [];
-          const armOffset = (arm * Math.PI * 2) / 3;
+        // White stars
+        const starGeometry = new THREE.BufferGeometry();
+        const starVertices = [];
+        const starColors = [];
+        const blinkingStars = [];
+        
+        for (let i = 0; i < 400; i++) {
+          // Random positions covering full screen and beyond
+          const x = (Math.random() - 0.5) * 800;
+          const y = (Math.random() - 0.5) * 600;
+          const z = -300 + Math.random() * 200;
           
-          for (let i = 0; i < 200; i++) {
-            const t = i * 0.1;
-            const radius = 50 + t * 2;
-            const angle = armOffset + t * 0.3;
-            
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius * 0.3;
-            const z = -100 + (Math.random() - 0.5) * 30;
-            
-            spiralVertices.push(x, y, z);
-          }
+          starVertices.push(x, y, z);
           
-          spiralGeometry.setAttribute('position', new THREE.Float32BufferAttribute(spiralVertices, 3));
-          const spiralMaterial = new THREE.PointsMaterial({
-            color: 0x4488ff,
-            size: 3,
-            transparent: true,
-            opacity: 0.8
-          });
+          // White color with slight variations
+          const brightness = 0.7 + Math.random() * 0.3;
+          starColors.push(brightness, brightness, brightness);
           
-          const spiral = new THREE.Points(spiralGeometry, spiralMaterial);
-          galacticCore.add(spiral);
+          // Mark some stars as blinking (20% chance)
+          blinkingStars.push(Math.random() < 0.2);
         }
+        
+        starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+        starGeometry.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
+        
+        // Create star texture
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.width = 32;
+        canvas.height = 32;
+        
+        // Create star shape with glow
+        const gradient = context.createRadialGradient(16, 16, 0, 16, 16, 16);
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        gradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.8)');
+        gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.3)');
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, 32, 32);
+        
+        // Add cross flare
+        context.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        context.fillRect(15, 4, 2, 24);
+        context.fillRect(4, 15, 24, 2);
+        
+        const starTexture = new THREE.CanvasTexture(canvas);
+        
+        const starMaterial = new THREE.PointsMaterial({
+          map: starTexture,
+          size: 4,
+          transparent: true,
+          opacity: 0.9,
+          vertexColors: true,
+          sizeAttenuation: true,
+          alphaTest: 0.01
+        });
+        
+        const stars = new THREE.Points(starGeometry, starMaterial);
+        stars.userData.blinkingStars = blinkingStars;
+        galacticCore.add(stars);
         
         galacticCore.visible = true;  // Start with hero background visible
         scene.add(galacticCore);
@@ -1101,14 +1121,22 @@ const zachary = {
       function animateSectionBackgrounds() {
         // Animate Galactic Core
         if (galacticCore && galacticCore.visible) {
-          galacticCore.rotation.z += 0.001;
-          const core = galacticCore.children[0];
-          if (core) {
-            core.material.opacity = 0.8 + Math.sin(time * 2) * 0.2;
-          }
-          // Rotate spiral arms
-          for (let i = 1; i < galacticCore.children.length; i++) {
-            galacticCore.children[i].rotation.z += 0.002 * i;
+          // Animate blinking stars
+          const stars = galacticCore.children[0];
+          if (stars && stars.userData.blinkingStars) {
+            const colors = stars.geometry.attributes.color.array;
+            const blinkingStars = stars.userData.blinkingStars;
+            
+            for (let i = 0; i < blinkingStars.length; i++) {
+              if (blinkingStars[i]) {
+                const brightness = 0.3 + Math.abs(Math.sin(time * 3 + i * 0.5)) * 0.7;
+                colors[i * 3] = brightness;     // R
+                colors[i * 3 + 1] = brightness; // G
+                colors[i * 3 + 2] = brightness; // B
+              }
+            }
+            
+            stars.geometry.attributes.color.needsUpdate = true;
           }
         }
 

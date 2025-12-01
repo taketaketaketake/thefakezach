@@ -101,7 +101,7 @@ const pageTitle = "Cosmic Garage – Cosmic Crew Universe";
           2000
         );
 
-        camera.position.set(0, 20, 120);
+        camera.position.set(-60, 30, 80);
         camera.lookAt(0, 10, 0);
 
         createEnvironment();
@@ -194,7 +194,7 @@ const pageTitle = "Cosmic Garage – Cosmic Crew Universe";
         ceiling.position.y = 80;
         groups.env.add(ceiling);
 
-        // Support beams
+        // Support beams with detailed structure
         for (let i = -4; i <= 4; i++) {
           const beam = new THREE.Mesh(
             new THREE.BoxGeometry(8, 100, 8),
@@ -206,6 +206,47 @@ const pageTitle = "Cosmic Garage – Cosmic Crew Universe";
           );
           beam.position.set(i * 80, 30, -40);
           groups.env.add(beam);
+
+          // Beam detail rings
+          for (let j = 0; j < 3; j++) {
+            const ring = new THREE.Mesh(
+              new THREE.TorusGeometry(6, 0.8, 8, 16),
+              new THREE.MeshStandardMaterial({
+                color: 0x555555,
+                metalness: 0.8,
+                roughness: 0.2,
+              })
+            );
+            ring.position.set(i * 80, j * 30 - 15, -40);
+            ring.rotation.x = Math.PI / 2;
+            groups.env.add(ring);
+          }
+        }
+
+        // Atmospheric lighting strips
+        for (let i = -3; i <= 3; i++) {
+          const lightStrip = new THREE.Mesh(
+            new THREE.BoxGeometry(300, 2, 4),
+            new THREE.MeshBasicMaterial({
+              color: COLORS.aqua,
+              transparent: true,
+              opacity: 0.6,
+            })
+          );
+          lightStrip.position.set(0, 70 + i * 3, -75);
+          groups.env.add(lightStrip);
+
+          // Light strip glow
+          const glow = new THREE.Mesh(
+            new THREE.BoxGeometry(300, 6, 8),
+            new THREE.MeshBasicMaterial({
+              color: COLORS.aqua,
+              transparent: true,
+              opacity: 0.1,
+            })
+          );
+          glow.position.set(0, 70 + i * 3, -75);
+          groups.env.add(glow);
         }
 
         scene.add(groups.env);
@@ -217,17 +258,39 @@ const pageTitle = "Cosmic Garage – Cosmic Crew Universe";
       function createRocket() {
         groups.rocket = new THREE.Group();
 
-        // Main rocket body with panels
-        const body = new THREE.Mesh(
-          new THREE.CylinderGeometry(8, 10, 50, 16),
-          new THREE.MeshStandardMaterial({
-            color: 0xcccccc,
-            metalness: 0.8,
-            roughness: 0.2,
-          })
-        );
-        body.position.y = 10;
-        groups.rocket.add(body);
+        // Complex rocket body assembly
+        const bodyAssembly = new THREE.Group();
+        
+        // Main hull sections
+        for (let i = 0; i < 3; i++) {
+          const section = new THREE.Mesh(
+            new THREE.CylinderGeometry(8 - i * 0.5, 10 - i * 0.5, 18, 16),
+            new THREE.MeshStandardMaterial({
+              color: i % 2 ? 0xcccccc : 0xaaaaaa,
+              metalness: 0.8,
+              roughness: 0.2,
+            })
+          );
+          section.position.y = 10 + i * 16;
+          bodyAssembly.add(section);
+        }
+
+        // Hull connection rings
+        for (let i = 0; i < 4; i++) {
+          const ring = new THREE.Mesh(
+            new THREE.TorusGeometry(9, 1, 8, 16),
+            new THREE.MeshStandardMaterial({
+              color: COLORS.amber,
+              metalness: 0.9,
+              roughness: 0.1,
+            })
+          );
+          ring.position.y = i * 16 - 6;
+          ring.rotation.x = Math.PI / 2;
+          bodyAssembly.add(ring);
+        }
+
+        groups.rocket.add(bodyAssembly);
 
         // Body panels and details
         for (let i = 0; i < 8; i++) {
@@ -249,17 +312,54 @@ const pageTitle = "Cosmic Garage – Cosmic Crew Universe";
           groups.rocket.add(panel);
         }
 
-        // Nose cone with details
+        // Complex nose assembly
+        const noseAssembly = new THREE.Group();
+        
+        // Main nose cone
         const nose = new THREE.Mesh(
-          new THREE.ConeGeometry(8, 20, 12),
+          new THREE.ConeGeometry(8, 15, 12),
           new THREE.MeshStandardMaterial({ 
             color: COLORS.chartreuse,
             metalness: 0.7,
             roughness: 0.3,
           })
         );
-        nose.position.y = 45;
-        groups.rocket.add(nose);
+        nose.position.y = 40;
+        noseAssembly.add(nose);
+
+        // Nose cap details
+        const noseCap = new THREE.Mesh(
+          new THREE.SphereGeometry(3, 12, 8),
+          new THREE.MeshStandardMaterial({
+            color: 0xffffff,
+            metalness: 0.9,
+            roughness: 0.1,
+          })
+        );
+        noseCap.position.y = 50;
+        noseAssembly.add(noseCap);
+
+        // Navigation sensors around nose
+        for (let i = 0; i < 6; i++) {
+          const sensor = new THREE.Mesh(
+            new THREE.BoxGeometry(1, 3, 0.5),
+            new THREE.MeshStandardMaterial({
+              color: COLORS.aqua,
+              metalness: 0.8,
+              roughness: 0.2,
+            })
+          );
+          const angle = (i / 6) * Math.PI * 2;
+          sensor.position.set(
+            Math.cos(angle) * 7,
+            35,
+            Math.sin(angle) * 7
+          );
+          sensor.rotation.y = angle;
+          noseAssembly.add(sensor);
+        }
+
+        groups.rocket.add(noseAssembly);
 
         // Engine nozzles
         for (let i = 0; i < 4; i++) {
@@ -296,8 +396,11 @@ const pageTitle = "Cosmic Garage – Cosmic Crew Universe";
           groups.rocket.add(glow);
         }
 
-        // Fins
+        // Complex fin assemblies
         for (let i = 0; i < 4; i++) {
+          const finAssembly = new THREE.Group();
+          
+          // Main fin
           const fin = new THREE.Mesh(
             new THREE.BoxGeometry(1, 15, 8),
             new THREE.MeshStandardMaterial({
@@ -306,71 +409,354 @@ const pageTitle = "Cosmic Garage – Cosmic Crew Universe";
               roughness: 0.2,
             })
           );
+          finAssembly.add(fin);
+
+          // Fin support struts
+          const strut1 = new THREE.Mesh(
+            new THREE.BoxGeometry(0.5, 12, 0.5),
+            new THREE.MeshStandardMaterial({
+              color: COLORS.amber,
+              metalness: 0.9,
+              roughness: 0.1,
+            })
+          );
+          strut1.position.set(0, -1, 2);
+          finAssembly.add(strut1);
+
+          const strut2 = new THREE.Mesh(
+            new THREE.BoxGeometry(0.5, 12, 0.5),
+            new THREE.MeshStandardMaterial({
+              color: COLORS.amber,
+              metalness: 0.9,
+              roughness: 0.1,
+            })
+          );
+          strut2.position.set(0, -1, -2);
+          finAssembly.add(strut2);
+
           const angle = (i / 4) * Math.PI * 2;
-          fin.position.set(
+          finAssembly.position.set(
             Math.cos(angle) * 11,
             -10,
             Math.sin(angle) * 11
           );
-          fin.rotation.y = angle;
-          groups.rocket.add(fin);
+          finAssembly.rotation.y = angle;
+          groups.rocket.add(finAssembly);
         }
 
         scene.add(groups.rocket);
       }
 
       /* -------------------------
-         Character Glow Orbs
+         Workshop Equipment & Tools
       --------------------------*/
       function createCharacters() {
         groups.characters = new THREE.Group();
 
-        function addOrb(name, color, pos) {
-          const orb = new THREE.Mesh(
-            new THREE.SphereGeometry(7, 32, 32),
-            new THREE.MeshStandardMaterial({
-              color,
-              emissive: color,
-              emissiveIntensity: 0.8,
+        // Workstation Console 1
+        const console1 = new THREE.Group();
+        const consoleBase = new THREE.Mesh(
+          new THREE.BoxGeometry(15, 8, 10),
+          new THREE.MeshStandardMaterial({
+            color: 0x333333,
+            metalness: 0.8,
+            roughness: 0.2,
+          })
+        );
+        console1.add(consoleBase);
+
+        // Screen panels on console
+        for (let i = 0; i < 3; i++) {
+          const screen = new THREE.Mesh(
+            new THREE.PlaneGeometry(4, 3),
+            new THREE.MeshBasicMaterial({
+              color: COLORS.aqua,
               transparent: true,
-              opacity: 0.95,
+              opacity: 0.8,
             })
           );
-          orb.position.copy(pos);
-          orb.userData.name = name;
-          groups.characters.add(orb);
+          screen.position.set((i - 1) * 4.5, 4.5, 5.1);
+          console1.add(screen);
+
+          // Screen glow
+          const screenGlow = new THREE.Mesh(
+            new THREE.PlaneGeometry(5, 4),
+            new THREE.MeshBasicMaterial({
+              color: COLORS.aqua,
+              transparent: true,
+              opacity: 0.1,
+            })
+          );
+          screenGlow.position.set((i - 1) * 4.5, 4.5, 5.2);
+          console1.add(screenGlow);
         }
 
-        addOrb("Space Dog", COLORS.amber, new THREE.Vector3(-40, -10, 20));
-        addOrb("Chompy", 0xFF66B3, new THREE.Vector3(30, -5, -10));
+        // Control panels with buttons
+        for (let i = 0; i < 8; i++) {
+          const button = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.5, 0.5, 0.3, 8),
+            new THREE.MeshStandardMaterial({
+              color: i % 2 ? COLORS.chartreuse : COLORS.amber,
+              emissive: i % 2 ? COLORS.chartreuse : COLORS.amber,
+              emissiveIntensity: 0.3,
+              metalness: 0.9,
+              roughness: 0.1,
+            })
+          );
+          button.position.set((i - 3.5) * 1.5, 1, 5.1);
+          console1.add(button);
+        }
 
-        // ❗ FIXED TYPO — correct constructor
-        addOrb("Buzzo", COLORS.aqua, new THREE.Vector3(0, 10, 40));
+        console1.position.set(-40, -10, 20);
+        groups.characters.add(console1);
+
+        // Tool Rack & Equipment Stand
+        const toolRack = new THREE.Group();
+        const rackBase = new THREE.Mesh(
+          new THREE.CylinderGeometry(3, 5, 12, 12),
+          new THREE.MeshStandardMaterial({
+            color: 0x444444,
+            metalness: 0.7,
+            roughness: 0.3,
+          })
+        );
+        toolRack.add(rackBase);
+
+        // Tool arms extending from rack
+        for (let i = 0; i < 6; i++) {
+          const arm = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.3, 0.3, 8, 8),
+            new THREE.MeshStandardMaterial({
+              color: 0x666666,
+              metalness: 0.8,
+              roughness: 0.2,
+            })
+          );
+          const angle = (i / 6) * Math.PI * 2;
+          arm.position.set(Math.cos(angle) * 4, i * 1.5 - 3, Math.sin(angle) * 4);
+          arm.rotation.z = Math.PI / 2;
+          toolRack.add(arm);
+
+          // Tool heads
+          const tool = new THREE.Mesh(
+            new THREE.BoxGeometry(2, 0.5, 0.5),
+            new THREE.MeshStandardMaterial({
+              color: COLORS.amber,
+              metalness: 0.9,
+              roughness: 0.1,
+            })
+          );
+          tool.position.set(Math.cos(angle) * 8, i * 1.5 - 3, Math.sin(angle) * 8);
+          toolRack.add(tool);
+        }
+
+        toolRack.position.set(30, -5, -10);
+        groups.characters.add(toolRack);
+
+        // Power Core Assembly
+        const powerCore = new THREE.Group();
+        const coreHousing = new THREE.Mesh(
+          new THREE.CylinderGeometry(6, 6, 15, 16),
+          new THREE.MeshStandardMaterial({
+            color: 0x222222,
+            metalness: 0.9,
+            roughness: 0.1,
+          })
+        );
+        powerCore.add(coreHousing);
+
+        // Core energy rings
+        for (let i = 0; i < 5; i++) {
+          const ring = new THREE.Mesh(
+            new THREE.TorusGeometry(7, 0.5, 8, 16),
+            new THREE.MeshStandardMaterial({
+              color: COLORS.aqua,
+              emissive: COLORS.aqua,
+              emissiveIntensity: 0.5,
+              transparent: true,
+              opacity: 0.8,
+            })
+          );
+          ring.position.y = i * 3 - 6;
+          powerCore.add(ring);
+        }
+
+        // Connecting cables
+        for (let i = 0; i < 4; i++) {
+          const cable = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.2, 0.2, 25, 8),
+            new THREE.MeshStandardMaterial({
+              color: 0x0a0a0a,
+              metalness: 0.1,
+              roughness: 0.9,
+            })
+          );
+          const angle = (i / 4) * Math.PI * 2;
+          cable.position.set(Math.cos(angle) * 8, -5, Math.sin(angle) * 8);
+          cable.rotation.z = Math.PI / 2 + angle * 0.3;
+          powerCore.add(cable);
+        }
+
+        powerCore.position.set(0, 10, 40);
+        groups.characters.add(powerCore);
 
         scene.add(groups.characters);
       }
 
       /* -------------------------
-         Hologram Panels
+         Detailed Workshop Elements
       --------------------------*/
       function createHolograms() {
         groups.holos = new THREE.Group();
 
-        for (let i = 0; i < 6; i++) {
-          const panel = new THREE.Mesh(
-            new THREE.PlaneGeometry(25, 18),
-            new THREE.MeshBasicMaterial({
-              color: i % 2 ? COLORS.aqua : COLORS.chartreuse,
-              transparent: true,
-              opacity: 0.25,
+        // Storage Containers & Crates
+        for (let i = 0; i < 4; i++) {
+          const container = new THREE.Group();
+          
+          // Main crate body
+          const crateBody = new THREE.Mesh(
+            new THREE.BoxGeometry(12, 8, 8),
+            new THREE.MeshStandardMaterial({
+              color: 0x444444,
+              metalness: 0.6,
+              roughness: 0.4,
             })
           );
+          container.add(crateBody);
 
-          const angle = (i / 6) * Math.PI * 2;
-          panel.position.set(Math.cos(angle) * 70, 20, Math.sin(angle) * 70);
-          panel.lookAt(0, 20, 0);
-          groups.holos.add(panel);
+          // Crate reinforcement bars
+          for (let j = 0; j < 4; j++) {
+            const bar = new THREE.Mesh(
+              new THREE.BoxGeometry(12.2, 0.5, 0.5),
+              new THREE.MeshStandardMaterial({
+                color: COLORS.amber,
+                metalness: 0.9,
+                roughness: 0.1,
+              })
+            );
+            bar.position.y = j * 2 - 3;
+            bar.position.z = j % 2 ? 4.1 : -4.1;
+            container.add(bar);
+          }
+
+          // Warning labels
+          const label = new THREE.Mesh(
+            new THREE.PlaneGeometry(8, 2),
+            new THREE.MeshBasicMaterial({
+              color: COLORS.chartreuse,
+              transparent: true,
+              opacity: 0.8,
+            })
+          );
+          label.position.set(0, 2, 4.1);
+          container.add(label);
+
+          const angle = (i / 4) * Math.PI * 2;
+          container.position.set(Math.cos(angle) * 60, -8, Math.sin(angle) * 60);
+          container.rotation.y = angle + Math.PI;
+          groups.holos.add(container);
         }
+
+        // Holographic Display Stations
+        for (let i = 0; i < 3; i++) {
+          const station = new THREE.Group();
+          
+          // Display base
+          const base = new THREE.Mesh(
+            new THREE.CylinderGeometry(4, 5, 3, 12),
+            new THREE.MeshStandardMaterial({
+              color: 0x333333,
+              metalness: 0.8,
+              roughness: 0.2,
+            })
+          );
+          base.position.y = -16;
+          station.add(base);
+
+          // Hologram projector
+          const projector = new THREE.Mesh(
+            new THREE.CylinderGeometry(1, 2, 8, 12),
+            new THREE.MeshStandardMaterial({
+              color: 0x666666,
+              metalness: 0.9,
+              roughness: 0.1,
+            })
+          );
+          projector.position.y = -10;
+          station.add(projector);
+
+          // Holographic display
+          const holoDisplay = new THREE.Mesh(
+            new THREE.PlaneGeometry(20, 15),
+            new THREE.MeshBasicMaterial({
+              color: i === 0 ? COLORS.aqua : i === 1 ? COLORS.chartreuse : COLORS.amber,
+              transparent: true,
+              opacity: 0.4,
+            })
+          );
+          holoDisplay.position.y = 5;
+          station.add(holoDisplay);
+
+          // Display frame
+          const frame = new THREE.Mesh(
+            new THREE.BoxGeometry(22, 1, 17),
+            new THREE.MeshStandardMaterial({
+              color: 0x555555,
+              metalness: 0.7,
+              roughness: 0.3,
+            })
+          );
+          frame.position.y = -2;
+          frame.rotation.x = -Math.PI / 2;
+          station.add(frame);
+
+          const angle = (i / 3) * Math.PI * 2 + Math.PI / 3;
+          station.position.set(Math.cos(angle) * 75, 20, Math.sin(angle) * 75);
+          station.rotation.y = angle + Math.PI;
+          groups.holos.add(station);
+        }
+
+        // Mechanical Arms & Crane
+        const crane = new THREE.Group();
+        
+        // Crane base
+        const craneBase = new THREE.Mesh(
+          new THREE.CylinderGeometry(6, 8, 12, 16),
+          new THREE.MeshStandardMaterial({
+            color: 0x444444,
+            metalness: 0.8,
+            roughness: 0.2,
+          })
+        );
+        craneBase.position.y = -8;
+        crane.add(craneBase);
+
+        // Crane arm
+        const craneArm = new THREE.Mesh(
+          new THREE.BoxGeometry(45, 3, 3),
+          new THREE.MeshStandardMaterial({
+            color: COLORS.amber,
+            metalness: 0.9,
+            roughness: 0.1,
+          })
+        );
+        craneArm.position.set(20, 8, 0);
+        crane.add(craneArm);
+
+        // Crane hook assembly
+        const hook = new THREE.Mesh(
+          new THREE.CylinderGeometry(1, 1, 8, 12),
+          new THREE.MeshStandardMaterial({
+            color: 0x666666,
+            metalness: 0.9,
+            roughness: 0.1,
+          })
+        );
+        hook.position.set(40, -5, 0);
+        crane.add(hook);
+
+        crane.position.set(-70, 30, 0);
+        groups.holos.add(crane);
 
         scene.add(groups.holos);
       }
@@ -430,14 +816,36 @@ const pageTitle = "Cosmic Garage – Cosmic Crew Universe";
         requestAnimationFrame(animate);
         time += 0.01;
 
-        // Orbit camera
-        camera.position.x = Math.sin(time * 0.2) * 90;
-        camera.position.z = Math.cos(time * 0.2) * 90;
+        // Static camera view
         camera.lookAt(0, 10, 0);
 
-        // Rocket bounce
+        // Subtle rocket hover
         if (groups.rocket) {
-          groups.rocket.position.y = Math.sin(time) * 2;
+          groups.rocket.position.y = Math.sin(time * 0.5) * 0.5;
+        }
+
+        // Minimal equipment animations
+        if (groups.characters) {
+          groups.characters.children.forEach((equipment, index) => {
+            if (equipment.children.length > 5) { // Power core
+              equipment.children.forEach((child, childIndex) => {
+                if (child.geometry && child.geometry.type === 'TorusGeometry') {
+                  child.rotation.y = time * 0.3;
+                }
+              });
+            }
+          });
+        }
+
+        // Subtle hologram flicker
+        if (groups.holos) {
+          groups.holos.children.forEach((element, index) => {
+            element.children.forEach(child => {
+              if (child.material && child.material.transparent && child.material.opacity < 1) {
+                child.material.opacity = 0.4 + Math.sin(time * 1.5 + index) * 0.1;
+              }
+            });
+          });
         }
 
         renderer.render(scene, camera);
