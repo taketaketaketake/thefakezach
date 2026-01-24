@@ -17,7 +17,7 @@ const zachary = {
 
 ---
 
-I'm currently fixated on engineering/desiging a management OS and cognition layer for multi-agent systems.`,
+I'm currently fixated on building a management OS and cognition layer for multi-agent systems.`,
   contact: {
     twitter: "#",
     github: "#",
@@ -210,12 +210,12 @@ I'm currently fixated on engineering/desiging a management OS and cognition laye
       <div class="max-w-5xl mx-auto px-4 sm:px-6">
         <div class="flex justify-center gap-1">
           <button
-            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative"
+            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative active"
             data-tab="0"
             aria-label="About tab"
           >
             About
-            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
+            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform transition-transform"></span>
           </button>
           <button
             class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative"
@@ -226,12 +226,12 @@ I'm currently fixated on engineering/desiging a management OS and cognition laye
             <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
           </button>
           <button
-            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative active"
+            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative"
             data-tab="2"
             aria-label="Projects tab"
           >
             Projects
-            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform transition-transform"></span>
+            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
           </button>
         </div>
       </div>
@@ -239,7 +239,7 @@ I'm currently fixated on engineering/desiging a management OS and cognition laye
 
     <!-- Swipeable Container -->
     <div class="swipe-wrapper overflow-hidden">
-      <div class="swipe-container flex transition-transform duration-300 ease-out" style="transform: translateX(-200%)">
+      <div class="swipe-container flex transition-transform duration-300 ease-out" style="transform: translateX(0%)">
 
         <!-- Panel 1: About -->
         <div class="swipe-panel flex-shrink-0 w-full">
@@ -339,7 +339,7 @@ I'm currently fixated on engineering/desiging a management OS and cognition laye
 
     <!-- Swipe Functionality Script -->
     <script>
-      let currentTab = 2; // Start with Projects (index 2)
+      let currentTab = 0; // Start with About (index 0)
       const container = document.querySelector('.swipe-container');
       const tabButtons = document.querySelectorAll('.tab-button');
       const totalTabs = 3;
