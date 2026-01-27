@@ -6,7 +6,6 @@ import CollapsibleCard from "../components/CollapsibleCard.astro";
 import ProjectsButton from "../components/ProjectsButton.astro";
 import ContactButton from "../components/ContactButton.astro";
 import ProjectsSection from "../components/ProjectsSection.astro";
-import WallSection from "../components/WallSection.astro";
 
 const zachary = {
   name: "Zachary Lewis",
@@ -220,14 +219,6 @@ I'm currently fixated on building a management OS and cognition layer for multi-
           <button
             class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative"
             data-tab="1"
-            aria-label="Wall tab"
-          >
-            Wall
-            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
-          </button>
-          <button
-            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative"
-            data-tab="2"
             aria-label="Projects tab"
           >
             Projects
@@ -255,32 +246,7 @@ I'm currently fixated on building a management OS and cognition layer for multi-
           </main>
         </div>
 
-        <!-- Panel 2: Wall -->
-        <div class="swipe-panel flex-shrink-0 w-full">
-          <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-            <WallSection
-              posts={[
-                {
-                  name: "Chris P.",
-                  date: "October 28, 2025",
-                  message: "Loved your Detroit Small Business Map project. Super inspiring!"
-                },
-                {
-                  name: "Avery",
-                  date: "October 27, 2025",
-                  message: "That Bags of Laundry campaign is genius 💡. Keep it up!"
-                },
-                {
-                  name: "Jamie L.",
-                  date: "October 25, 2025",
-                  message: "Your AI Voice Concierge concept is 🔥. Excited to see where it goes!"
-                }
-              ]}
-            />
-          </main>
-        </div>
-
-        <!-- Panel 3: Projects -->
+        <!-- Panel 2: Projects -->
         <div class="swipe-panel flex-shrink-0 w-full">
           <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
             <ProjectsSection projects={zachary.projects} />
@@ -342,7 +308,7 @@ I'm currently fixated on building a management OS and cognition layer for multi-
       let currentTab = 0; // Start with About (index 0)
       const container = document.querySelector('.swipe-container');
       const tabButtons = document.querySelectorAll('.tab-button');
-      const totalTabs = 3;
+      const totalTabs = 2;
 
       let touchStartX = 0;
       let touchEndX = 0;
