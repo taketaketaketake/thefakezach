@@ -1,0 +1,79 @@
+---
+import { getCollection } from "astro:content";
+import "../../styles/global.css";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{post.data.title} | Zachary Lewis</title>
+    <meta name="description" content={post.data.description} />
+  </head>
+
+  <body class="bg-zinc-950 text-zinc-50 font-sans min-h-screen">
+    <!-- Header -->
+    <header class="border-b border-zinc-800">
+      <div class="max-w-2xl mx-auto px-4 py-4">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
+        </a>
+      </div>
+    </header>
+
+    <!-- Article -->
+    <main class="max-w-2xl mx-auto px-4 py-10">
+      <article>
+        <!-- Meta -->
+        <time class="text-sm text-zinc-500" datetime={post.data.date.toISOString()}>
+          {post.data.date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </time>
+
+        <!-- Title -->
+        <h1 class="text-3xl sm:text-4xl font-bold text-white mt-2 mb-8 leading-tight">
+          {post.data.title}
+        </h1>
+
+        <!-- Content -->
+        <div class="prose prose-invert prose-lg max-w-none
+          prose-p:text-zinc-300 prose-p:leading-relaxed
+          prose-headings:text-white prose-headings:font-bold
+          prose-a:text-pink-400 prose-a:no-underline hover:prose-a:underline
+          prose-strong:text-white
+          prose-code:text-pink-400 prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
+          prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-800
+          prose-blockquote:border-pink-500 prose-blockquote:text-zinc-400
+          prose-li:text-zinc-300
+        ">
+          <Content />
+        </div>
+      </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-zinc-800 py-8 text-center text-xs text-zinc-500">
+      <a href="/" class="hover:text-white transition-colors">thefakezach.com</a>
+    </footer>
+  </body>
+</html>

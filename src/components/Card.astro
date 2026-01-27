@@ -10,10 +10,11 @@ const id = project.title.toLowerCase().replace(/ /g, "-");
     >
       {project.image ? (
         <>
-          <img 
-            src={project.image} 
+          <img
+            src={project.image}
             alt={`${project.title} project screenshot`}
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            style={project.imagePosition ? `object-position: ${project.imagePosition}` : undefined}
             loading="lazy"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
           />
