@@ -301,9 +301,11 @@ I'm currently fixated on building a management OS and cognition layer for multi-
       const wrapper = document.querySelector('.swipe-wrapper');
 
       wrapper.addEventListener('touchstart', (e) => {
-        // Don't start drag if touching form elements
-        if (e.target.matches('input, textarea, button, select') || 
-            e.target.closest('form')) {
+        // Don't start drag if touching form elements or clickable elements (like project cards)
+        if (e.target.matches('input, textarea, button, select, a') ||
+            e.target.closest('form') ||
+            e.target.closest('button') ||
+            e.target.closest('a')) {
           return;
         }
         
@@ -314,10 +316,12 @@ I'm currently fixated on building a management OS and cognition layer for multi-
 
       wrapper.addEventListener('touchmove', (e) => {
         if (!isDragging) return;
-        
-        // Don't swipe if touching form elements
-        if (e.target.matches('input, textarea, button, select') || 
-            e.target.closest('form')) {
+
+        // Don't swipe if touching form elements or clickable elements
+        if (e.target.matches('input, textarea, button, select, a') ||
+            e.target.closest('form') ||
+            e.target.closest('button') ||
+            e.target.closest('a')) {
           return;
         }
 
@@ -365,6 +369,14 @@ I'm currently fixated on building a management OS and cognition layer for multi-
 
       // Mouse drag for desktop
       wrapper.addEventListener('mousedown', (e) => {
+        // Don't start drag if clicking form elements or clickable buttons
+        if (e.target.matches('input, textarea, button, select, a') ||
+            e.target.closest('form') ||
+            e.target.closest('button') ||
+            e.target.closest('a')) {
+          return;
+        }
+
         isDragging = true;
         startX = e.clientX;
         container.style.transition = 'none';
