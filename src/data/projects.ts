@@ -16,6 +16,19 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    title: "AgentLand Observability",
+    emoji: "📡",
+    year: "2026",
+    summary: "Real-time observability dashboard for multi-agent coding sessions.",
+    spark: "While running multiple AI coding agents, I had no visibility into what they were doing. Needed a mission control to watch agents work in real-time and evaluate their quality.",
+    whatItDoes: "Real-time dashboard for Claude Code and Gemini CLI sessions. Captures hook events, streams via WebSocket, displays live event feeds with agent tracking, session transcripts, and LLM-powered evaluation system for scoring agent quality.",
+    tech: ["Bun", "SQLite", "React", "WebSocket", "Python", "Playwright"],
+    status: "shipped",
+    featured: true,
+    link: "",
+    github: "https://github.com/thefakezach"
+  },
+  {
     title: "Spec-Driven Development Template",
     emoji: "📋",
     image: "https://pub-7237b0e442304806ab3b8f7c4497b5de.r2.dev/4c662ab5-aaff-4ee5-b32e-2a89c6806e99-0.jpg",
