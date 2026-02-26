@@ -77,12 +77,25 @@ export const projects: Project[] = [
     emoji: "🗣️",
     year: "2025",
     summary: "Production voice AI systems handling real customer calls with sub-500ms response latency.",
-    spark: "HVAC companies were missing leads after hours. Hiring 24/7 staff wasn't realistic. I wanted to see if AI could handle the first touch naturally enough that callers wouldn't hang up.",
-    whatItDoes: "Production voice agents using Telnyx Voice API for ultra-low latency conversations. Handles inbound calls, collects customer info naturally, supports SMS/MMS follow-up, and logs all interactions. Currently live at (833) FIX-IT-NOW.",
+    spark: "Businesses were missing calls after hours. Hiring 24/7 staff wasn't realistic. I wanted to see if AI could handle the first touch naturally enough that callers wouldn't hang up.",
+    whatItDoes: "Production voice agents using Telnyx Voice API for ultra-low latency conversations. Handles inbound calls, collects customer info naturally, supports SMS/MMS follow-up, and logs all interactions. Built for service businesses across multiple industries.",
     tech: ["Node.js", "Express", "Telnyx", "SQLite", "Supabase"],
     status: "shipped",
     featured: true,
     link: "https://fixmyfurnacemi.com",
+    github: "#"
+  },
+  {
+    title: "Overflow",
+    emoji: "📺",
+    year: "2025",
+    summary: "PPV livestream platform for exclusive live events and performances.",
+    spark: "Wanted to create a platform where independent artists and creators could monetize live performances directly, without middlemen taking massive cuts.",
+    whatItDoes: "Full-stack PPV platform with payment processing, live video infrastructure, and event management. Produces exclusive shows for independent artists and creators.",
+    tech: ["Astro", "Tailwind CSS", "Stripe", "JWT"],
+    status: "shipped",
+    featured: true,
+    link: "https://watchoverflow.com",
     github: "#"
   },
   {
