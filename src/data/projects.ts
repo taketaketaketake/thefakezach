@@ -101,6 +101,7 @@ export const projects: Project[] = [
   {
     title: "Overflow",
     emoji: "📺",
+    image: "/projects/overflow-cover.jpeg",
     year: "2025",
     summary: "PPV livestream platform for exclusive live events and performances.",
     spark: "Wanted to create a platform where independent artists and creators could monetize live performances directly, without middlemen taking massive cuts.",
