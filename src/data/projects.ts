@@ -86,17 +86,18 @@ export const projects: Project[] = [
     github: "#"
   },
   {
-    title: "AI Voice Agents",
-    emoji: "🗣️",
-    year: "2025",
-    summary: "Production voice AI systems handling real customer calls with sub-500ms response latency.",
-    spark: "Businesses were missing calls after hours. Hiring 24/7 staff wasn't realistic. I wanted to see if AI could handle the first touch naturally enough that callers wouldn't hang up.",
-    whatItDoes: "Production voice agents using Telnyx Voice API for ultra-low latency conversations. Handles inbound calls, collects customer info naturally, supports SMS/MMS follow-up, and logs all interactions. Built for service businesses across multiple industries.",
-    tech: ["Node.js", "Express", "Telnyx", "SQLite", "Supabase"],
-    status: "shipped",
+    title: "Agentland OS",
+    emoji: "🧠",
+    image: "/projects/agentland-os-cover.png",
+    year: "2026",
+    summary: "",
+    spark: "",
+    whatItDoes: "",
+    tech: [],
+    status: "in-progress",
     featured: true,
-    link: "https://fixmyfurnacemi.com",
-    github: "#"
+    link: "https://agentlandos.com",
+    github: ""
   },
   {
     title: "Overflow",
