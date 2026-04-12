@@ -5,27 +5,39 @@ const pageTitle = "Resume | Zachary Lewis";
 
 const skills = {
   languages: ["TypeScript", "JavaScript", "Python", "SQL"],
-  frontend: ["React", "React Native", "Astro", "Expo", "Tailwind CSS"],
-  backend: ["Node.js", "Bun", "Express", "Prisma", "Socket.io", "BullMQ"],
+  frontend: ["React", "React Native", "Astro", "Expo", "Tailwind CSS", "Vite", "Three.js"],
+  backend: ["Node.js", "Bun", "Express", "FastAPI", "Prisma", "Socket.io", "BullMQ", "Microservices", "REST APIs"],
+  "ai & agents": ["Telnyx AI", "Deepgram", "Gemini", "LLM Evaluation", "Multi-Agent Systems", "A2A Protocol", "LangChain", "Claude SDK"],
   databases: ["PostgreSQL", "SQLite", "Redis", "Supabase"],
-  integrations: ["Stripe", "Telnyx", "Twilio", "Resend"],
-  video: ["Live Streaming", "Multi-Camera Production", "OBS", "vMix"],
-  content: ["Social Media Strategy", "Brand Building", "Content Creation"],
-  devops: ["Docker", "Railway", "Netlify", "GitHub Actions"]
+  "auth & payments": ["Stripe", "Better Auth", "JWT", "Magic Links", "OAuth"],
+  "real-time": ["WebSocket", "Socket.io", "SSE", "Message Queues"],
+  "cloud & infra": ["AWS", "GCP", "Docker", "Railway", "Netlify", "GitHub Actions", "Sentry", "CI/CD"],
+  integrations: ["Twilio", "Resend", "Shopify", "Mapbox", "Google Places"],
+  video: ["Live Streaming", "Multi-Camera Production", "OBS", "vMix", "Remotion"]
 };
 
 const projects = [
   {
+    title: "AgentlandOS",
+    subtitle: "AI Agent Operating System",
+    tech: ["React", "Python", "Vite", "Better Auth", "Sentry"],
+    website: "agentlandos.com",
+    highlights: [
+      "Microservices architecture with 15+ service modules across orchestration, planning, and execution",
+      "Agent routing, tool invocation, and human-in-the-loop workflows",
+      "Telemetry, billing, and multi-tenant auth with observability layers"
+    ]
+  },
+  {
     title: "Voice AI Systems",
     subtitle: "Production Voice Agents",
-    tech: ["Node.js", "Express", "Telnyx", "SQLite", "Supabase"],
-    website: "fixmyfurnacemi.com",
+    tech: ["Node.js", "Express", "Telnyx", "Python", "SQLite", "Supabase"],
     phone: "(833) FIX-IT-NOW",
     phoneLink: "tel:+18333498669",
     highlights: [
-      "Built production voice AI with sub-500ms response latency",
-      "Real-time call monitoring with conversation memory",
-      "Architected for 1000+ concurrent calls"
+      "Deployed production voice AI agents handling live customer calls with sub-500ms response latency",
+      "Built real-time call monitoring dashboard with conversation memory and context persistence",
+      "Architected for 1000+ concurrent calls with graceful failover"
     ]
   },
   {
@@ -34,9 +46,42 @@ const projects = [
     tech: ["Bun", "SQLite", "React", "WebSocket", "Python"],
     website: "github.com/thefakezach",
     highlights: [
-      "Real-time observability for Claude Code and Gemini CLI sessions",
-      "Live event streaming with agent tracking and transcript viewing",
-      "LLM-powered evaluation system for scoring agent quality"
+      "Real-time observability for Claude Code and Gemini CLI agent sessions",
+      "Live event streaming with agent tracking, transcript viewing, and session replay",
+      "LLM-powered evaluation system for scoring agent quality across runs"
+    ]
+  },
+  {
+    title: "TraceTrack",
+    subtitle: "GitHub for AI Workflows",
+    tech: ["Node.js", "PostgreSQL", "Redis", "WebSocket", "React"],
+    website: "github.com/taketaketaketake/Trace-Track",
+    highlights: [
+      "Trace sharing, forking, and diffing for AI coding sessions across teams",
+      "Version-controlled prompt pipelines with automated eval suites",
+      "Ingestion from Langfuse, LangSmith, OpenTelemetry, and direct API"
+    ]
+  },
+  {
+    title: "A2A Telephony Protocol",
+    subtitle: "Open Standard for Agent Phone Calls",
+    tech: ["Python", "FastAPI", "A2A Protocol"],
+    website: "github.com/taketaketaketake/telephony-protocol",
+    highlights: [
+      "Authored open standard extending Google's A2A protocol with telephony capabilities",
+      "Reference server with conformant JSON-RPC implementation and stub carrier handlers",
+      "Single operation design — any A2A-compliant agent can make phone calls and send texts"
+    ]
+  },
+  {
+    title: "On The Floor",
+    subtitle: "Patient Care Experience Platform",
+    tech: ["React Native", "Expo", "Express", "Prisma", "PostgreSQL", "Socket.io"],
+    website: "onthefloor.app",
+    highlights: [
+      "Full-stack platform: React Native mobile app + Express API + PostgreSQL",
+      "Real-time chat rooms with Socket.io for in-hospital patient expression",
+      "Magic Link + OAuth auth, structured care reviews with scored signals"
     ]
   },
   {
@@ -45,31 +90,31 @@ const projects = [
     tech: ["Express", "Prisma", "PostgreSQL", "Redis", "Stripe", "Twilio"],
     website: "seatbites.com/about",
     highlights: [
-      "Multi-tenant vendor system with smart dispatch",
-      "Complete 9-state order machine with BullMQ",
-      "Stripe integration with idempotent webhooks"
+      "Multi-tenant vendor system with smart dispatch across locations",
+      "Complete 9-state order machine with BullMQ job processing",
+      "Stripe integration with idempotent webhooks and retry logic"
     ]
   },
   {
     title: "Overflow",
     subtitle: "PPV Livestream Platform",
-    tech: ["Astro", "Tailwind CSS", "Stripe", "JWT"],
+    tech: ["Astro", "Tailwind CSS", "Stripe", "JWT", "Playwright"],
     website: "watchoverflow.com",
     highlights: [
       "Built full-stack PPV platform for exclusive live events and performances",
       "Integrated payment processing and live video infrastructure",
-      "Producing shows for independent artists and creators"
+      "E2E test coverage with Playwright and Vitest"
     ]
   },
   {
-    title: "On The Floor",
-    subtitle: "React Native Mobile Application",
-    tech: ["React Native", "Expo 54", "TypeScript", "Socket.io"],
-    website: "onthefloor.app",
+    title: "Fix My Furnace",
+    subtitle: "HVAC Lead Generation Platform",
+    tech: ["Astro", "Supabase", "Tailwind CSS"],
+    website: "fixmyfurnacemi.com",
     highlights: [
-      "Native iOS/Android with real-time chat",
-      "Magic Link + OAuth authentication",
-      "Push notifications with Expo Router navigation"
+      "Smart lead capture with phone validation and address autocomplete",
+      "Contractor application portal with admin moderation",
+      "Real pricing transparency system from actual service contracts"
     ]
   },
   {
@@ -82,19 +127,41 @@ const projects = [
       "Service zone capacity management and scheduling",
       "Magic link auth with Stripe subscription billing"
     ]
+  },
+  {
+    title: "Detroit Small Business Map",
+    subtitle: "Self-Enriching Business Directory",
+    tech: ["Hono", "Prisma", "PostgreSQL", "Redis", "Gemini AI", "Mapbox", "Astro", "React"],
+    website: "github.com/thefakezach",
+    highlights: [
+      "Automated data enrichment pipeline using SERP, Google Places, Geoapify, and Gemini AI",
+      "Quality-gated promotion system from staging to production listings",
+      "Neighborhood-based discovery with Mapbox interactive maps and S3 image storage"
+    ]
+  },
+  {
+    title: "Penalty Box",
+    subtitle: "E-Commerce for Darren McCarty",
+    tech: ["Astro", "React", "Shopify API", "Nanostores"],
+    website: "github.com/thefakezach",
+    highlights: [
+      "Shopify storefront integration for 4x Stanley Cup champion",
+      "Event booking system with product catalog",
+      "Reactive state management with Nanostores"
+    ]
   }
 ];
 
 const experience = [
   {
-    role: "Technical Director",
-    company: "Overflow",
-    website: "watchoverflow.com",
+    role: "Agentic Engineer",
+    company: "thefakezach.com",
+    website: "thefakezach.com",
     period: "2024 - Present",
     highlights: [
-      "Built and operate a PPV livestream platform for exclusive live events",
-      "Produce live performances and shows for independent artists and creators",
-      "Developed full-stack platform with payment processing and live video infrastructure"
+      "Shipped 9+ production products: voice AI agents, multi-agent platforms, real-time systems, and mobile apps",
+      "Designed agentic architectures with orchestration, tool invocation, and observability layers",
+      "Authored open telephony standard for the A2A protocol; built AI workflow tracing and eval platform"
     ]
   },
   {
@@ -110,8 +177,8 @@ const experience = [
     ]
   },
   {
-    role: "Property Management",
-    company: "Boydell Development",
+    role: "Short Term Property Manager",
+    company: "Airbnb",
     period: "2024",
     highlights: [
       "Managed portfolio of residential and commercial properties",
@@ -125,14 +192,14 @@ const zachary = {
   name: "Zachary Lewis",
   username: "thefakezach",
   avatarPhoto: "/profile-photo.jpg",
-  title: "Full-Stack Developer",
+  title: "Agentic AI Engineer",
   location: "Detroit, MI"
 };
 
 const stats = [
   { value: "100K+", label: "Followers" },
   { value: "25M+", label: "Video Views" },
-  { value: "10+", label: "Years Experience" },
+  { value: "9+", label: "AI Projects" },
   { value: "9+", label: "Products Shipped" }
 ];
 ---
@@ -142,7 +209,7 @@ const stats = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{pageTitle}</title>
-    <meta name="description" content="Zachary Lewis - Developer & Content Creator based in Detroit, MI. Building software, producing video content, and growing online brands." />
+    <meta name="description" content="Zachary Lewis - Agentic AI Engineer based in Detroit, MI. Building production AI agents, multi-agent platforms, and cloud-native systems." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
 
@@ -196,6 +263,10 @@ const stats = [
               <span>🌐</span>
               <span class="hidden sm:inline text-sm">thefakezach.com</span>
             </a>
+            <a href="https://github.com/taketaketaketake" class="flex items-center gap-2 hover:text-pink-400 transition-colors">
+              <span>💻</span>
+              <span class="hidden sm:inline text-sm">GitHub</span>
+            </a>
           </div>
         </div>
       </div>
@@ -226,43 +297,8 @@ const stats = [
             <span class="text-pink-400">About</span>
           </h2>
           <p class="text-zinc-300 text-base leading-relaxed">
-            Full-stack developer with a background in video production. I spent years building a video production business and growing an audience to 100K+ followers and 25M+ video views. In 2024, I became obsessed with AI and haven't stopped building since—shipping voice AI systems, mobile apps, real-time platforms, and everything in between. I learn by doing and ship fast.
+            Agentic AI engineer who ships production systems. Background in video production and brand building (100K+ followers, 25M+ views) before going all-in on AI in 2024. Since then I've shipped voice AI agents handling real phone calls, built multi-agent observability and tracing platforms, authored an open telephony standard for the A2A protocol, and delivered 9+ full-stack products. I build fast, deploy to production, and communicate clearly with technical and non-technical stakeholders.
           </p>
-        </div>
-      </section>
-
-      <!-- Experience -->
-      <section class="mb-10">
-        <div class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-6">
-          <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
-            <span class="text-pink-400">Experience</span>
-          </h2>
-          <div class="space-y-6">
-            {experience.map((job) => (
-              <div class="relative pl-6 border-l-2 border-zinc-700">
-                <div class="absolute -left-[9px] top-0 w-4 h-4 bg-pink-500 rounded-full border-4 border-zinc-900"></div>
-                <div class="flex flex-wrap items-baseline gap-2 mb-1">
-                  <h3 class="text-lg font-semibold text-white">{job.role}</h3>
-                  <span class="text-sm text-zinc-500">•</span>
-                  <span class="text-sm text-pink-400">{job.company}</span>
-                  {job.website && (
-                    <a href={`https://${job.website}`} class="text-xs text-zinc-500 hover:text-pink-400 transition-colors">
-                      ({job.website})
-                    </a>
-                  )}
-                </div>
-                <p class="text-sm text-zinc-500 mb-3">{job.period}</p>
-                <ul class="space-y-1.5">
-                  {job.highlights.map((highlight) => (
-                    <li class="text-sm text-zinc-400 flex items-start gap-2">
-                      <span class="text-zinc-600 mt-1">–</span>
-                      {highlight}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -300,9 +336,13 @@ const stats = [
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             {projects.map((project) => (
               <div class="bg-zinc-800/50 rounded-xl p-5 border border-zinc-700/50 hover:border-pink-500/30 transition-colors">
-                <a href={`https://${project.website}`} target="_blank" rel="noopener noreferrer" class="text-lg font-semibold text-white hover:text-pink-400 transition-colors">
-                  {project.title} ↗
-                </a>
+                {project.website ? (
+                  <a href={`https://${project.website}`} target="_blank" rel="noopener noreferrer" class="text-lg font-semibold text-white hover:text-pink-400 transition-colors">
+                    {project.title} ↗
+                  </a>
+                ) : (
+                  <span class="text-lg font-semibold text-white">{project.title}</span>
+                )}
                 <p class={`text-sm text-pink-400 mt-1 ${project.phone ? 'mb-1' : 'mb-3'}`}>{project.subtitle}</p>
                 {project.phone && (
                   <div class="mb-3 text-xs">
@@ -322,6 +362,41 @@ const stats = [
                   {project.highlights.map((highlight) => (
                     <li class="text-sm text-zinc-400 flex items-start gap-2">
                       <span class="text-pink-400 mt-1">›</span>
+                      {highlight}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- Experience -->
+      <section class="mb-10">
+        <div class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-6">
+          <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+            <span class="text-pink-400">Experience</span>
+          </h2>
+          <div class="space-y-6">
+            {experience.map((job) => (
+              <div class="relative pl-6 border-l-2 border-zinc-700">
+                <div class="absolute -left-[9px] top-0 w-4 h-4 bg-pink-500 rounded-full border-4 border-zinc-900"></div>
+                <div class="flex flex-wrap items-baseline gap-2 mb-1">
+                  <h3 class="text-lg font-semibold text-white">{job.role}</h3>
+                  <span class="text-sm text-zinc-500">•</span>
+                  <span class="text-sm text-pink-400">{job.company}</span>
+                  {job.website && (
+                    <a href={`https://${job.website}`} class="text-xs text-zinc-500 hover:text-pink-400 transition-colors">
+                      ({job.website})
+                    </a>
+                  )}
+                </div>
+                <p class="text-sm text-zinc-500 mb-3">{job.period}</p>
+                <ul class="space-y-1.5">
+                  {job.highlights.map((highlight) => (
+                    <li class="text-sm text-zinc-400 flex items-start gap-2">
+                      <span class="text-zinc-600 mt-1">–</span>
                       {highlight}
                     </li>
                   ))}
