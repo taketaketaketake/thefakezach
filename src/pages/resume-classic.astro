@@ -26,22 +26,22 @@ const experience = [
     period: "2024 – Present",
     location: "Detroit, MI",
     bullets: [
-      { bold: "Shipped 9+ production products", rest: " including voice AI agents handling live phone calls with sub-500ms latency, multi-agent observability platforms, and real-time systems." },
-      { bold: "Authored open telephony standard", rest: " extending Google's A2A protocol with phone and SMS capabilities; published reference server with JSON-RPC implementation." },
-      { bold: "Architected agentic systems", rest: " with orchestration, tool invocation, human-in-the-loop workflows, telemetry, and multi-tenant auth across 15+ service modules." },
-      { bold: "Built LLM evaluation platform", rest: " for scoring agent quality across runs with trace ingestion from Langfuse, LangSmith, and OpenTelemetry." },
+      { bold: "Product Lifecycle Management", rest: " including voice AI agents handling live phone calls with sub-500ms latency, multi-agent observability platforms, and real-time systems." },
+      { bold: "Agentic Engineering", rest: " authoring an open telephony standard extending Google's A2A protocol with phone and SMS capabilities; published reference server with JSON-RPC implementation." },
+      { bold: "Harness Engineering", rest: " with orchestration, tool invocation, human-in-the-loop workflows, telemetry, and multi-tenant auth across 15+ service modules." },
+      { bold: "Observability and Evals", rest: " for scoring agent quality across runs with trace ingestion from Langfuse, LangSmith, and OpenTelemetry." },
       { label: "Technologies", rest: "TypeScript, Node.js, Bun, Python, FastAPI, React, PostgreSQL, Redis, Telnyx, Gemini, Claude SDK, WebSocket, Docker, AWS" }
     ]
   },
   {
     company: "Take Detroit / Take Media",
-    role: "Founder & Creative Director",
+    role: "Technical Director",
     period: "2015 – Present",
     location: "Detroit, MI",
     bullets: [
-      { bold: "Grew online brand to 100,000+ followers", rest: " across social platforms and generated 25+ million video views through original content." },
-      { bold: "Established Detroit's go-to city guide", rest: " and lifestyle brand through consistent publishing, livestreams, and editorial video." },
-      { bold: "Produced video, livestreams, and digital marketing", rest: " for clients across food, sports, entertainment, and small business verticals." },
+      { bold: "Social Media Management", rest: " across social platforms, growing an online brand to 100,000+ followers and generating 25+ million video views through original content." },
+      { bold: "Online Marketing", rest: " establishing Detroit's go-to city guide and lifestyle brand through consistent publishing, livestreams, and editorial video." },
+      { bold: "Live Broadcast and Video Production", rest: " for clients across food, sports, entertainment, and small business verticals." },
       { label: "Technologies", rest: "Adobe Premiere, OBS, vMix, Remotion, Three.js, Mapbox, Shopify" }
     ]
   },
@@ -57,11 +57,21 @@ const projects = [
     ]
   },
   {
-    title: "Voice AI Systems",
-    link: "(833) FIX-IT-NOW",
+    title: "Agentland Docs",
+    link: "docs.agentlandos.com",
     bullets: [
-      "Deployed production voice AI agents handling live customer calls with sub-500ms response latency",
-      "Architected for 1000+ concurrent calls with graceful failover, conversation memory, and real-time monitoring dashboard"
+      "Documentation site covering the AgentlandOS platform, agent APIs, and integration guides",
+      "Structured reference for developers building on the multi-agent runtime"
+    ]
+  },
+  {
+    title: "AgentLand Observability",
+    link: "github.com/thefakezach",
+    bullets: [
+      "Real-time observability dashboard for Claude Code and Gemini CLI agent sessions with live event streaming",
+      "LLM-powered evaluation system scoring agent quality across runs with session replay and transcript viewing",
+      "Trace sharing, forking, and diffing across teams with version-controlled prompt pipelines",
+      "Ingestion from Langfuse, LangSmith, OpenTelemetry, and direct API with automated eval suites"
     ]
   },
   {
@@ -73,19 +83,11 @@ const projects = [
     ]
   },
   {
-    title: "TraceTrack",
-    link: "github.com/taketaketaketake/Trace-Track",
+    title: "Cosmic Crew",
+    link: "cosmiccrew.club",
     bullets: [
-      "GitHub for AI workflows: trace sharing, forking, and diffing across teams with version-controlled prompt pipelines",
-      "Ingestion from Langfuse, LangSmith, OpenTelemetry, and direct API with automated eval suites"
-    ]
-  },
-  {
-    title: "AgentLand Observability",
-    link: "github.com/thefakezach",
-    bullets: [
-      "Real-time observability dashboard for Claude Code and Gemini CLI agent sessions with live event streaming",
-      "LLM-powered evaluation system scoring agent quality across runs with session replay and transcript viewing"
+      "Interactive 3D educational game with rocket navigation, star fields, and warp effects built in Three.js",
+      "WebGL rendering with raycasting for interaction and multiple game modes including rocket explorer and space shooter"
     ]
   },
   {
@@ -96,14 +98,6 @@ const projects = [
       "Magic Link + OAuth auth, structured care reviews with scored signals for in-hospital patient expression"
     ]
   },
-  {
-    title: "SeatBites",
-    link: "seatbites.com/about",
-    bullets: [
-      "Multi-tenant SMS-first food ordering platform with smart dispatch across vendor locations",
-      "Complete 9-state order machine with BullMQ job processing and Stripe integration with idempotent webhooks"
-    ]
-  }
 ];
 
 const skills = {
@@ -190,7 +184,11 @@ const skills = {
         <div class="mt-3">
           <div class="flex justify-between items-baseline flex-wrap gap-x-2">
             <span class="font-semibold text-white">{project.title}</span>
-            <span class="italic text-zinc-500">{project.link}</span>
+            {project.link.startsWith("(") ? (
+              <span class="italic text-zinc-500">{project.link}</span>
+            ) : (
+              <a href={`https://${project.link}`} target="_blank" rel="noopener noreferrer" class="italic text-pink-400 hover:text-pink-300">{project.link}</a>
+            )}
           </div>
           <ul class="list-disc pl-5 mt-1 space-y-1 marker:text-pink-400/60">
             {project.bullets.map((bullet) => (
