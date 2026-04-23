@@ -1,0 +1,278 @@
+---
+import "../styles/global.css";
+
+const pageTitle = "Resume | Zachary Lewis";
+
+const zachary = {
+  name: "Zachary Lewis",
+  title: "Agentic AI Engineer",
+  email: "Zach@TakeDetroit.com",
+  location: "Detroit, MI",
+  website: "thefakezach.com",
+  github: "github.com/taketaketaketake"
+};
+
+const education = {
+  school: "Kutztown University of Pennsylvania",
+  degree: "B.S. Psychology",
+  graduation: "2008",
+  extras: "Founder of Take Detroit, growing an online brand to 100,000+ followers and 25M+ video views before transitioning to agentic AI engineering in 2024."
+};
+
+const experience = [
+  {
+    company: "thefakezach.com",
+    role: "Agentic Engineer",
+    period: "2024 – Present",
+    location: "Detroit, MI",
+    bullets: [
+      { bold: "Shipped 9+ production products", rest: " including voice AI agents handling live phone calls with sub-500ms latency, multi-agent observability platforms, and real-time systems." },
+      { bold: "Authored open telephony standard", rest: " extending Google's A2A protocol with phone and SMS capabilities; published reference server with JSON-RPC implementation." },
+      { bold: "Architected agentic systems", rest: " with orchestration, tool invocation, human-in-the-loop workflows, telemetry, and multi-tenant auth across 15+ service modules." },
+      { bold: "Built LLM evaluation platform", rest: " for scoring agent quality across runs with trace ingestion from Langfuse, LangSmith, and OpenTelemetry." },
+      { label: "Technologies", rest: "TypeScript, Node.js, Bun, Python, FastAPI, React, PostgreSQL, Redis, Telnyx, Gemini, Claude SDK, WebSocket, Docker, AWS" }
+    ]
+  },
+  {
+    company: "Take Detroit / Take Media",
+    role: "Founder & Creative Director",
+    period: "2015 – Present",
+    location: "Detroit, MI",
+    bullets: [
+      { bold: "Grew online brand to 100,000+ followers", rest: " across social platforms and generated 25+ million video views through original content." },
+      { bold: "Established Detroit's go-to city guide", rest: " and lifestyle brand through consistent publishing, livestreams, and editorial video." },
+      { bold: "Produced video, livestreams, and digital marketing", rest: " for clients across food, sports, entertainment, and small business verticals." },
+      { label: "Technologies", rest: "Adobe Premiere, OBS, vMix, Remotion, Three.js, Mapbox, Shopify" }
+    ]
+  },
+];
+
+const projects = [
+  {
+    title: "AgentlandOS",
+    link: "agentlandos.com",
+    bullets: [
+      "Microservices architecture with 15+ service modules spanning orchestration, planning, and execution layers",
+      "Agent routing, tool invocation, and human-in-the-loop workflows with telemetry, billing, and multi-tenant auth"
+    ]
+  },
+  {
+    title: "Voice AI Systems",
+    link: "(833) FIX-IT-NOW",
+    bullets: [
+      "Deployed production voice AI agents handling live customer calls with sub-500ms response latency",
+      "Architected for 1000+ concurrent calls with graceful failover, conversation memory, and real-time monitoring dashboard"
+    ]
+  },
+  {
+    title: "A2A Telephony Protocol",
+    link: "github.com/taketaketaketake/telephony-protocol",
+    bullets: [
+      "Authored open standard extending Google's A2A protocol with telephony capabilities for AI agents",
+      "Reference server with conformant JSON-RPC implementation — any A2A-compliant agent can make phone calls and send texts"
+    ]
+  },
+  {
+    title: "TraceTrack",
+    link: "github.com/taketaketaketake/Trace-Track",
+    bullets: [
+      "GitHub for AI workflows: trace sharing, forking, and diffing across teams with version-controlled prompt pipelines",
+      "Ingestion from Langfuse, LangSmith, OpenTelemetry, and direct API with automated eval suites"
+    ]
+  },
+  {
+    title: "AgentLand Observability",
+    link: "github.com/thefakezach",
+    bullets: [
+      "Real-time observability dashboard for Claude Code and Gemini CLI agent sessions with live event streaming",
+      "LLM-powered evaluation system scoring agent quality across runs with session replay and transcript viewing"
+    ]
+  },
+  {
+    title: "On The Floor",
+    link: "onthefloor.app",
+    bullets: [
+      "Full-stack patient care platform: React Native mobile app + Express API + PostgreSQL with Socket.io chat rooms",
+      "Magic Link + OAuth auth, structured care reviews with scored signals for in-hospital patient expression"
+    ]
+  },
+  {
+    title: "SeatBites",
+    link: "seatbites.com/about",
+    bullets: [
+      "Multi-tenant SMS-first food ordering platform with smart dispatch across vendor locations",
+      "Complete 9-state order machine with BullMQ job processing and Stripe integration with idempotent webhooks"
+    ]
+  }
+];
+
+const skills = {
+  languages: "TypeScript, JavaScript, Python, SQL",
+  frontend: "React, React Native, Astro, Expo, Tailwind CSS, Vite, Three.js",
+  backend: "Node.js, Bun, Express, FastAPI, Prisma, Socket.io, BullMQ, Microservices, REST APIs",
+  ai: "Telnyx AI, Deepgram, Gemini, Claude SDK, LangChain, LLM Evaluation, Multi-Agent Systems, A2A Protocol",
+  data: "PostgreSQL, SQLite, Redis, Supabase",
+  infra: "AWS, GCP, Docker, Railway, Netlify, GitHub Actions, Sentry, CI/CD",
+  integrations: "Stripe, Twilio, Resend, Shopify, Mapbox, Google Places, Better Auth"
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content="Zachary Lewis - Agentic AI Engineer resume (classic format)." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+
+  <body class="bg-zinc-950 text-zinc-50 font-sans min-h-screen">
+    <div class="resume-classic max-w-[850px] mx-auto px-4 sm:px-8 py-10 text-[14px] leading-relaxed">
+
+      <!-- Name -->
+      <h1 class="text-center text-3xl sm:text-4xl font-bold tracking-tight text-white">{zachary.name}</h1>
+
+      <!-- Contact Row -->
+      <div class="text-center text-sm mt-3 mb-6 text-zinc-400">
+        <span class="text-pink-400">{zachary.title}</span>
+        <span class="text-zinc-700 mx-2">|</span>
+        <span>{zachary.location}</span>
+        <span class="text-zinc-700 mx-2">|</span>
+        <a href={`https://${zachary.website}`} class="text-pink-400 hover:text-pink-300 transition-colors">{zachary.website}</a>
+        <span class="text-zinc-700 mx-2">|</span>
+        <a href={`https://${zachary.github}`} class="text-pink-400 hover:text-pink-300 transition-colors">GitHub</a>
+      </div>
+
+      <!-- Education -->
+      <h2 class="text-pink-400 text-sm font-bold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-zinc-800">Education</h2>
+      <div class="mt-2">
+        <div class="flex justify-between items-baseline flex-wrap gap-x-2">
+          <div>
+            <span class="font-semibold text-white">{education.school}</span>
+            <span class="text-zinc-400"> | {education.degree}</span>
+          </div>
+          <div class="text-right text-zinc-400">
+            <span class="font-semibold text-zinc-300">Graduation:</span> {education.graduation}
+          </div>
+        </div>
+        <p class="mt-1 text-zinc-400">{education.extras}</p>
+      </div>
+
+      <!-- Experience -->
+      <h2 class="text-pink-400 text-sm font-bold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-zinc-800">Experience</h2>
+      {experience.map((job) => (
+        <div class="mt-3">
+          <div class="flex justify-between items-baseline flex-wrap gap-x-2">
+            <span class="font-semibold text-white">{job.company}</span>
+            <span class="text-zinc-400">{job.period}</span>
+          </div>
+          <div class="flex justify-between items-baseline flex-wrap gap-x-2">
+            <span class="italic text-zinc-300">{job.role}</span>
+            <span class="italic text-zinc-500">{job.location}</span>
+          </div>
+          <ul class="list-disc pl-5 mt-1.5 space-y-1 marker:text-pink-400/60">
+            {job.bullets.map((b) => (
+              <li class="text-zinc-300">
+                {b.label ? (
+                  <span class="text-zinc-400"><span class="italic">{b.label} used:</span> {b.rest}</span>
+                ) : (
+                  <span><span class="font-semibold text-white">{b.bold}</span>{b.rest}</span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+
+      <!-- Projects -->
+      <h2 class="text-pink-400 text-sm font-bold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-zinc-800">Projects</h2>
+      {projects.map((project) => (
+        <div class="mt-3">
+          <div class="flex justify-between items-baseline flex-wrap gap-x-2">
+            <span class="font-semibold text-white">{project.title}</span>
+            <span class="italic text-zinc-500">{project.link}</span>
+          </div>
+          <ul class="list-disc pl-5 mt-1 space-y-1 marker:text-pink-400/60">
+            {project.bullets.map((bullet) => (
+              <li class="text-zinc-300">{bullet}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+
+      <!-- Technical Skills -->
+      <h2 class="text-pink-400 text-sm font-bold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-zinc-800">Technical Skills</h2>
+      <ul class="list-disc pl-5 mt-2 space-y-1 marker:text-pink-400/60">
+        <li class="text-zinc-300"><span class="font-semibold text-white">Languages:</span> {skills.languages}</li>
+        <li class="text-zinc-300"><span class="font-semibold text-white">Frontend:</span> {skills.frontend}</li>
+        <li class="text-zinc-300"><span class="font-semibold text-white">Backend:</span> {skills.backend}</li>
+        <li class="text-zinc-300"><span class="font-semibold text-white">AI & Agents:</span> {skills.ai}</li>
+        <li class="text-zinc-300"><span class="font-semibold text-white">Databases:</span> {skills.data}</li>
+        <li class="text-zinc-300"><span class="font-semibold text-white">Cloud & Infra:</span> {skills.infra}</li>
+        <li class="text-zinc-300"><span class="font-semibold text-white">Integrations:</span> {skills.integrations}</li>
+      </ul>
+
+      <!-- Print Button -->
+      <div class="mt-10 text-center print:hidden">
+        <button
+          onclick="window.print()"
+          class="inline-flex items-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-semibold px-6 py-3 rounded-full transition-colors"
+        >
+          <span>📄</span>
+          Print / Save as PDF
+        </button>
+      </div>
+    </div>
+
+    <style>
+      .resume-classic ul {
+        list-style-type: disc;
+        list-style-position: outside;
+        padding-left: 1.5rem;
+      }
+      .resume-classic ul li {
+        padding-left: 0.25rem;
+      }
+      .resume-classic ul li::marker {
+        color: rgba(244, 114, 182, 0.7);
+      }
+      .resume-classic a {
+        text-decoration: none;
+      }
+      .resume-classic a:hover {
+        text-decoration: underline;
+      }
+
+      @media print {
+        @page {
+          margin: 0.4in;
+        }
+        body {
+          background: white !important;
+          color: black !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .text-white,
+        .text-zinc-50,
+        .text-zinc-300,
+        .text-zinc-400,
+        .text-zinc-500 {
+          color: #222 !important;
+        }
+        .text-pink-400 {
+          color: #db2777 !important;
+        }
+        .border-zinc-800 {
+          border-color: #222 !important;
+        }
+        .text-zinc-700 {
+          color: #999 !important;
+        }
+        button {
+          display: none;
+        }
+      }
+    </style>
+  </body>
+</html>
