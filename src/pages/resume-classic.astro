@@ -12,17 +12,18 @@ const zachary = {
   github: "github.com/taketaketaketake"
 };
 
+const summary = "Agentic AI engineer who ships production systems. Background in video production and brand building (100K+ followers, 25M+ views) before going all-in on AI in 2024. Since then I've shipped voice AI agents handling real phone calls, built multi-agent observability and tracing platforms, authored an open telephony standard for the A2A protocol, and delivered 9+ full-stack products. I build fast, deploy to production, and communicate clearly with technical and non-technical stakeholders.";
+
 const education = {
   school: "Kutztown University of Pennsylvania",
   degree: "B.S. Psychology",
-  graduation: "2008",
-  extras: "Founder of Take Detroit, growing an online brand to 100,000+ followers and 25M+ video views before transitioning to agentic AI engineering in 2024."
+  graduation: "2008"
 };
 
 const experience = [
   {
     company: "thefakezach.com",
-    role: "Agentic Engineer",
+    role: "Agentic Engineer + Entrepreneur",
     period: "2024 – Present",
     location: "Detroit, MI",
     bullets: [
@@ -137,6 +138,10 @@ const skills = {
         <a href={`https://${zachary.github}`} class="text-pink-400 hover:text-pink-300 transition-colors">GitHub</a>
       </div>
 
+      <!-- Summary -->
+      <h2 class="text-pink-400 text-sm font-bold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-zinc-800">Summary</h2>
+      <p class="text-zinc-300">{summary}</p>
+
       <!-- Education -->
       <h2 class="text-pink-400 text-sm font-bold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-zinc-800">Education</h2>
       <div class="mt-2">
@@ -149,7 +154,6 @@ const skills = {
             <span class="font-semibold text-zinc-300">Graduation:</span> {education.graduation}
           </div>
         </div>
-        <p class="mt-1 text-zinc-400">{education.extras}</p>
       </div>
 
       <!-- Experience -->
