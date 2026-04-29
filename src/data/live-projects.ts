@@ -30,11 +30,17 @@ export type MetricSource =
       description: string;
     };
 
+export interface MetricDelta {
+  window: string; // human label, e.g. "7d", "30d", "MoM"
+  pct: number | null; // signed percentage; null = placeholder, fill once wired
+}
+
 export interface OpsMetric {
   label: string;
   value: string;
   hint?: string;
   source: MetricSource;
+  delta: MetricDelta;
 }
 
 export interface ActivityEntry {
@@ -92,6 +98,7 @@ export const liveProjects: LiveProject[] = [
           query: "select count(*) from form_submissions",
           description: "Total customer leads submitted across every form on the site.",
         },
+        delta: { window: "7d", pct: null },
       },
       {
         label: "Active Contractors",
@@ -104,6 +111,7 @@ export const liveProjects: LiveProject[] = [
             "select count(*) from provider_applications where status = 'approved'",
           description: "Contractors approved and visible in the partner directory.",
         },
+        delta: { window: "7d", pct: null },
       },
       {
         label: "Contracts Published",
@@ -116,6 +124,7 @@ export const liveProjects: LiveProject[] = [
             "select count(*) from service_contracts where status = 'approved'",
           description: "Customer-uploaded service contracts approved for the public pricing database.",
         },
+        delta: { window: "7d", pct: null },
       },
       {
         label: "Cities Served",
@@ -128,6 +137,7 @@ export const liveProjects: LiveProject[] = [
             "select count(distinct city) from form_submissions where city is not null",
           description: "Distinct Michigan cities that have submitted at least one lead.",
         },
+        delta: { window: "7d", pct: null },
       },
     ],
     focus: [
@@ -170,6 +180,7 @@ export const liveProjects: LiveProject[] = [
             "prisma.order.count({ where: { createdAt: { gte: startOfMonth(now) } } })",
           description: "Orders created since the first of the current month.",
         },
+        delta: { window: "7d", pct: null },
       },
       {
         label: "Active Members",
@@ -181,6 +192,7 @@ export const liveProjects: LiveProject[] = [
           query: "prisma.membership.count({ where: { status: 'active' } })",
           description: "Members with an active Stripe subscription.",
         },
+        delta: { window: "7d", pct: null },
       },
       {
         label: "Partner Laundromats",
@@ -192,6 +204,7 @@ export const liveProjects: LiveProject[] = [
           query: "prisma.laundromat.count({ where: { isActive: true } })",
           description: "Active partner laundromats accepting routed orders.",
         },
+        delta: { window: "7d", pct: null },
       },
       {
         label: "Avg Ticket",
@@ -204,6 +217,7 @@ export const liveProjects: LiveProject[] = [
             "prisma.order.aggregate({ _avg: { totalCents: true }, where: { createdAt: { gte: thirtyDaysAgo } } })",
           description: "Average order total over the last 30 days, in cents.",
         },
+        delta: { window: "7d", pct: null },
       },
     ],
     focus: [
@@ -245,6 +259,7 @@ export const liveProjects: LiveProject[] = [
           field: "total",
           description: "Total businesses in the public production table.",
         },
+        delta: { window: "7d", pct: null },
       },
       {
         label: "Listings Staged",
@@ -256,6 +271,7 @@ export const liveProjects: LiveProject[] = [
           field: "staged",
           description: "Businesses in `business_directory` awaiting promotion to production.",
         },
+        delta: { window: "7d", pct: null },
       },
       {
         label: "Neighborhoods",
@@ -267,6 +283,7 @@ export const liveProjects: LiveProject[] = [
           field: "length",
           description: "Distinct Detroit neighborhoods with at least one published business.",
         },
+        delta: { window: "7d", pct: null },
       },
       {
         label: "Pipeline Pending",
@@ -278,6 +295,7 @@ export const liveProjects: LiveProject[] = [
           field: "pendingEnrichment",
           description: "Discovered candidates that still need SERP, Places, or Gemini enrichment.",
         },
+        delta: { window: "7d", pct: null },
       },
     ],
     focus: [
@@ -320,6 +338,7 @@ export const liveProjects: LiveProject[] = [
           query: "prisma.review.count()",
           description: "Total structured 1–5 reviews submitted across all encounters.",
         },
+        delta: { window: "7d", pct: null },
       },
       {
         label: "Hospitals Indexed",
@@ -331,6 +350,7 @@ export const liveProjects: LiveProject[] = [
           query: "prisma.hospital.count()",
           description: "Hospitals plus nursing homes available for review.",
         },
+        delta: { window: "7d", pct: null },
       },
       {
         label: "Avg Signal Score",
@@ -343,6 +363,7 @@ export const liveProjects: LiveProject[] = [
             "prisma.review.aggregate({ _avg: { signalScore: true } })",
           description: "Mean of all signal-score fields across reviews.",
         },
+        delta: { window: "7d", pct: null },
       },
       {
         label: "Live Messages Today",
@@ -355,6 +376,7 @@ export const liveProjects: LiveProject[] = [
             "prisma.chatMessage.count({ where: { createdAt: { gte: startOfToday() } } })",
           description: "Live-chat messages posted since midnight (72-hour TTL).",
         },
+        delta: { window: "7d", pct: null },
       },
     ],
     focus: [

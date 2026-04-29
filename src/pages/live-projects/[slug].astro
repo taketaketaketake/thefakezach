@@ -29,17 +29,36 @@ const statusBadgeClass: Record<string, string> = {
 
 // Render the source contract for a metric. Every metric carries a typed
 // `source` describing how the live value will be read once wiring is added.
-function renderSource(s: MetricSource): { kindLabel: string; ref: string } {
+function sourceRef(s: MetricSource): string {
   switch (s.kind) {
     case "supabase":
-      return { kindLabel: "supabase", ref: `${s.table} · ${s.query}` };
+      return `${s.table} · ${s.query}`;
     case "prisma":
-      return { kindLabel: "prisma", ref: `${s.model} · ${s.query}` };
+      return `${s.model} · ${s.query}`;
     case "api":
-      return { kindLabel: "api", ref: `${s.endpoint} → ${s.field}` };
+      return `${s.endpoint} → ${s.field}`;
     case "manual":
-      return { kindLabel: "manual", ref: s.description };
+      return s.description;
   }
+}
+
+// Format the period-over-period delta for the metric chip.
+// Null pct renders as a neutral em-dash + window label; signed values are
+// colored green (up) or red (down).
+function formatDelta(d: { window: string; pct: number | null }): {
+  text: string;
+  cls: string;
+} {
+  const neutral = "text-zinc-400 bg-zinc-800/60 border-zinc-700";
+  if (d.pct === null) {
+    return { text: `— ${d.window}`, cls: neutral };
+  }
+  const text = `${d.pct > 0 ? "+" : ""}${d.pct.toFixed(1)}% ${d.window}`;
+  if (d.pct > 0)
+    return { text, cls: "text-green-400 bg-green-500/10 border-green-500/30" };
+  if (d.pct < 0)
+    return { text, cls: "text-red-400 bg-red-500/10 border-red-500/30" };
+  return { text, cls: neutral };
 }
 
 const formatDate = (iso: string) =>
@@ -146,15 +165,19 @@ const pageTitle = `${project.title} | Live Projects`;
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           {project.metrics.map((m) => {
-            const src = renderSource(m.source);
+            const ref = sourceRef(m.source);
+            const delta = formatDelta(m.delta);
             return (
               <div class="bg-zinc-950/60 border border-zinc-800 rounded-xl p-5">
                 <div class="flex items-baseline justify-between mb-2 gap-3">
                   <span class="text-xs font-bold uppercase tracking-wider text-pink-400">
                     {m.label}
                   </span>
-                  <span class="text-[10px] uppercase tracking-wider text-zinc-500 bg-zinc-800/60 border border-zinc-700 px-2 py-0.5 rounded font-mono">
-                    {src.kindLabel}
+                  <span
+                    class={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded border ${delta.cls}`}
+                    title={`Change vs previous ${m.delta.window}`}
+                  >
+                    {delta.text}
                   </span>
                 </div>
                 <div class="text-3xl sm:text-4xl font-extrabold text-white leading-none mb-1">
@@ -164,7 +187,7 @@ const pageTitle = `${project.title} | Live Projects`;
                 <div
                   class="font-mono text-xs text-zinc-300 bg-black/40 border border-zinc-800 rounded-md px-3 py-2 mb-2 break-all"
                 >
-                  {src.ref}
+                  {ref}
                 </div>
                 <div class="text-xs text-zinc-500 leading-relaxed">
                   {m.source.description}
