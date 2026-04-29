@@ -3,6 +3,7 @@ import "../styles/global.css";
 import Modal from "../components/Modal.astro";
 import ProjectsSection from "../components/ProjectsSection.astro";
 import BlogSection from "../components/BlogSection.astro";
+import LiveProjectsSection from "../components/LiveProjectsSection.astro";
 import { projects as allProjects } from "../data/projects";
 
 // Filter out projects hidden from homepage
@@ -162,6 +163,14 @@ const zachary = {
             Blog
             <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
           </button>
+          <button
+            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative"
+            data-tab="3"
+            aria-label="Live tab"
+          >
+            Live
+            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
+          </button>
         </div>
       </div>
     </nav>
@@ -195,6 +204,27 @@ const zachary = {
         <div class="swipe-panel flex-shrink-0 w-full">
           <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
             <BlogSection />
+          </main>
+        </div>
+
+        <!-- Panel 4: Live Projects -->
+        <div class="swipe-panel flex-shrink-0 w-full">
+          <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+            <section aria-labelledby="live-heading">
+              <div class="flex items-baseline justify-between gap-4 mb-6 flex-wrap">
+                <div>
+                  <h2 id="live-heading" class="text-2xl font-bold text-white">Live Projects</h2>
+                  <p class="text-zinc-400 text-sm mt-1">Businesses I'm running, in real time.</p>
+                </div>
+                <a
+                  href="/live-projects"
+                  class="text-pink-400 hover:text-pink-300 text-sm font-semibold no-underline hover:no-underline"
+                >
+                  Open page →
+                </a>
+              </div>
+              <LiveProjectsSection />
+            </section>
           </main>
         </div>
 
@@ -253,7 +283,7 @@ const zachary = {
       let currentTab = 0; // Start with About (index 0)
       const container = document.querySelector('.swipe-container');
       const tabButtons = document.querySelectorAll('.tab-button');
-      const totalTabs = 3;
+      const totalTabs = 4;
 
       let touchStartX = 0;
       let touchEndX = 0;
