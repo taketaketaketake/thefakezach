@@ -68,7 +68,8 @@ export interface LiveProject {
   summary: string;
   model: string;
   stack: string[];
-  metrics: OpsMetric[];
+  metrics: OpsMetric[]; // business KPIs
+  platformMetrics: OpsMetric[]; // operational/platform numbers (traffic, LLM, signups, errors)
   focus: string[];
   activity: ActivityEntry[];
   links: BusinessLinks;
@@ -136,6 +137,59 @@ export const liveProjects: LiveProject[] = [
           query:
             "select count(distinct city) from form_submissions where city is not null",
           description: "Distinct Michigan cities that have submitted at least one lead.",
+        },
+        delta: { window: "7d", pct: null },
+      },
+    ],
+    platformMetrics: [
+      {
+        label: "Page Views",
+        value: "—",
+        hint: "site visitors",
+        source: {
+          kind: "api",
+          endpoint: "GET https://plausible.io/api/v1/stats/aggregate?site_id=fixmyfurnacedetroit.com&period=7d&metrics=pageviews",
+          field: "results.pageviews.value",
+          description: "7-day page-view count from Plausible analytics for the marketing site.",
+        },
+        delta: { window: "7d", pct: null },
+      },
+      {
+        label: "Signups",
+        value: "—",
+        hint: "new leads",
+        source: {
+          kind: "supabase",
+          table: "form_submissions",
+          query:
+            "select count(*) from form_submissions where created_at >= now() - interval '7 days'",
+          description: "New customer leads submitted in the last 7 days.",
+        },
+        delta: { window: "7d", pct: null },
+      },
+      {
+        label: "LLM Calls",
+        value: "—",
+        hint: "agent activity",
+        source: {
+          kind: "api",
+          endpoint:
+            "GET https://agentland.dev/api/v1/llm/usage?workspace=fix-my-furnace&from=-7d",
+          field: "totalCalls",
+          description: "Calls to Agentland's LLM service made by agents working on this business in the last 7 days.",
+        },
+        delta: { window: "7d", pct: null },
+      },
+      {
+        label: "Errors",
+        value: "—",
+        hint: "site + API",
+        source: {
+          kind: "api",
+          endpoint:
+            "GET https://sentry.io/api/0/projects/fix-my-furnace/issues/?statsPeriod=7d",
+          field: "issuesCount",
+          description: "Unresolved error events tracked by Sentry over the last 7 days.",
         },
         delta: { window: "7d", pct: null },
       },
@@ -220,6 +274,59 @@ export const liveProjects: LiveProject[] = [
         delta: { window: "7d", pct: null },
       },
     ],
+    platformMetrics: [
+      {
+        label: "Page Views",
+        value: "—",
+        hint: "site visitors",
+        source: {
+          kind: "api",
+          endpoint: "GET https://plausible.io/api/v1/stats/aggregate?site_id=bagsoflaundry.com&period=7d&metrics=pageviews",
+          field: "results.pageviews.value",
+          description: "7-day page-view count from Plausible analytics.",
+        },
+        delta: { window: "7d", pct: null },
+      },
+      {
+        label: "Signups",
+        value: "—",
+        hint: "new customers",
+        source: {
+          kind: "prisma",
+          model: "customer",
+          query:
+            "prisma.customer.count({ where: { createdAt: { gte: sevenDaysAgo } } })",
+          description: "Customers created in the last 7 days.",
+        },
+        delta: { window: "7d", pct: null },
+      },
+      {
+        label: "LLM Calls",
+        value: "—",
+        hint: "agent activity",
+        source: {
+          kind: "api",
+          endpoint:
+            "GET https://agentland.dev/api/v1/llm/usage?workspace=bags-of-laundry&from=-7d",
+          field: "totalCalls",
+          description: "Calls to Agentland's LLM service for this business in the last 7 days.",
+        },
+        delta: { window: "7d", pct: null },
+      },
+      {
+        label: "Errors",
+        value: "—",
+        hint: "site + API",
+        source: {
+          kind: "api",
+          endpoint:
+            "GET https://sentry.io/api/0/projects/bags-of-laundry/issues/?statsPeriod=7d",
+          field: "issuesCount",
+          description: "Unresolved error events tracked by Sentry over the last 7 days.",
+        },
+        delta: { window: "7d", pct: null },
+      },
+    ],
     focus: [
       "Smooth out the Saturday capacity crunch with a 4th partner",
       "Convert non-member trial customers to the 6-month plan",
@@ -294,6 +401,60 @@ export const liveProjects: LiveProject[] = [
           endpoint: "GET /api/v1/enrichment/pipeline-stats",
           field: "pendingEnrichment",
           description: "Discovered candidates that still need SERP, Places, or Gemini enrichment.",
+        },
+        delta: { window: "7d", pct: null },
+      },
+    ],
+    platformMetrics: [
+      {
+        label: "Page Views",
+        value: "—",
+        hint: "site visitors",
+        source: {
+          kind: "api",
+          endpoint:
+            "POST https://posthog.com/api/projects/{id}/insights/trend?events=$pageview&date_from=-7d",
+          field: "result.aggregated_value",
+          description: "7-day page-view count from PostHog for takedetroit.com.",
+        },
+        delta: { window: "7d", pct: null },
+      },
+      {
+        label: "Signups",
+        value: "—",
+        hint: "new accounts",
+        source: {
+          kind: "prisma",
+          model: "profile",
+          query:
+            "prisma.profile.count({ where: { createdAt: { gte: sevenDaysAgo } } })",
+          description: "Profiles created in the last 7 days.",
+        },
+        delta: { window: "7d", pct: null },
+      },
+      {
+        label: "LLM Calls",
+        value: "—",
+        hint: "Gemini + agents",
+        source: {
+          kind: "api",
+          endpoint:
+            "GET https://agentland.dev/api/v1/llm/usage?workspace=detroit-small-business-map&from=-7d",
+          field: "totalCalls",
+          description: "Gemini calls for enrichment plus Agentland agent calls in the last 7 days.",
+        },
+        delta: { window: "7d", pct: null },
+      },
+      {
+        label: "Errors",
+        value: "—",
+        hint: "API + pipeline",
+        source: {
+          kind: "api",
+          endpoint:
+            "GET https://sentry.io/api/0/projects/detroit-small-business-map/issues/?statsPeriod=7d",
+          field: "issuesCount",
+          description: "Unresolved error events from the Hono API and enrichment pipeline.",
         },
         delta: { window: "7d", pct: null },
       },
@@ -375,6 +536,60 @@ export const liveProjects: LiveProject[] = [
           query:
             "prisma.chatMessage.count({ where: { createdAt: { gte: startOfToday() } } })",
           description: "Live-chat messages posted since midnight (72-hour TTL).",
+        },
+        delta: { window: "7d", pct: null },
+      },
+    ],
+    platformMetrics: [
+      {
+        label: "Page Views",
+        value: "—",
+        hint: "site visitors",
+        source: {
+          kind: "api",
+          endpoint:
+            "GET https://plausible.io/api/v1/stats/aggregate?site_id=nurse-app&period=7d&metrics=pageviews",
+          field: "results.pageviews.value",
+          description: "7-day page-view count from Plausible analytics. Site URL pending pilot launch.",
+        },
+        delta: { window: "7d", pct: null },
+      },
+      {
+        label: "Signups",
+        value: "—",
+        hint: "new users",
+        source: {
+          kind: "prisma",
+          model: "user",
+          query:
+            "prisma.user.count({ where: { createdAt: { gte: sevenDaysAgo } } })",
+          description: "Users created in the last 7 days via Better Auth (magic link or Google OAuth).",
+        },
+        delta: { window: "7d", pct: null },
+      },
+      {
+        label: "LLM Calls",
+        value: "—",
+        hint: "moderation + agents",
+        source: {
+          kind: "api",
+          endpoint:
+            "GET https://agentland.dev/api/v1/llm/usage?workspace=nurse-app&from=-7d",
+          field: "totalCalls",
+          description: "Calls to Agentland's LLM service for this business in the last 7 days.",
+        },
+        delta: { window: "7d", pct: null },
+      },
+      {
+        label: "Errors",
+        value: "—",
+        hint: "API + WebSocket",
+        source: {
+          kind: "api",
+          endpoint:
+            "GET https://sentry.io/api/0/projects/nurse-app/issues/?statsPeriod=7d",
+          field: "issuesCount",
+          description: "Unresolved error events from the Express API and WebSocket layer.",
         },
         delta: { window: "7d", pct: null },
       },

@@ -1,0 +1,72 @@
+---
+import type { OpsMetric, MetricSource } from "../data/live-projects";
+
+interface Props {
+  metrics: OpsMetric[];
+}
+
+const { metrics } = Astro.props as Props;
+
+function sourceRef(s: MetricSource): string {
+  switch (s.kind) {
+    case "supabase":
+      return `${s.table} · ${s.query}`;
+    case "prisma":
+      return `${s.model} · ${s.query}`;
+    case "api":
+      return `${s.endpoint} → ${s.field}`;
+    case "manual":
+      return s.description;
+  }
+}
+
+function formatDelta(d: { window: string; pct: number | null }): {
+  text: string;
+  cls: string;
+} {
+  const neutral = "text-zinc-400 bg-zinc-800/60 border-zinc-700";
+  if (d.pct === null) {
+    return { text: `— ${d.window}`, cls: neutral };
+  }
+  const text = `${d.pct > 0 ? "+" : ""}${d.pct.toFixed(1)}% ${d.window}`;
+  if (d.pct > 0)
+    return { text, cls: "text-green-400 bg-green-500/10 border-green-500/30" };
+  if (d.pct < 0)
+    return { text, cls: "text-red-400 bg-red-500/10 border-red-500/30" };
+  return { text, cls: neutral };
+}
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  {metrics.map((m) => {
+    const ref = sourceRef(m.source);
+    const delta = formatDelta(m.delta);
+    return (
+      <div class="bg-zinc-950/60 border border-zinc-800 rounded-xl p-5">
+        <div class="flex items-baseline justify-between mb-2 gap-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-pink-400">
+            {m.label}
+          </span>
+          <span
+            class={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded border ${delta.cls}`}
+            title={`Change vs previous ${m.delta.window}`}
+          >
+            {delta.text}
+          </span>
+        </div>
+        <div class="text-3xl sm:text-4xl font-extrabold text-white leading-none mb-1">
+          {m.value}
+        </div>
+        {m.hint && <div class="text-xs text-zinc-500 mb-3">{m.hint}</div>}
+        <div
+          class="font-mono text-xs text-zinc-300 bg-black/40 border border-zinc-800 rounded-md px-3 py-2 mb-2 break-all"
+        >
+          {ref}
+        </div>
+        <div class="text-xs text-zinc-500 leading-relaxed">
+          {m.source.description}
+        </div>
+      </div>
+    );
+  })}
+</div>
