@@ -1,7 +1,17 @@
 ---
 import "../styles/global.css";
+import Modal from "../components/Modal.astro";
+import ProjectsSection from "../components/ProjectsSection.astro";
 import BlogSection from "../components/BlogSection.astro";
-import LiveProjectsSection from "../components/LiveProjectsSection.astro";
+import { projects as allProjects } from "../data/projects";
+
+// Filter out projects hidden from homepage (tracked separately on /live-projects)
+const hiddenFromHomepage = [
+  "Fix My Furnace",
+  "Detroit Small Business Map",
+  "Bags of Laundry"
+];
+const projects = allProjects.filter(p => !hiddenFromHomepage.includes(p.title));
 
 const zachary = {
   name: "Zachary Lewis",
@@ -14,7 +24,8 @@ const zachary = {
     github: "#",
     linkedin: "#",
     email: "mailto:zach at takedetroit.com"
-  }
+  },
+  projects
 };
 ---
 
@@ -130,25 +141,25 @@ const zachary = {
           <button
             class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative active"
             data-tab="0"
-            aria-label="Live Projects tab"
+            aria-label="About tab"
           >
-            Live Projects
+            About
             <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform transition-transform"></span>
           </button>
           <button
             class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative"
             data-tab="1"
-            aria-label="Blog tab"
+            aria-label="Projects tab"
           >
-            Blog
+            Projects
             <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
           </button>
           <button
             class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative"
             data-tab="2"
-            aria-label="About tab"
+            aria-label="Blog tab"
           >
-            About
+            Blog
             <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
           </button>
         </div>
@@ -159,35 +170,7 @@ const zachary = {
     <div class="swipe-wrapper overflow-hidden">
       <div class="swipe-container flex transition-transform duration-300 ease-out" style="transform: translateX(0%)">
 
-        <!-- Panel 1: Live Projects -->
-        <div class="swipe-panel flex-shrink-0 w-full">
-          <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-            <section aria-labelledby="live-heading">
-              <div class="flex items-baseline justify-between gap-4 mb-6 flex-wrap">
-                <div>
-                  <h2 id="live-heading" class="text-2xl font-bold text-white">Live Projects</h2>
-                  <p class="text-zinc-400 text-sm mt-1">Businesses I'm running, in real time.</p>
-                </div>
-                <a
-                  href="/live-projects"
-                  class="text-pink-400 hover:text-pink-300 text-sm font-semibold no-underline hover:no-underline"
-                >
-                  Open page →
-                </a>
-              </div>
-              <LiveProjectsSection />
-            </section>
-          </main>
-        </div>
-
-        <!-- Panel 2: Blog -->
-        <div class="swipe-panel flex-shrink-0 w-full">
-          <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-            <BlogSection />
-          </main>
-        </div>
-
-        <!-- Panel 3: About -->
+        <!-- Panel 1: About -->
         <div class="swipe-panel flex-shrink-0 w-full">
           <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
             <div class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-6">
@@ -201,6 +184,20 @@ const zachary = {
           </main>
         </div>
 
+        <!-- Panel 2: Projects -->
+        <div class="swipe-panel flex-shrink-0 w-full">
+          <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+            <ProjectsSection projects={zachary.projects} />
+          </main>
+        </div>
+
+        <!-- Panel 3: Blog -->
+        <div class="swipe-panel flex-shrink-0 w-full">
+          <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+            <BlogSection />
+          </main>
+        </div>
+
       </div>
     </div>
 
@@ -209,9 +206,51 @@ const zachary = {
       <p>© {new Date().getFullYear()} {zachary.name}. All Rights Reserved.</p>
     </footer>
 
+    <!-- Modals -->
+    {zachary.projects.map(project => (
+      <Modal project={project} />
+    ))}
+
+    <!-- Modal Script -->
+    <script define:vars={{ projects: zachary.projects }}>
+      for (const project of projects) {
+        const slug = project.title.toLowerCase().replace(/ /g, "-");
+        const openButton = document.getElementById(`open-${slug}`);
+        const closeButton = document.getElementById(`close-${slug}`);
+        const modal = document.getElementById(`modal-${slug}`);
+
+        if (!openButton || !modal) continue;
+
+        openButton.addEventListener("click", () => {
+          modal.classList.remove("hidden");
+          modal.classList.add("flex");
+          modal.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
+        });
+
+        if (closeButton) {
+          closeButton.addEventListener("click", () => {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            modal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+          });
+        }
+
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            modal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+          }
+        });
+      }
+    </script>
+
     <!-- Swipe Functionality Script -->
     <script>
-      let currentTab = 0; // Start with Live Projects (index 0)
+      let currentTab = 0; // Start with About (index 0)
       const container = document.querySelector('.swipe-container');
       const tabButtons = document.querySelectorAll('.tab-button');
       const totalTabs = 3;
