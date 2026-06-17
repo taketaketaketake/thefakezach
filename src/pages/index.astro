@@ -281,37 +281,85 @@ const testimonials = [
   </section>
   */}
 
-  <!-- USER.MD CTA -->
+  <!-- FEATURED CAROUSEL -->
   <section class="border-t border-ink">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
-      <div class="rounded-3xl bg-accent/10 border border-ink p-8 md:p-12">
-        <div class="grid md:grid-cols-2 gap-10 items-center">
-          <div>
-            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-accent mb-3">Free tool · No signup</span>
-            <h2 class="text-2xl md:text-3xl font-bold text-ink mb-3">USER.md — one file that tells any AI who you are</h2>
-            <p class="text-ink/80 leading-relaxed mb-7">
-              Build a <strong>USER.md</strong> — one file that tells any AI assistant who you are, your goals, and how
-              you like to work. Fill it out, watch it build live, then copy or download.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-3">
-              <a href="/tools/user-md" class="no-underline px-7 py-3.5 rounded-xl bg-accent text-white border border-ink font-semibold text-center hover:opacity-90 transition-opacity">Build your USER.md →</a>
-              <a href="/tools" class="no-underline px-7 py-3.5 rounded-xl border border-ink text-ink font-semibold text-center hover:bg-paper2 transition-colors">More free tools →</a>
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+      <div class="flex items-end justify-between mb-6">
+        <h2 class="font-mono text-[11px] uppercase tracking-widest text-ink/50">// Featured</h2>
+        <div class="flex gap-2">
+          <button id="promo-prev" aria-label="Previous" class="w-10 h-10 rounded-full border border-ink text-ink flex items-center justify-center hover:bg-paper2 transition-colors">←</button>
+          <button id="promo-next" aria-label="Next" class="w-10 h-10 rounded-full border border-ink text-ink flex items-center justify-center hover:bg-paper2 transition-colors">→</button>
+        </div>
+      </div>
+
+      <div id="promo-track" class="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <!-- Slide 1: USER.md -->
+        <a href="/tools/user-md" class="snap-start shrink-0 w-full no-underline">
+          <div class="border border-ink overflow-hidden bg-paper2">
+            <div class="flex items-center justify-between px-4 py-2.5 border-b border-ink font-mono text-[10px] md:text-[11px] uppercase tracking-widest">
+              <span class="text-accent">USER.md · Free tool</span>
+              <span class="text-ink/50">No signup · Build yours →</span>
+            </div>
+            <div class="aspect-[4/3] md:aspect-[3/2] w-full flex items-center justify-center overflow-hidden">
+              <img src="/user-md-cta.png" alt="USER.md — one file that gives any AI your full context" class="w-full h-full object-contain" loading="lazy" />
             </div>
           </div>
-          <div class="flex items-center justify-center">
-            <!-- Drop your graphic at public/user-md-cta.png (or .svg) -->
-            <img
-              src="/user-md-cta.png"
-              alt="USER.md — a single file that gives any AI assistant your full context"
-              class="w-full max-w-md rounded-2xl"
-              loading="lazy"
-              onerror="this.style.display='none'"
-            />
+        </a>
+
+        <!-- Slide 2: Agentland (custom card) -->
+        <a href="https://agentlandos.com" target="_blank" rel="noopener noreferrer" class="snap-start shrink-0 w-full no-underline">
+          <div class="border border-ink overflow-hidden bg-zinc-950">
+            <div class="flex items-center justify-between px-4 py-2.5 border-b border-zinc-800 font-mono text-[10px] md:text-[11px] uppercase tracking-widest">
+              <span class="text-purple-300">AgentlandOS · Platform</span>
+              <span class="text-zinc-500">agentlandos.com ↗</span>
+            </div>
+
+            <div class="relative aspect-[4/3] md:aspect-[3/2] w-full overflow-hidden p-6 md:p-10 flex flex-col items-start justify-center text-left">
+              <!-- ambient glows + grid -->
+              <div class="absolute -top-16 -right-12 w-64 h-64 rounded-full bg-purple-600/30 blur-3xl"></div>
+              <div class="absolute -bottom-20 -left-12 w-64 h-64 rounded-full bg-pink-600/20 blur-3xl"></div>
+              <div class="absolute inset-0 opacity-[0.06]" style="background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:40px 40px;"></div>
+
+              <!-- giant wordmark + super-sized tagline -->
+              <h3 class="relative font-black text-white tracking-tight leading-[0.85]" style="font-size:clamp(3rem,15vw,10rem);">Agentland</h3>
+              <p class="relative mt-2 md:mt-4 font-bold text-zinc-200 leading-[0.95]" style="font-size:clamp(2rem,10vw,6.5rem);">AI agents that operate your business</p>
+              <span class="relative mt-6 md:mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold text-sm">
+                Visit AgentlandOS →
+              </span>
+            </div>
           </div>
-        </div>
+        </a>
+      </div>
+
+      <!-- dots -->
+      <div class="flex justify-center gap-2 mt-5">
+        <button data-promo-dot aria-label="Go to slide 1" class="w-2.5 h-2.5 rounded-full bg-ink transition-colors"></button>
+        <button data-promo-dot aria-label="Go to slide 2" class="w-2.5 h-2.5 rounded-full bg-ink/25 transition-colors"></button>
       </div>
     </div>
   </section>
+
+  <script>
+    const track = document.getElementById("promo-track");
+    if (track) {
+      const dots = Array.from(document.querySelectorAll("[data-promo-dot]"));
+      const go = (i) => track.scrollTo({ left: track.clientWidth * i, behavior: "smooth" });
+      document.getElementById("promo-prev")?.addEventListener("click", () =>
+        track.scrollBy({ left: -track.clientWidth, behavior: "smooth" })
+      );
+      document.getElementById("promo-next")?.addEventListener("click", () =>
+        track.scrollBy({ left: track.clientWidth, behavior: "smooth" })
+      );
+      dots.forEach((d, i) => d.addEventListener("click", () => go(i)));
+      track.addEventListener("scroll", () => {
+        const i = Math.round(track.scrollLeft / track.clientWidth);
+        dots.forEach((d, k) => {
+          d.classList.toggle("bg-ink", k === i);
+          d.classList.toggle("bg-ink/25", k !== i);
+        });
+      });
+    }
+  </script>
 
   {/* FINAL CTA — hidden for now, kept for later
   <section class="border-t border-ink bg-paper2">
