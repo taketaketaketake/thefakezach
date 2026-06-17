@@ -1,0 +1,80 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+---
+
+<BrandLayout active="about" title="About | Zachary Lewis" description="Zachary Lewis went from building a 100K+ audience in video to shipping AI systems that run real businesses.">
+  <!-- Header -->
+  <section class="relative overflow-hidden border-b border-ink">
+    <div class="absolute inset-0 bg-transparent"></div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-20 md:py-28 grid md:grid-cols-5 gap-10 items-center">
+      <div class="md:col-span-3">
+        <span class="text-xs font-semibold uppercase tracking-wider text-accent">About</span>
+        <h1 class="mt-3 text-4xl md:text-5xl font-black text-ink leading-tight">
+          From 25M views to AI that runs the business.
+        </h1>
+        <p class="mt-5 text-lg text-ink/80 leading-relaxed">
+          I'm Zachary Lewis — a builder from Detroit. I spent years learning how to capture attention,
+          then turned that obsession toward AI systems that capture <em>work</em>.
+        </p>
+      </div>
+      <div class="md:col-span-2">
+        <div class="aspect-square w-full max-w-sm rounded-2xl overflow-hidden border border-ink bg-paper2">
+          <img src="/profile-photo.jpg" alt="Zachary Lewis" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+    <div class="prose prose-invert max-w-none text-ink/80 text-lg leading-relaxed space-y-5">
+      <p>
+        Hi, I'm Zach. I build and design AI systems that change the way you work — and I came at it from an
+        unusual direction.
+      </p>
+      <p>
+        For years I wasn't an engineer. I was a storyteller. I built a video production business and grew an
+        audience of <strong>100K+ followers and 25M+ views</strong> — learning the thing most technical people
+        never do: how to make people actually <em>care</em>, how attention really moves, and how to ship something
+        every single day.
+      </p>
+      <p>
+        Then in 2024, AI clicked for me, and I haven't stopped building since. Voice agents, mobile apps, real-time
+        platforms — and eventually <strong>AgentlandOS</strong>, an operating system of AI agents that now runs the
+        day-to-day across my own companies: fielding customer inquiries, booking jobs, chasing down leads, and
+        reporting the numbers back to me every morning. Along the way I shipped <strong>TraceTrack</strong> (the
+        GitHub for AI workflows), an agent-based trading system, and a shelf of free tools I give away because
+        they're useful.
+      </p>
+      <p>
+        Here's what all of it taught me: most people <em>talk</em> about AI. Very few make it actually do the work.
+        The gap isn't the models — it's building systems that show up, run, and don't need babysitting.
+      </p>
+      <p>
+        That's where I come in. If you're a founder or a creative team buried in repetitive, manual work — the
+        inbox, the follow-ups, the busywork that quietly eats your week — I design and build the systems that take
+        it off your plate. The result: <strong>10+ hours back a week</strong> and software that keeps running while
+        you sleep. No slide decks, no demos that fall apart — working systems you can click, run, and watch do the job.
+      </p>
+      <p>
+        I move fast, I build in the open, and I care more about what <em>runs</em> than what impresses in a meeting.
+        I've always believed the fastest way to understand something is to build it — and that the best tools quietly
+        give people their time back.
+      </p>
+      <p>
+        If that's the kind of partner you're looking for, <a href="/contact" class="text-accent font-semibold">let's build something</a>.
+        And if you just want to see how I think, <a href="/tools" class="text-accent font-semibold">the free tools are yours</a> — no signup.
+      </p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="border-t border-ink bg-paper2">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-ink mb-4">Let's build something that runs itself.</h2>
+      <a href="/contact" class="inline-block px-7 py-3.5 rounded-xl bg-accent text-white border border-ink font-semibold hover:opacity-90 transition-opacity">
+        Get in touch
+      </a>
+    </div>
+  </section>
+</BrandLayout>

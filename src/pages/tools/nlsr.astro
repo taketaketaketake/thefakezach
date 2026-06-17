@@ -1,0 +1,163 @@
+---
+import BrandLayout from "../../layouts/BrandLayout.astro";
+
+const REPO_URL = "https://github.com/taketaketaketake/non-linear-stream-renderer";
+const NPM_URL = "https://www.npmjs.com/package/nlsr";
+
+const features = [
+  { icon: "✍️", title: "Forward streaming", desc: "A primary agent streams text into a fixed character-grid viewport, token by token." },
+  { icon: "↩️", title: "Concurrent revision", desc: "Revision agents jump back and edit earlier phrases at the same time — neither blocks the other." },
+  { icon: "🪟", title: "Shared grid coordination", desc: "The grid is the coordination mechanism — flushed at a steady 60fps for smooth output." },
+  { icon: "🔌", title: "Stream adapters", desc: "Pipe ReadableStream, SSE/EventSource, or async iterables straight into the renderer." },
+  { icon: "💬", title: "Inter-agent messaging", desc: "A built-in message board lets agents post and read coordination messages." },
+  { icon: "🧩", title: "Provider-agnostic", desc: "No LLM calls inside. Bring Claude, GPT, Gemini, LangGraph, or your own loop." },
+];
+
+const installCode = `npm install nlsr`;
+
+const quickStartCode = `import { useRef, useEffect } from "react";
+import { NLSRRenderer, createCoordinator } from "nlsr";
+
+function App() {
+  const renderer = useRef(null);
+  const coordinator = useRef(null);
+
+  useEffect(() => {
+    coordinator.current = createCoordinator(renderer);
+    coordinator.current.registerAgent("writer", "primary");
+    coordinator.current.registerAgent("editor", "revision");
+  }, []);
+
+  const write = () => coordinator.current.write("writer", "Hello world. ");
+  const revise = () =>
+    coordinator.current.revise("editor", "Hello world", "Hello NLSR", "branding");
+
+  return <NLSRRenderer ref={renderer} cols={72} rows={22} />;
+}`;
+
+const api = [
+  { sig: "createCoordinator(rendererRef)", desc: "Creates a coordinator that owns the text buffer and routes operations to the renderer." },
+  { sig: "coordinator.write(agentId, text)", desc: "Append text — primary agents only." },
+  { sig: "coordinator.revise(agentId, old, new, reason)", desc: "Replace a phrase — revision agents only." },
+  { sig: "streamAdapter(coordinator, source, options)", desc: "Pipe a streaming LLM response into write() calls." },
+  { sig: "coordinator.messageBoard.post / read", desc: "Inter-agent messaging between writer and revision agents." },
+  { sig: "<NLSRRenderer cols rows />", desc: "The viewport component; exposes write() and revise() via ref." },
+];
+---
+
+<BrandLayout theme="dark" active="tools" title="NLSR — Non-Linear Stream Renderer | Zachary Lewis" description="An open-source React rendering engine for concurrent multi-agent text output. Multiple LLM agents write forward and revise earlier text simultaneously on a shared character grid.">
+  <!-- HERO -->
+  <section class="relative overflow-hidden border-b border-zinc-800">
+    <div class="absolute inset-0 bg-transparent"></div>
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 hidden"></div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-20 md:py-28 grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <span class="inline-flex items-center gap-2 bg-zinc-900/40 border border-zinc-800 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-pink-400 mb-6">
+          <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+          Open source · npm · MIT
+        </span>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.05]">
+          Many agents, <span class="text-pink-400">one canvas.</span>
+        </h1>
+        <p class="mt-6 text-lg md:text-xl text-zinc-300 leading-relaxed">
+          <strong>NLSR</strong> is a rendering engine for concurrent multi-agent text output on a fixed character grid.
+          One agent streams forward while others revise earlier text — at the same time, without blocking.
+        </p>
+        <div class="mt-8 max-w-xs">
+          <div class="rounded-xl border border-zinc-800 bg-black/60 px-4 py-3 font-mono text-sm text-cyan-300">{installCode}</div>
+        </div>
+        <div class="mt-6 flex flex-col sm:flex-row gap-3">
+          <a href="#quick-start" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold text-center hover:opacity-90 transition-opacity">⚡ Quick start</a>
+          <a href={NPM_URL} target="_blank" rel="noopener noreferrer" class="px-7 py-3.5 rounded-xl border border-zinc-800 text-white font-semibold text-center hover:bg-zinc-800/50 transition-colors">View on npm →</a>
+        </div>
+      </div>
+
+      <!-- Grid mockup -->
+      <div class="rounded-2xl border border-zinc-800 bg-black/60 overflow-hidden shadow-2xl">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-zinc-800 bg-zinc-900/40">
+          <div class="flex items-center gap-2 text-sm">
+            <span class="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse"></span>
+            <span class="font-mono text-zinc-300">grid · 72×22 · 60fps</span>
+          </div>
+          <div class="flex gap-1.5">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono border border-purple-500/30 text-pink-400">writer →</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-mono border border-cyan-500/40 text-cyan-400">↩ editor</span>
+          </div>
+        </div>
+        <div class="p-4 font-mono text-sm leading-relaxed text-paper/85">
+          <p>The renderer streams text into a fixed grid while a second
+          <span class="bg-cyan-500/20 text-cyan-300 rounded px-1">agent revises</span>
+          earlier phrases <span class="bg-pink-500/20 text-pink-400 rounded px-1 animate-pulse">in real&nbsp;time▍</span></p>
+          <p class="mt-3 text-paper/45 text-xs">// both operate concurrently — neither blocks the other</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-20 text-center">
+    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Streaming UIs assume one writer. Agents aren't.</h2>
+    <p class="text-zinc-400 text-lg leading-relaxed">
+      Most text renderers append, full stop. But multi-agent systems want to write <em>and</em> rewrite — a primary
+      drafting forward while editors fix what's already on screen. NLSR makes that coordination a solved problem:
+      a shared grid, flushed at 60fps, that every agent reads and writes without stepping on each other.
+    </p>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="border-y border-zinc-800 bg-zinc-900/40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+      <h2 class="text-3xl font-bold text-white mb-10">What it does</h2>
+      <div class="grid gap-6 md:grid-cols-3">
+        {features.map((f) => (
+          <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-7">
+            <div class="text-3xl mb-3">{f.icon}</div>
+            <h3 class="text-lg font-bold text-white mb-2">{f.title}</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">{f.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK START -->
+  <section id="quick-start" class="scroll-mt-20 max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+    <h2 class="text-3xl font-bold text-white mb-3">Quick start</h2>
+    <p class="text-zinc-400 mb-6">Peer deps: <code class="text-zinc-300">react &gt;= 18</code> and <code class="text-zinc-300">react-dom &gt;= 18</code>.</p>
+    <div class="rounded-2xl border border-zinc-800 bg-black/60 overflow-hidden">
+      <div class="px-4 py-2.5 border-b border-zinc-800 bg-zinc-900/40 text-xs font-mono text-zinc-400">App.jsx</div>
+      <pre class="p-4 text-xs sm:text-sm font-mono text-white overflow-x-auto leading-relaxed">{quickStartCode}</pre>
+    </div>
+  </section>
+
+  <!-- API -->
+  <section class="border-y border-zinc-800 bg-zinc-900/40">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+      <h2 class="text-3xl font-bold text-white mb-3">Core API</h2>
+      <p class="text-zinc-400 mb-10">A small surface — a coordinator, a renderer, and an optional stream adapter.</p>
+      <div class="space-y-3">
+        {api.map((a) => (
+          <div class="grid sm:grid-cols-2 gap-3 rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+            <code class="text-sm text-cyan-300 font-mono break-words">{a.sig}</code>
+            <span class="text-sm text-zinc-400">{a.desc}</span>
+          </div>
+        ))}
+      </div>
+      <div class="mt-8 rounded-2xl border border-purple-500/30 bg-purple-500/5 p-6">
+        <h3 class="font-bold text-white mb-1">🧩 Bring your own agents</h3>
+        <p class="text-sm text-zinc-400 leading-relaxed">NLSR never calls an LLM API. Wire Claude, GPT, Gemini, LangGraph, or a custom loop into the coordinator via <code class="text-zinc-300">write()</code> and <code class="text-zinc-300">revise()</code>. Full integration examples live in <code class="text-zinc-300">docs/integration.md</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-16 md:py-24 text-center">
+    <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">Build multi-agent text UIs.</h2>
+    <p class="text-zinc-400 text-lg mb-8">Free, MIT-licensed, and on npm. Install it and ship.</p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href={NPM_URL} target="_blank" rel="noopener noreferrer" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold hover:opacity-90 transition-opacity">View on npm</a>
+      <a href={REPO_URL} target={REPO_URL.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" class="px-7 py-3.5 rounded-xl border border-zinc-800 text-white font-semibold hover:bg-zinc-800/50 transition-colors">GitHub</a>
+    </div>
+    <p class="mt-8 text-sm text-zinc-500"><a href="/tools" class="hover:text-zinc-300 transition-colors">← Back to all free tools</a></p>
+  </section>
+</BrandLayout>

@@ -1,0 +1,174 @@
+---
+import BrandLayout from "../../layouts/BrandLayout.astro";
+
+const REPO_URL = "https://github.com/taketaketaketake/agentland-docs";
+
+const docFiles = [
+  { f: "CLAUDE.md", d: "Persistent LLM context and rules" },
+  { f: "vision.md", d: "System intent and principles" },
+  { f: "architecture.md", d: "Structural overview" },
+  { f: "invariants.md", d: "Non-negotiable constraints" },
+  { f: "models.md", d: "Data model definitions" },
+  { f: "contracts.md", d: "Interface completeness tracking" },
+  { f: "stubs.md", d: "Stub registry" },
+  { f: "artifacts.md", d: "Artifact type registry" },
+  { f: "plan-template.md", d: "Phase tracking" },
+  { f: "glossary.md", d: "Term definitions" },
+  { f: "markdown-glossary.md", d: "The central routing table" },
+  { f: "adr-template.md", d: "Decision record template" },
+  { f: "health-log.md", d: "Codebase health log" },
+];
+
+const enforcement = [
+  {
+    layer: "Claude Code Hook",
+    tag: "Automatic",
+    desc: "A SessionStart hook loads the glossary routing table into Claude's context so it always knows which docs map to which code. Shipped with init — no setup.",
+  },
+  {
+    layer: "Claude Code Skills",
+    tag: "LLM-enforced",
+    desc: "A phase-audit skill hard-gates marking any phase complete until docs, ADRs, and validations are current. A codebase-health skill writes structured assessments on demand.",
+  },
+  {
+    layer: "Git Hooks",
+    tag: "Local",
+    desc: "pre-commit and commit-msg hooks block commits when documentation contracts aren't satisfied — the last line of defense before code lands.",
+  },
+];
+---
+
+<BrandLayout theme="dark" active="tools" title="Spec-Driven Docs — Keep Docs in Sync with AI-Written Code | Zachary Lewis" description="An open-source documentation framework that treats docs as enforceable contracts, so LLM-written code never outruns its documentation.">
+  <!-- HERO -->
+  <section class="relative overflow-hidden border-b border-zinc-800">
+    <div class="absolute inset-0 bg-transparent"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 hidden"></div>
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 py-20 md:py-28 text-center">
+      <span class="inline-flex items-center gap-2 bg-zinc-900/40 border border-zinc-800 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-pink-400 mb-6">
+        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+        Open source · Free
+      </span>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.05]">
+An <span class="text-pink-400">AI-updated</span> documentation framework
+      </h1>
+      <p class="mt-6 text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed">
+        A documentation framework that keeps docs in sync with code during LLM-assisted development —
+        by treating documentation as <strong>enforceable contracts</strong>, not good intentions.
+      </p>
+      <div class="mt-8 max-w-md mx-auto">
+        <div class="rounded-xl border border-zinc-800 bg-black/60 px-4 py-3 font-mono text-sm text-cyan-300 text-left">npx spec-driven-docs init</div>
+      </div>
+      <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="#quick-start" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold hover:opacity-90 transition-opacity">⚡ Quick start</a>
+        <a href={REPO_URL} target={REPO_URL.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" class="px-7 py-3.5 rounded-xl border border-zinc-800 text-white font-semibold hover:bg-zinc-800/50 transition-colors">View on GitHub →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-20 text-center">
+    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">LLMs write code fast — and docs rot faster.</h2>
+    <p class="text-zinc-400 text-lg leading-relaxed">
+      AI is brilliant at generating code and terrible at maintaining documentation. Docs drift within hours.
+      By the end of a build phase, your README describes a system that no longer exists. This framework makes
+      the system <em>know</em> which docs went stale when code changed — and blocks progress until they're current.
+    </p>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="border-y border-zinc-800 bg-zinc-900/40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+      <h2 class="text-3xl font-bold text-white mb-10">How it works</h2>
+      <div class="grid gap-6 md:grid-cols-4">
+        {[
+          { n: "01", t: "Install templates", d: "One command drops all doc templates, hooks, and skills into your project." },
+          { n: "02", t: "Let the LLM fill them", d: "Point Claude at your codebase; it fills the templates and deletes what doesn't apply." },
+          { n: "03", t: "Work in phases", d: "Build normally. Hooks warn when code outpaces docs as you go." },
+          { n: "04", t: "Gates enforce sync", d: "Phase audits and commit hooks block progress until docs are current." },
+        ].map((s) => (
+          <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6">
+            <div class="text-2xl font-black text-pink-400">{s.n}</div>
+            <h3 class="mt-3 text-lg font-bold text-white">{s.t}</h3>
+            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">{s.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ENFORCEMENT -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+    <div class="max-w-2xl mb-10">
+      <span class="text-xs font-semibold uppercase tracking-wider text-pink-400">The teeth</span>
+      <h2 class="mt-2 text-3xl font-bold text-white">Three layers that LLMs can't ignore</h2>
+      <p class="mt-3 text-zinc-400 leading-relaxed">Suggestions get skipped. These don't — each layer enforces sync at a different point in the loop.</p>
+    </div>
+    <div class="grid gap-6 md:grid-cols-3">
+      {enforcement.map((e) => (
+        <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-7">
+          <span class="text-[10px] font-semibold uppercase tracking-wider text-pink-400 bg-purple-500/10 border border-purple-500/30 rounded-full px-2.5 py-1">{e.tag}</span>
+          <h3 class="mt-3 text-lg font-bold text-white">{e.layer}</h3>
+          <p class="mt-2 text-sm text-zinc-400 leading-relaxed">{e.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section class="border-y border-zinc-800 bg-zinc-900/40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+      <h2 class="text-3xl font-bold text-white mb-3">What you get</h2>
+      <p class="text-zinc-400 mb-10">A complete, opt-in documentation system. Delete what you don't need — the glossary and hooks adapt to what's present.</p>
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {docFiles.map((d) => (
+          <div class="flex items-baseline gap-3 rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-3">
+            <code class="text-sm text-cyan-300 font-mono whitespace-nowrap">{d.f}</code>
+            <span class="text-sm text-zinc-400">{d.d}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK START -->
+  <section id="quick-start" class="scroll-mt-20 max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+    <h2 class="text-3xl font-bold text-white mb-8">Quick start</h2>
+    <ol class="space-y-6">
+      <li class="flex gap-4">
+        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-pink-600 to-purple-600 flex items-center justify-center font-bold text-white text-sm">1</span>
+        <div class="flex-1">
+          <p class="text-white font-semibold mb-2">Install the templates</p>
+          <div class="rounded-xl border border-zinc-800 bg-black/60 px-4 py-3 font-mono text-sm text-cyan-300">npx spec-driven-docs init</div>
+          <p class="text-sm text-zinc-500 mt-2">Copies templates, hooks, and skills into your project. Use <code class="text-zinc-300">--force</code> to overwrite.</p>
+        </div>
+      </li>
+      <li class="flex gap-4">
+        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-pink-600 to-purple-600 flex items-center justify-center font-bold text-white text-sm">2</span>
+        <div class="flex-1">
+          <p class="text-white font-semibold mb-2">Tell the LLM about your project</p>
+          <p class="text-sm text-zinc-400 leading-relaxed">Open Claude Code in the project and prompt it to read the templates and fill out CLAUDE.md, vision.md, and the plan from what your project actually does.</p>
+        </div>
+      </li>
+      <li class="flex gap-4">
+        <span class="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-r from-pink-600 to-purple-600 flex items-center justify-center font-bold text-white text-sm">3</span>
+        <div class="flex-1">
+          <p class="text-white font-semibold mb-2">Work in phases</p>
+          <p class="text-sm text-zinc-400 leading-relaxed">Build normally. The hooks and skills keep docs in sync — warning on edits, auditing at phase end, and blocking commits when docs are incomplete.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- CTA -->
+  <section class="border-t border-zinc-800 bg-zinc-900/40">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">Stop shipping docs that lie.</h2>
+      <p class="text-zinc-400 text-lg mb-8">It's free and open source. Drop it into any project in one command.</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href={REPO_URL} target={REPO_URL.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold hover:opacity-90 transition-opacity">View on GitHub</a>
+        <a href="/contact" class="px-7 py-3.5 rounded-xl border border-zinc-800 text-white font-semibold hover:bg-zinc-800/50 transition-colors">Work with me</a>
+      </div>
+      <p class="mt-8 text-sm text-zinc-500"><a href="/tools" class="hover:text-zinc-300 transition-colors">← Back to all free tools</a></p>
+    </div>
+  </section>
+</BrandLayout>

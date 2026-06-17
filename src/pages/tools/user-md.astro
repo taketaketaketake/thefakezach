@@ -1,0 +1,644 @@
+---
+import BrandLayout from "../../layouts/BrandLayout.astro";
+
+// --- Field definitions (rendered below + used to drive the form) ---
+const identity: [string, string, string][] = [
+  ["f-name", "Name", "Jane Doe"],
+  ["f-preferred", "Preferred Name", "Jane"],
+  ["f-pronouns", "Pronouns", "she/her"],
+  ["f-location", "Location", "Detroit, MI"],
+  ["f-timezone", "Time Zone", "America/Detroit (EST)"],
+  ["f-language", "Primary Language", "English"],
+];
+
+const longGoals: [string, string, string][] = [
+  ["g-personal", "Personal", "Spend more time on creative projects"],
+  ["g-professional", "Professional", "Become an independent consultant"],
+  ["g-financial", "Financial", "Build a profitable product"],
+  ["g-educational", "Educational", "Get fluent in AI tooling"],
+];
+
+const background: [string, string, string][] = [
+  ["bg-industries", "Industries", "SaaS, e-commerce"],
+  ["bg-roles", "Roles", "Founder, product manager"],
+  ["bg-notable", "Notable Experience", "Scaled a store to 7 figures"],
+  ["edu-formal", "Formal Education", "B.A. Marketing"],
+  ["edu-certs", "Certifications", "PMP"],
+  ["edu-self", "Self-Taught Skills", "Web dev, automation"],
+];
+
+const interests: [string, string, string][] = [
+  ["int-enjoy", "Topics I enjoy learning about", "AI, design, business"],
+  ["int-follow", "Topics I actively follow", "Startups, automation"],
+  ["int-learn", "Topics I would like to learn", "Data analysis"],
+];
+
+const constraints: [string, string, string][] = [
+  ["con-time", "Time", "~10 hrs/week for side projects"],
+  ["con-budget", "Budget", "Bootstrapped, lean"],
+  ["con-tech", "Technical Resources", "Laptop + cloud credits"],
+  ["con-other", "Other Constraints", "Solo, no team yet"],
+];
+
+const toolsUsed: [string, string, string][] = [
+  ["tu-software", "Software", "Figma, Notion, VS Code"],
+  ["tu-ai", "AI Tools", "Claude, ChatGPT"],
+  ["tu-productivity", "Productivity Tools", "Linear, Calendar"],
+  ["tu-comm", "Communication Tools", "Slack, Gmail"],
+];
+
+const pom: [string, string, string][] = [
+  ["pom-motivates", "What Motivates Me", "Building things people use"],
+  ["pom-frustrates", "What Frustrates Me", "Vague advice and busywork"],
+  ["pom-success", "What Success Looks Like", "A product that runs itself"],
+  ["pom-more", "What I Want More Of", "Focused deep work"],
+  ["pom-less", "What I Want Less Of", "Meetings and context-switching"],
+];
+
+const skillAreas = ["Business", "Technology", "Marketing", "Sales", "Communication"];
+const levels = ["Beginner", "Intermediate", "Advanced", "Expert"];
+const commStyles = ["Concise", "Detailed", "Step-by-step", "Strategic", "Technical", "Beginner-friendly", "Visual", "Data-driven"];
+const decisionStyles = ["Present tradeoffs", "Recommend a preferred option", "Show risks", "Show alternatives", "Prioritize speed", "Prioritize accuracy", "Prioritize cost savings", "Prioritize long-term value"];
+const learningStyles = ["Reading", "Videos", "Examples", "Hands-on projects", "Discussion", "Visual diagrams"];
+
+const inputClass = "w-full px-3 py-2 rounded-lg bg-zinc-900/40 border border-zinc-800 text-white text-sm placeholder-zinc-500 focus:outline-none focus:border-purple-500";
+
+// Sections that are ON by default (the "minimal" starting point).
+const minimalKeys = ["identity", "priorities", "preferences", "guidelines"];
+
+// Reusable "Include in file" switch for each section header.
+const toggle = (key: string) =>
+  `<label class="section-toggle-wrap flex items-center gap-2 text-xs font-normal cursor-pointer" title="Include this section in your file">` +
+    `<input type="checkbox" data-toggle="${key}" ${minimalKeys.includes(key) ? "checked" : ""} class="section-toggle sr-only peer" />` +
+    `<span class="w-9 h-5 rounded-full bg-zinc-700 peer-checked:bg-purple-600 relative transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:w-4 after:h-4 after:rounded-full after:bg-zinc-900/40 after:transition-transform peer-checked:after:translate-x-4"></span>` +
+    `<span class="hidden sm:inline text-zinc-500 peer-checked:text-white/80">Include</span>` +
+  `</label>`;
+---
+
+<BrandLayout theme="dark" active="tools" title="USER.md Generator — Free AI Context Tool | Zachary Lewis" description="Build your own USER.md in minutes — a single file that tells any AI assistant who you are, your goals, and how you like to work. Free, no signup. Copy or download.">
+  <!-- HERO / LANDING -->
+  <section class="relative overflow-hidden border-b border-zinc-800">
+    <div class="absolute inset-0 bg-transparent"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 hidden"></div>
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 py-20 md:py-28 text-center">
+      <span class="inline-flex items-center gap-2 bg-zinc-900/40 border border-zinc-800 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-pink-400 mb-6">
+        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+        Free Tool · No signup
+      </span>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.05]">
+        Make AI actually <span class="text-pink-400">get you.</span>
+      </h1>
+      <p class="mt-6 text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed">
+        A <code class="text-pink-400 bg-black/60 px-1.5 py-0.5 rounded">USER.md</code> is one file that tells any AI assistant who you are, what you're working on, and how you like to work — so you stop re-explaining yourself every chat.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="#tool" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold hover:opacity-90 transition-opacity">
+          ✨ Build mine now
+        </a>
+        <a href="/USER-template.md" download="USER.md" class="px-7 py-3.5 rounded-xl border border-zinc-800 text-white font-semibold hover:bg-zinc-800/50 transition-colors">
+          ⬇ Download blank template
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-16">
+    <div class="grid gap-6 md:grid-cols-3">
+      {[
+        { icon: "🧠", title: "Stop repeating yourself", desc: "Paste it once at the start of a chat (or drop it in your project) and the AI has your full context." },
+        { icon: "🎯", title: "Better answers, instantly", desc: "Goals, constraints, and preferences mean recommendations fit your real situation." },
+        { icon: "🔒", title: "Yours, private, portable", desc: "It's just a markdown file. Built in your browser — nothing is uploaded or stored." },
+      ].map((c) => (
+        <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-7">
+          <div class="text-3xl mb-3">{c.icon}</div>
+          <h3 class="text-lg font-bold text-white mb-2">{c.title}</h3>
+          <p class="text-zinc-400 text-sm leading-relaxed">{c.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- THE TOOL -->
+  <section id="tool" class="scroll-mt-20 border-t border-zinc-800 bg-zinc-900/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+      <div class="mb-6">
+        <h2 class="text-3xl font-bold text-white">Build your USER.md</h2>
+        <p class="text-zinc-400 mt-2">Starts minimal — just the essentials. Flip on more sections with the <span class="text-zinc-300 font-medium">Include</span> switches, or use a preset below. Updates live on the right.</p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2 mb-8">
+        <span class="text-sm text-zinc-500 mr-1">Preset:</span>
+        <button type="button" id="preset-minimal" class="px-4 py-2 rounded-lg text-sm font-semibold bg-zinc-900/40 border border-zinc-800 text-white hover:bg-zinc-800/50 transition-colors">✦ Minimal</button>
+        <button type="button" id="preset-full" class="px-4 py-2 rounded-lg text-sm font-semibold bg-zinc-900/40 border border-zinc-800 text-white hover:bg-zinc-800/50 transition-colors">⛁ Everything</button>
+      </div>
+
+      <form id="umd-form" class="grid lg:grid-cols-2 gap-8 items-start">
+        <!-- LEFT: FORM -->
+        <div class="space-y-4">
+
+          <!-- Identity -->
+          <details open class="group rounded-2xl border border-zinc-800 bg-zinc-900/40 overflow-hidden">
+            <summary class="cursor-pointer select-none px-6 py-4 font-semibold text-white flex items-center justify-between gap-2"><span class="flex items-center gap-2">👤 Identity</span><Fragment set:html={toggle("identity")} /></summary>
+            <div class="px-6 pb-6 space-y-4">
+              <div class="grid sm:grid-cols-2 gap-4">
+                {identity.map(([id, label, ph]) => (
+                  <div>
+                    <label for={id} class="block text-xs font-medium text-zinc-400 mb-1">{label}</label>
+                    <input id={id} type="text" placeholder={ph} class={inputClass} />
+                  </div>
+                ))}
+              </div>
+              <div>
+                <label for="f-about" class="block text-xs font-medium text-zinc-400 mb-1">About me</label>
+                <textarea id="f-about" rows="3" placeholder="A short description of who you are..." class={inputClass}></textarea>
+              </div>
+            </div>
+          </details>
+
+          <!-- Priorities -->
+          <details class="rounded-2xl border border-zinc-800 bg-zinc-900/40 overflow-hidden">
+            <summary class="cursor-pointer select-none px-6 py-4 font-semibold text-white flex items-center justify-between gap-2"><span class="flex items-center gap-2">🎯 Current Priorities</span><Fragment set:html={toggle("priorities")} /></summary>
+            <div class="px-6 pb-6 space-y-5">
+              {[1, 2, 3].map((n) => (
+                <div class="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label for={`pr${n}-goal`} class="block text-xs font-medium text-zinc-400 mb-1">Priority {n} — Goal</label>
+                    <input id={`pr${n}-goal`} type="text" placeholder="What you're focused on" class={inputClass} />
+                  </div>
+                  <div>
+                    <label for={`pr${n}-why`} class="block text-xs font-medium text-zinc-400 mb-1">Why it matters</label>
+                    <input id={`pr${n}-why`} type="text" placeholder="Why it's important" class={inputClass} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </details>
+
+          <!-- Long-term goals -->
+          <details class="rounded-2xl border border-zinc-800 bg-zinc-900/40 overflow-hidden">
+            <summary class="cursor-pointer select-none px-6 py-4 font-semibold text-white flex items-center justify-between gap-2"><span class="flex items-center gap-2">🌱 Long-Term Goals</span><Fragment set:html={toggle("longgoals")} /></summary>
+            <div class="px-6 pb-6 grid sm:grid-cols-2 gap-4">
+              {longGoals.map(([id, label, ph]) => (
+                <div>
+                  <label for={id} class="block text-xs font-medium text-zinc-400 mb-1">{label}</label>
+                  <input id={id} type="text" placeholder={ph} class={inputClass} />
+                </div>
+              ))}
+            </div>
+          </details>
+
+          <!-- Background -->
+          <details class="rounded-2xl border border-zinc-800 bg-zinc-900/40 overflow-hidden">
+            <summary class="cursor-pointer select-none px-6 py-4 font-semibold text-white flex items-center justify-between gap-2"><span class="flex items-center gap-2">💼 Background</span><Fragment set:html={toggle("background")} /></summary>
+            <div class="px-6 pb-6 grid sm:grid-cols-2 gap-4">
+              {background.map(([id, label, ph]) => (
+                <div>
+                  <label for={id} class="block text-xs font-medium text-zinc-400 mb-1">{label}</label>
+                  <input id={id} type="text" placeholder={ph} class={inputClass} />
+                </div>
+              ))}
+            </div>
+          </details>
+
+          <!-- Skills -->
+          <details class="rounded-2xl border border-zinc-800 bg-zinc-900/40 overflow-hidden">
+            <summary class="cursor-pointer select-none px-6 py-4 font-semibold text-white flex items-center justify-between gap-2"><span class="flex items-center gap-2">📊 Skills</span><Fragment set:html={toggle("skills")} /></summary>
+            <div class="px-6 pb-6 space-y-4">
+              {skillAreas.map((area) => (
+                <div class="rounded-xl border border-zinc-800 p-4">
+                  <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                    <span class="text-sm font-semibold text-white">{area}</span>
+                    <div class="flex flex-wrap gap-1.5">
+                      {levels.map((lvl) => (
+                        <label class="cursor-pointer">
+                          <input type="radio" name={`skill-${area}`} value={lvl} class="peer sr-only" />
+                          <span class="px-2.5 py-1 rounded-full text-xs border border-zinc-800 text-zinc-400 peer-checked:bg-purple-600 peer-checked:text-white peer-checked:border-purple-500/30 transition-colors">{lvl}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                  <input id={`skillnote-${area}`} type="text" placeholder={`Notes on ${area.toLowerCase()} (optional)`} class={inputClass} />
+                </div>
+              ))}
+            </div>
+          </details>
+
+          <!-- Interests -->
+          <details class="rounded-2xl border border-zinc-800 bg-zinc-900/40 overflow-hidden">
+            <summary class="cursor-pointer select-none px-6 py-4 font-semibold text-white flex items-center justify-between gap-2"><span class="flex items-center gap-2">💡 Interests</span><Fragment set:html={toggle("interests")} /></summary>
+            <div class="px-6 pb-6 space-y-4">
+              {interests.map(([id, label, ph]) => (
+                <div>
+                  <label for={id} class="block text-xs font-medium text-zinc-400 mb-1">{label}</label>
+                  <input id={id} type="text" placeholder={ph} class={inputClass} />
+                </div>
+              ))}
+            </div>
+          </details>
+
+          <!-- Preferences -->
+          <details class="rounded-2xl border border-zinc-800 bg-zinc-900/40 overflow-hidden">
+            <summary class="cursor-pointer select-none px-6 py-4 font-semibold text-white flex items-center justify-between gap-2"><span class="flex items-center gap-2">⚙️ Preferences</span><Fragment set:html={toggle("preferences")} /></summary>
+            <div class="px-6 pb-6 space-y-6">
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Communication style</p>
+                <div class="flex flex-wrap gap-2">
+                  {commStyles.map((opt) => (
+                    <label class="cursor-pointer">
+                      <input type="checkbox" data-group="comm" value={opt} class="peer sr-only" />
+                      <span class="px-3 py-1.5 rounded-full text-xs border border-zinc-800 text-zinc-400 peer-checked:bg-purple-600 peer-checked:text-white peer-checked:border-purple-500/30 transition-colors">{opt}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Decision-making</p>
+                <div class="flex flex-wrap gap-2">
+                  {decisionStyles.map((opt) => (
+                    <label class="cursor-pointer">
+                      <input type="checkbox" data-group="decision" value={opt} class="peer sr-only" />
+                      <span class="px-3 py-1.5 rounded-full text-xs border border-zinc-800 text-zinc-400 peer-checked:bg-purple-600 peer-checked:text-white peer-checked:border-purple-500/30 transition-colors">{opt}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">Learning style</p>
+                <div class="flex flex-wrap gap-2">
+                  {learningStyles.map((opt) => (
+                    <label class="cursor-pointer">
+                      <input type="checkbox" data-group="learning" value={opt} class="peer sr-only" />
+                      <span class="px-3 py-1.5 rounded-full text-xs border border-zinc-800 text-zinc-400 peer-checked:bg-purple-600 peer-checked:text-white peer-checked:border-purple-500/30 transition-colors">{opt}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- Constraints -->
+          <details class="rounded-2xl border border-zinc-800 bg-zinc-900/40 overflow-hidden">
+            <summary class="cursor-pointer select-none px-6 py-4 font-semibold text-white flex items-center justify-between gap-2"><span class="flex items-center gap-2">🚧 Constraints</span><Fragment set:html={toggle("constraints")} /></summary>
+            <div class="px-6 pb-6 grid sm:grid-cols-2 gap-4">
+              {constraints.map(([id, label, ph]) => (
+                <div>
+                  <label for={id} class="block text-xs font-medium text-zinc-400 mb-1">{label}</label>
+                  <input id={id} type="text" placeholder={ph} class={inputClass} />
+                </div>
+              ))}
+            </div>
+          </details>
+
+          <!-- Values -->
+          <details class="rounded-2xl border border-zinc-800 bg-zinc-900/40 overflow-hidden">
+            <summary class="cursor-pointer select-none px-6 py-4 font-semibold text-white flex items-center justify-between gap-2"><span class="flex items-center gap-2">🧭 Values</span><Fragment set:html={toggle("values")} /></summary>
+            <div class="px-6 pb-6">
+              <input id="f-values" type="text" placeholder="Independence, Creativity, Financial freedom, Family..." class={inputClass} />
+            </div>
+          </details>
+
+          <!-- Tools -->
+          <details class="rounded-2xl border border-zinc-800 bg-zinc-900/40 overflow-hidden">
+            <summary class="cursor-pointer select-none px-6 py-4 font-semibold text-white flex items-center justify-between gap-2"><span class="flex items-center gap-2">🧰 Tools &amp; Platforms</span><Fragment set:html={toggle("tools")} /></summary>
+            <div class="px-6 pb-6 grid sm:grid-cols-2 gap-4">
+              {toolsUsed.map(([id, label, ph]) => (
+                <div>
+                  <label for={id} class="block text-xs font-medium text-zinc-400 mb-1">{label}</label>
+                  <input id={id} type="text" placeholder={ph} class={inputClass} />
+                </div>
+              ))}
+            </div>
+          </details>
+
+          <!-- Operating manual -->
+          <details class="rounded-2xl border border-zinc-800 bg-zinc-900/40 overflow-hidden">
+            <summary class="cursor-pointer select-none px-6 py-4 font-semibold text-white flex items-center justify-between gap-2"><span class="flex items-center gap-2">📖 Personal Operating Manual</span><Fragment set:html={toggle("opmanual")} /></summary>
+            <div class="px-6 pb-6 space-y-4">
+              {pom.map(([id, label, ph]) => (
+                <div>
+                  <label for={id} class="block text-xs font-medium text-zinc-400 mb-1">{label}</label>
+                  <input id={id} type="text" placeholder={ph} class={inputClass} />
+                </div>
+              ))}
+              <div>
+                <label for="f-aiknow" class="block text-xs font-medium text-zinc-400 mb-1">Anything else the AI should know</label>
+                <textarea id="f-aiknow" rows="3" placeholder="Extra context that helps..." class={inputClass}></textarea>
+              </div>
+            </div>
+          </details>
+
+          <!-- Boilerplate section (no inputs, just toggleable) -->
+          <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 px-6 py-4 flex items-center justify-between gap-2">
+            <span class="font-semibold text-white flex items-center gap-2">🤖 AI Assistant Guidelines <span class="text-xs font-normal text-zinc-500">(standard boilerplate)</span></span>
+            <Fragment set:html={toggle("guidelines")} />
+          </div>
+        </div>
+
+        <!-- RIGHT: PREVIEW -->
+        <div class="lg:sticky lg:top-20">
+          <div class="rounded-2xl border border-zinc-800 bg-black/60 overflow-hidden">
+            <div class="flex items-center justify-between px-4 py-3 border-b border-zinc-800 bg-zinc-900/40">
+              <div class="flex items-center gap-2 text-sm">
+                <span class="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse"></span>
+                <span class="font-mono text-zinc-300">USER.md</span>
+              </div>
+              <div class="flex gap-2">
+                <button type="button" id="copy-btn" class="px-3 py-1.5 rounded-lg text-xs font-semibold border border-zinc-800 text-white hover:bg-zinc-800/50 transition-colors">Copy</button>
+                <button type="button" id="download-btn" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-gradient-to-r from-pink-600 to-purple-600 text-white hover:opacity-90 transition-opacity">Download .md</button>
+              </div>
+            </div>
+            <pre id="preview" class="text-xs text-zinc-300 font-mono p-4 overflow-auto max-h-[70vh] whitespace-pre-wrap leading-relaxed"></pre>
+          </div>
+          <p class="text-xs text-zinc-600 mt-3 text-center">Built entirely in your browser. Nothing is uploaded.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- HOW TO USE -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-20">
+    <h2 class="text-3xl font-bold text-white mb-8 text-center">How to use it</h2>
+    <div class="grid gap-6 sm:grid-cols-3">
+      {[
+        { n: "1", t: "Fill it out", d: "Add what's relevant above. Skip anything that doesn't apply." },
+        { n: "2", t: "Copy or download", d: "Grab the file, or copy the markdown straight to your clipboard." },
+        { n: "3", t: "Give it to your AI", d: "Paste it at the start of a chat, or save it as USER.md / project context." },
+      ].map((s) => (
+        <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-6 text-center">
+          <div class="mx-auto w-10 h-10 rounded-full bg-gradient-to-r from-pink-600 to-purple-600 flex items-center justify-center font-bold text-white mb-3">{s.n}</div>
+          <h3 class="font-bold text-white mb-1">{s.t}</h3>
+          <p class="text-sm text-zinc-400">{s.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="border-t border-zinc-800 bg-zinc-900/40">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">Want AI doing more than chatting?</h2>
+      <p class="text-zinc-400 text-lg mb-8">This is a taste. I build AI systems that actually run businesses — and I can build one for yours.</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="/tools" class="px-7 py-3.5 rounded-xl border border-zinc-800 text-white font-semibold hover:bg-zinc-800/50 transition-colors">More free tools</a>
+        <a href="/contact" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold hover:opacity-90 transition-opacity">Work with me</a>
+      </div>
+    </div>
+  </section>
+
+  <script define:vars={{ skillAreas, levels, commStyles, decisionStyles, learningStyles }}>
+    const form = document.getElementById("umd-form");
+    const preview = document.getElementById("preview");
+
+    const g = (id) => (document.getElementById(id)?.value || "").trim();
+    const radio = (name) => {
+      const el = document.querySelector(`input[name="${name}"]:checked`);
+      return el ? el.value : "";
+    };
+    const checks = (group) =>
+      Array.from(document.querySelectorAll(`input[data-group="${group}"]:checked`)).map((e) => e.value);
+    const cb = (label, on) => `- [${on ? "x" : " "}] ${label}`;
+    const on = (key) => {
+      const el = document.querySelector(`input[data-toggle="${key}"]`);
+      return el ? el.checked : true;
+    };
+
+    // Each section returns its markdown block (without separators).
+    const sections = {
+      identity: () => `## Identity
+
+### Basic Information
+
+- **Name:** ${g("f-name")}
+- **Preferred Name:** ${g("f-preferred")}
+- **Pronouns:** ${g("f-pronouns")}
+- **Location:** ${g("f-location")}
+- **Time Zone:** ${g("f-timezone")}
+- **Primary Language:** ${g("f-language")}
+
+### About Me
+
+${g("f-about")}`,
+
+      priorities: () => `## Current Priorities
+
+### Priority 1
+
+- **Goal:** ${g("pr1-goal")}
+- **Why it matters:** ${g("pr1-why")}
+
+### Priority 2
+
+- **Goal:** ${g("pr2-goal")}
+- **Why it matters:** ${g("pr2-why")}
+
+### Priority 3
+
+- **Goal:** ${g("pr3-goal")}
+- **Why it matters:** ${g("pr3-why")}`,
+
+      longgoals: () => `## Long-Term Goals
+
+- **Personal:** ${g("g-personal")}
+- **Professional:** ${g("g-professional")}
+- **Financial:** ${g("g-financial")}
+- **Educational:** ${g("g-educational")}`,
+
+      background: () => `## Background
+
+### Work Experience
+
+- **Industries:** ${g("bg-industries")}
+- **Roles:** ${g("bg-roles")}
+- **Notable Experience:** ${g("bg-notable")}
+
+### Education
+
+- **Formal Education:** ${g("edu-formal")}
+- **Certifications:** ${g("edu-certs")}
+- **Self-Taught Skills:** ${g("edu-self")}`,
+
+      skills: () => `## Skills
+
+${skillAreas
+  .map((area) => {
+    const chosen = radio(`skill-${area}`);
+    const lines = levels.map((lvl) => cb(lvl, chosen === lvl)).join("\n");
+    return `### ${area}\n\n${lines}\n\n**Notes:** ${g(`skillnote-${area}`)}`;
+  })
+  .join("\n\n")}`,
+
+      interests: () => `## Interests
+
+- **Topics I enjoy learning about:** ${g("int-enjoy")}
+- **Topics I actively follow:** ${g("int-follow")}
+- **Topics I would like to learn:** ${g("int-learn")}`,
+
+      preferences: () => `## Preferences
+
+### Communication Style
+
+_I prefer responses that are:_
+
+${commStyles.map((o) => cb(o, checks("comm").includes(o))).join("\n")}
+
+### Decision-Making Style
+
+_When helping me make decisions:_
+
+${decisionStyles.map((o) => cb(o, checks("decision").includes(o))).join("\n")}
+
+### Learning Style
+
+_I learn best through:_
+
+${learningStyles.map((o) => cb(o, checks("learning").includes(o))).join("\n")}`,
+
+      constraints: () => `## Constraints
+
+- **Time:** ${g("con-time")}
+- **Budget:** ${g("con-budget")}
+- **Technical Resources:** ${g("con-tech")}
+- **Other Constraints:** ${g("con-other")}`,
+
+      values: () => `## Values
+
+**My Values:** ${g("f-values")}`,
+
+      tools: () => `## Tools and Platforms
+
+- **Software:** ${g("tu-software")}
+- **AI Tools:** ${g("tu-ai")}
+- **Productivity Tools:** ${g("tu-productivity")}
+- **Communication Tools:** ${g("tu-comm")}`,
+
+      guidelines: () => `## AI Assistant Guidelines
+
+When helping me:
+
+1. Ask clarifying questions when important information is missing.
+2. Avoid unnecessary complexity.
+3. Explain assumptions.
+4. Prioritize practical recommendations.
+5. Focus on actionable outcomes.
+6. Remember ongoing projects and goals when relevant.
+7. Present information in organized formats.
+8. Identify risks, dependencies, and tradeoffs.
+9. Challenge weak ideas when necessary.
+10. Optimize for real-world execution, not theory.`,
+
+      aiknow: () => `## Things the AI Should Know
+
+${g("f-aiknow")}`,
+
+      opmanual: () => `## Personal Operating Manual
+
+- **What Motivates Me:** ${g("pom-motivates")}
+- **What Frustrates Me:** ${g("pom-frustrates")}
+- **What Success Looks Like:** ${g("pom-success")}
+- **What I Want More Of:** ${g("pom-more")}
+- **What I Want Less Of:** ${g("pom-less")}`,
+    };
+
+    // Order in the file → toggle key that controls it.
+    // "aiknow" and "opmanual" share the Personal Operating Manual toggle.
+    const order = [
+      ["identity", "identity"],
+      ["priorities", "priorities"],
+      ["longgoals", "longgoals"],
+      ["background", "background"],
+      ["skills", "skills"],
+      ["interests", "interests"],
+      ["preferences", "preferences"],
+      ["constraints", "constraints"],
+      ["values", "values"],
+      ["tools", "tools"],
+      ["guidelines", "guidelines"],
+      ["aiknow", "opmanual"],
+      ["opmanual", "opmanual"],
+    ];
+
+    const HEADER = `# USER.md
+
+## Purpose
+
+This file provides foundational context about the user. Any AI assistant, agent, or software system should review this file before providing recommendations, creating plans, writing content, building projects, or making decisions on the user's behalf.`;
+
+    const FOOTER = `## Default Instruction
+
+Use the information in this file to personalize recommendations, plans, explanations, and decisions. Maintain consistency with the user's goals, preferences, constraints, and values. When uncertainty exists, ask questions rather than making assumptions.`;
+
+    function buildMarkdown() {
+      const parts = [HEADER];
+      for (const [sectionKey, toggleKey] of order) {
+        if (on(toggleKey)) parts.push(sections[sectionKey]());
+      }
+      parts.push(FOOTER);
+      return parts.join("\n\n---\n\n") + "\n";
+    }
+
+    function render() {
+      preview.textContent = buildMarkdown();
+    }
+
+    const allToggles = () => Array.from(document.querySelectorAll(".section-toggle"));
+    const dim = (t) => {
+      const wrap = t.closest("details") || t.closest("div");
+      if (wrap) wrap.classList.toggle("opacity-50", !t.checked);
+    };
+
+    // Section toggles: don't let the switch open/close the <details>, and dim excluded sections.
+    allToggles().forEach((t) => {
+      t.addEventListener("change", () => {
+        dim(t);
+        render();
+      });
+      const label = t.closest(".section-toggle-wrap");
+      if (label) label.addEventListener("click", (e) => e.stopPropagation());
+      dim(t); // initial state (minimal by default)
+    });
+
+    // Presets
+    const MINIMAL = ["identity", "priorities", "preferences", "guidelines"];
+    function applyPreset(keys) {
+      allToggles().forEach((t) => {
+        const key = t.getAttribute("data-toggle");
+        t.checked = keys === "all" ? true : keys.includes(key);
+        dim(t);
+      });
+      render();
+    }
+    document.getElementById("preset-minimal").addEventListener("click", () => applyPreset(MINIMAL));
+    document.getElementById("preset-full").addEventListener("click", () => applyPreset("all"));
+
+    form.addEventListener("input", render);
+    form.addEventListener("change", render);
+    render();
+
+    // Copy
+    const copyBtn = document.getElementById("copy-btn");
+    copyBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(buildMarkdown());
+        const orig = copyBtn.textContent;
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => (copyBtn.textContent = orig), 1500);
+      } catch (e) {
+        copyBtn.textContent = "Press Ctrl+C";
+      }
+    });
+
+    // Download
+    document.getElementById("download-btn").addEventListener("click", () => {
+      const blob = new Blob([buildMarkdown()], { type: "text/markdown;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "USER.md";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</BrandLayout>

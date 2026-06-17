@@ -1,0 +1,112 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+
+const offers = [
+  {
+    id: "build",
+    tag: "Most popular",
+    title: "AI Strategy & Build",
+    price: "Project or retainer",
+    desc: "I architect and ship the AI systems that do real work in your business — and hand you something that actually runs.",
+    includes: [
+      "Discovery: map the workflows worth automating",
+      "Architecture: the right stack for your use case",
+      "Build: voice agents, automations, multi-agent systems",
+      "Observability: dashboards so you can see it working",
+      "Handoff or ongoing operation",
+    ],
+  },
+  {
+    id: "training",
+    tag: null,
+    title: "Workshops & Training",
+    price: "Half-day to multi-day",
+    desc: "Get your team from “AI-curious” to shipping. Hands-on, built around your real workflows — not generic theory.",
+    includes: [
+      "Custom curriculum for your team & tools",
+      "Live, hands-on building sessions",
+      "Prompting and agent-design fundamentals",
+      "A working automation by the end",
+      "Recording + resources to keep",
+    ],
+  },
+];
+
+const process = [
+  { step: "01", title: "Call", desc: "We talk through what you're trying to build or automate, and whether I'm the right fit." },
+  { step: "02", title: "Plan", desc: "I scope the fastest path to a working system and what it'll cost." },
+  { step: "03", title: "Build", desc: "I ship in tight iterations so you see progress, not a black box." },
+  { step: "04", title: "Run", desc: "We hand off or I keep it operating — with dashboards so you always know what's happening." },
+];
+---
+
+<BrandLayout active="services" title="Services | Zachary Lewis" description="AI strategy and build, plus team workshops — applied AI that runs real operations.">
+  <!-- Header -->
+  <section class="relative overflow-hidden border-b border-ink">
+    <div class="absolute inset-0 bg-transparent"></div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-20 md:py-24">
+      <span class="text-xs font-semibold uppercase tracking-wider text-accent">Services</span>
+      <h1 class="mt-3 text-4xl md:text-5xl font-black text-ink leading-tight max-w-3xl">
+        Ways to put applied AI to work.
+      </h1>
+      <p class="mt-5 text-lg text-ink/80 max-w-2xl leading-relaxed">
+        Whether you need a system built or your team trained — here's how we can work together.
+      </p>
+    </div>
+  </section>
+
+  <!-- Offers -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24 space-y-6">
+    {offers.map((o) => (
+      <div id={o.id} class="scroll-mt-24 rounded-2xl border border-ink bg-white p-8 md:p-10 grid md:grid-cols-3 gap-8">
+        <div class="md:col-span-1">
+          {o.tag && (
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-accent mb-3 bg-accent/10 border border-accent rounded-full px-3 py-1">{o.tag}</span>
+          )}
+          <h2 class="text-2xl font-bold text-ink">{o.title}</h2>
+          <p class="mt-2 text-sm font-semibold text-accent">{o.price}</p>
+          <p class="mt-4 text-ink/60 leading-relaxed">{o.desc}</p>
+          <a href={o.link || "/contact"} class="mt-6 inline-block px-5 py-3 rounded-xl bg-accent text-white border border-ink font-semibold text-sm hover:opacity-90 transition-opacity">
+            {o.link ? "Learn more" : "Request this"}
+          </a>
+        </div>
+        <div class="md:col-span-2">
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-ink/50 mb-4">What's included</h3>
+          <ul class="space-y-3">
+            {o.includes.map((item) => (
+              <li class="flex gap-3 text-ink/80">
+                <span class="text-accent mt-0.5">✓</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <!-- Process -->
+  <section class="border-y border-ink bg-paper2">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+      <h2 class="text-3xl font-bold text-ink mb-12">How it works</h2>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {process.map((p) => (
+          <div class="rounded-2xl border border-ink bg-white p-6">
+            <div class="text-3xl font-black text-accent">{p.step}</div>
+            <h3 class="mt-3 text-lg font-bold text-ink">{p.title}</h3>
+            <p class="mt-2 text-sm text-ink/60 leading-relaxed">{p.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-16 md:py-24 text-center">
+    <h2 class="text-2xl md:text-3xl font-bold text-ink mb-4">Not sure which fits?</h2>
+    <p class="text-ink/60 text-lg mb-8">Tell me what you're working on and I'll point you to the fastest path.</p>
+    <a href="/contact" class="inline-block px-7 py-3.5 rounded-xl bg-accent text-white border border-ink font-semibold hover:opacity-90 transition-opacity">
+      Contact me
+    </a>
+  </section>
+</BrandLayout>

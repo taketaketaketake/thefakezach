@@ -1,0 +1,120 @@
+---
+import BrandLayout from "../../layouts/BrandLayout.astro";
+
+const REPO_URL = "https://github.com/taketaketaketake/show-breakdown-tool"; // verify
+
+const features = [
+  { icon: "📝", title: "Whisper transcription", desc: "Speech-to-text with Whisper (tiny by default, configurable) plus speaker diarization." },
+  { icon: "🎬", title: "Scene detection", desc: "Find shot boundaries and split episodes into scenes with content-aware detection." },
+  { icon: "🖼️", title: "Keyframe extraction", desc: "Pull representative frames per scene for downstream visual analysis." },
+  { icon: "🎚️", title: "Normalization", desc: "Standardize resolution, framerate, and codec so every input is processed the same way." },
+  { icon: "📊", title: "Pacing & structure", desc: "Surface pacing, motion, color patterns, dialogue structure, and narrative rhythm." },
+  { icon: "🧬", title: "Embeddings (planned)", desc: "CLIP, audio, and text embeddings for comparing episodes — on the roadmap." },
+];
+
+const stages = [
+  { n: "0", t: "Raw ingestion", d: "Import the source video." },
+  { n: "1", t: "Normalization", d: "Standardize resolution, framerate, codec." },
+  { n: "2", t: "Audio extraction", d: "Pull the audio track." },
+  { n: "3", t: "Transcription", d: "Whisper speech-to-text + speaker diarization." },
+  { n: "4", t: "Scene detection", d: "Identify shot boundaries." },
+  { n: "5", t: "Frame extraction", d: "Keyframes per scene." },
+  { n: "6–8", t: "Features & embeddings", d: "Visual/audio features and embeddings (planned)." },
+];
+---
+
+<BrandLayout theme="dark" active="tools" title="Media Analysis — Turn Video Into Structured Data | Zachary Lewis" description="An open-source pipeline that turns video into machine-learnable data: Whisper transcription, scene detection, keyframes, pacing, and embeddings.">
+  <!-- HERO -->
+  <section class="relative overflow-hidden border-b border-zinc-800">
+    <div class="absolute inset-0 bg-transparent"></div>
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 hidden"></div>
+    <div class="relative max-w-5xl mx-auto px-4 sm:px-6 py-20 md:py-28 text-center">
+      <span class="inline-flex items-center gap-2 bg-zinc-900/40 border border-zinc-800 rounded-full px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-pink-400 mb-6">
+        <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+        Open source · Free
+      </span>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white leading-[1.05]">
+        Turn video into <span class="text-pink-400">structured data.</span>
+      </h1>
+      <p class="mt-6 text-lg md:text-xl text-zinc-300 max-w-2xl mx-auto leading-relaxed">
+        A research-grade pipeline that takes a raw video and extracts machine-learnable features —
+        Whisper transcripts, scenes, keyframes, pacing, and more.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="#quick-start" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold hover:opacity-90 transition-opacity">⚡ Quick start</a>
+        <a href={REPO_URL} target="_blank" rel="noopener noreferrer" class="px-7 py-3.5 rounded-xl border border-zinc-800 text-white font-semibold hover:bg-zinc-800/50 transition-colors">View on GitHub →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-20 text-center">
+    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Video is opaque. This makes it queryable.</h2>
+    <p class="text-zinc-400 text-lg leading-relaxed">
+      A video file is a wall of pixels and audio. This pipeline breaks it into stages — transcript, scenes, frames,
+      pacing — so you can actually search, compare, and learn from what's inside. Built originally to study preschool
+      animated episodes, it works on any video.
+    </p>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="border-y border-zinc-800 bg-zinc-900/40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+      <h2 class="text-3xl font-bold text-white mb-10">What you get</h2>
+      <div class="grid gap-6 md:grid-cols-3">
+        {features.map((f) => (
+          <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-7">
+            <div class="text-3xl mb-3">{f.icon}</div>
+            <h3 class="text-lg font-bold text-white mb-2">{f.title}</h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">{f.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+    <h2 class="text-3xl font-bold text-white mb-3">The pipeline</h2>
+    <p class="text-zinc-400 mb-10">Each video flows through staged processing — <span class="font-mono text-zinc-300">raw → normalized → scenes → features → embeddings</span> — with artifacts saved per stage.</p>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {stages.map((s) => (
+        <div class="rounded-2xl border border-zinc-800 bg-zinc-900/40 p-5">
+          <div class="text-2xl font-black text-pink-400">{s.n}</div>
+          <h3 class="mt-2 text-base font-bold text-white">{s.t}</h3>
+          <p class="mt-1 text-sm text-zinc-400 leading-relaxed">{s.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- QUICK START -->
+  <section id="quick-start" class="scroll-mt-20 border-y border-zinc-800 bg-zinc-900/40">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+      <h2 class="text-3xl font-bold text-white mb-3">Quick start</h2>
+      <p class="text-zinc-400 mb-8">Python 3.11+ and FFmpeg required. Speaker diarization uses a HuggingFace token.</p>
+      <div class="rounded-2xl border border-zinc-800 bg-black/60 overflow-hidden">
+        <div class="px-4 py-2.5 border-b border-zinc-800 bg-zinc-900/40 text-xs font-mono text-zinc-400">terminal</div>
+        <pre class="p-4 text-sm font-mono text-white overflow-x-auto leading-relaxed"><span class="text-zinc-600"># set up the environment</span>
+python -m venv .venv
+source .venv/bin/activate   <span class="text-zinc-600"># macOS / Linux</span>
+pip install -r requirements.txt
+
+<span class="text-zinc-600"># run the pipeline on a video (stages 0 → 3 = transcript)</span>
+python pipeline.py</pre>
+      </div>
+      <p class="text-sm text-zinc-500 mt-4">Artifacts land under <code class="text-zinc-300">episodes/&lt;name&gt;/</code> — one folder per stage (audio, transcript, scenes, frames…).</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="max-w-3xl mx-auto px-4 sm:px-6 py-16 md:py-24 text-center">
+    <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">Free and open source.</h2>
+    <p class="text-zinc-400 text-lg mb-8">Grab it on GitHub — or if you need custom media analysis built for your data, let's talk.</p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href={REPO_URL} target="_blank" rel="noopener noreferrer" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold hover:opacity-90 transition-opacity">View on GitHub</a>
+      <a href="/contact" class="px-7 py-3.5 rounded-xl border border-zinc-800 text-white font-semibold hover:bg-zinc-800/50 transition-colors">Work with me</a>
+    </div>
+    <p class="mt-8 text-sm text-zinc-500"><a href="/tools" class="hover:text-zinc-300 transition-colors">← Back to all free tools</a></p>
+  </section>
+</BrandLayout>

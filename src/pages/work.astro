@@ -1,0 +1,78 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+import { projects } from "../data/showcase";
+---
+
+<BrandLayout active="work" title="Work | Zachary Lewis" description="Real AI systems Zachary Lewis has designed and shipped — from a business-running agent platform to dev tools and trading systems.">
+  <!-- Header -->
+  <section class="relative overflow-hidden border-b border-ink">
+    <div class="absolute inset-0 bg-transparent"></div>
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 py-20 md:py-24">
+      <span class="text-xs font-semibold uppercase tracking-wider text-accent">Work</span>
+      <h1 class="mt-3 text-4xl md:text-5xl font-black text-ink leading-tight max-w-3xl">
+        Systems I've built, shipped, and run.
+      </h1>
+      <p class="mt-5 text-lg text-ink/80 max-w-2xl leading-relaxed">
+        Not concepts — real software handling real work. This is the proof behind everything else on this site.
+      </p>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24 space-y-6">
+    {projects.map((p, i) => (
+      <article id={p.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")} class="scroll-mt-24 rounded-2xl border border-ink bg-white p-6 md:p-8 hover:border-accent transition-colors">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <!-- Image slot (alternates sides) -->
+          <div class={i % 2 === 1 ? "md:order-last" : ""}>
+            {p.image ? (
+              <img src={p.image} alt={`${p.title} screenshot`} class="w-full aspect-[16/10] object-cover rounded-xl border border-ink" loading="lazy" />
+            ) : (
+              <div class="w-full aspect-[16/10] rounded-xl border border-dashed border-ink bg-white flex items-center justify-center text-ink/45 text-sm">
+                Image coming soon
+              </div>
+            )}
+          </div>
+
+          <!-- Content -->
+          <div>
+            <div class="flex flex-wrap items-center gap-3 mb-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-ink/45">0{i + 1}</span>
+              <h2 class="text-2xl md:text-3xl font-bold text-ink">{p.title}</h2>
+              <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-accent/10 border border-accent text-accent">{p.status}</span>
+            </div>
+            <p class="text-accent font-semibold mb-3">{p.tagline}</p>
+            <p class="text-ink/80 leading-relaxed">{p.description}</p>
+            <div class="mt-5 flex flex-wrap gap-2">
+              {p.tags.map((t) => (
+                <span class="text-xs px-3 py-1 rounded-full bg-paper2 border border-ink text-ink/60">{t}</span>
+              ))}
+            </div>
+            {p.href && p.cta && (
+              <a
+                href={p.href}
+                target={p.href.startsWith("http") ? "_blank" : undefined}
+                rel={p.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                class="mt-6 inline-block px-5 py-3 rounded-xl border border-ink text-ink font-semibold text-sm hover:bg-paper2 transition-colors"
+              >
+                {p.cta} →
+              </a>
+            )}
+          </div>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <!-- Cross-link to tools -->
+  <section class="border-t border-ink bg-paper2">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold text-ink mb-3">Want to try my stuff for free?</h2>
+      <p class="text-ink/60 text-lg mb-8">I open-source tools and ship free utilities. Grab them, no signup.</p>
+      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="/tools" class="px-7 py-3.5 rounded-xl bg-accent text-white border border-ink font-semibold hover:opacity-90 transition-opacity">Browse free tools</a>
+        <a href="/contact" class="px-7 py-3.5 rounded-xl border border-ink text-ink font-semibold hover:bg-paper2 transition-colors">Build something with me</a>
+      </div>
+    </div>
+  </section>
+</BrandLayout>

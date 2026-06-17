@@ -1,470 +1,327 @@
 ---
-import "../styles/global.css";
-import Modal from "../components/Modal.astro";
-import ProjectsSection from "../components/ProjectsSection.astro";
-import BlogSection from "../components/BlogSection.astro";
-import { projects as allProjects } from "../data/projects";
+import BrandLayout from "../layouts/BrandLayout.astro";
 
-// Filter out projects hidden from homepage (tracked separately on /live-projects)
-const hiddenFromHomepage = [
-  "Fix My Furnace",
-  "Detroit Small Business Map",
-  "Bags of Laundry"
-];
-const projects = allProjects.filter(p => !hiddenFromHomepage.includes(p.title));
-
-const zachary = {
-  name: "Zachary Lewis",
-  username: "thefakezach",
-  avatarPhoto: "/profile-photo.jpg",
-  joinDate: "Building from Detroit, MI",
-  about: `Full-stack developer with a background in video production. I spent years building a video production business and growing an audience to 100K+ followers and 25M+ video views. In 2024, I became obsessed with AI and haven't stopped building since—shipping voice AI systems, mobile apps, real-time platforms, and everything in between. I learn by doing and ship fast.`,
-  contact: {
-    twitter: "#",
-    github: "#",
-    linkedin: "#",
-    email: "mailto:zach at takedetroit.com"
+const services = [
+  {
+    title: "AI Strategy & Build",
+    desc: "I architect and ship AI systems that run real operations — voice agents, automations, and multi-agent platforms. Done-with-you or done-for-you.",
+    href: "/services#build",
+    icon: "⚙️",
   },
-  projects
-};
+  {
+    title: "Workshops & Training",
+    desc: "Hands-on sessions that take your team from “AI-curious” to shipping. Half-day to multi-day, built around your actual workflows.",
+    href: "/services#training",
+    icon: "🎓",
+  },
+];
+
+const stats = [
+  { value: "3", label: "Platforms shipped" },
+  { value: "4", label: "Free & open-source tools" },
+  { value: "10+", label: "AI systems built" },
+  { value: "24/7", label: "Agents running real businesses" },
+];
+
+// Featured projects, framed as "originals" (logo shown when available; text mark otherwise).
+const featuredProjects = [
+  { ep: "EP.01", category: "PLATFORM", name: "AgentlandOS", tagline: "AI agents that run a business", logo: "/project-logos/agentland-logo.png", href: "/work#agentlandos" },
+  { ep: "EP.02", category: "DEV TOOL", name: "TraceTrack", tagline: "GitHub for AI workflows", logo: null, href: "/work#tracetrack" },
+  { ep: "EP.03", category: "QUANT", name: "Trading System", tagline: "Agent-based market signals", logo: "/project-logos/trading-logo.png", href: "/work#trading-system" },
+];
+
+// Scrolling marquee strip (broadcast/editorial motif)
+const marqueeItems = [
+  "AI SYSTEMS", "VOICE AGENTS", "AUTOMATIONS", "REAL-TIME PLATFORMS",
+  "DASHBOARDS", "FREE TOOLS", "BUILT IN DETROIT", "25M+ VIEWS",
+];
+
+const testimonials = [
+  {
+    quote:
+      "Zach doesn’t just talk about AI — he builds the thing and shows you the dashboard. We went from idea to a working agent in days.",
+    name: "Operations Lead",
+    org: "Local Services Business",
+  },
+  {
+    quote:
+      "The most practical AI session our team has had. No buzzwords, just systems we actually use now.",
+    name: "Founder",
+    org: "Detroit Startup",
+  },
+  {
+    quote:
+      "He gets that AI is only useful if it runs without you babysitting it. That mindset changed how we operate.",
+    name: "Small Business Owner",
+    org: "Service Company",
+  },
+];
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- Primary Meta Tags -->
-    <title>{zachary.name} | Designer & Developer</title>
-    <meta name="title" content="{zachary.name} | Designer & Developer" />
-    <meta name="description" content="Detroit-based developer and designer creating innovative web solutions. Building AI voice agents, business maps, and digital experiences from Motor City." />
-    <meta name="keywords" content="Detroit developer, Michigan web developer, AI voice agents, business mapping, software engineer, web design, Motor City tech" />
-    <meta name="author" content="{zachary.name}" />
-    <meta name="robots" content="index, follow" />
-    <meta name="language" content="English" />
-    <meta name="theme-color" content="#ec4899" />
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://thefakezach.com/" />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://thefakezach.com/" />
-    <meta property="og:title" content="{zachary.name} | Designer & Developer" />
-    <meta property="og:description" content="Detroit-based developer and designer creating innovative web solutions. Building AI voice agents, business maps, and digital experiences from Motor City." />
-    <meta property="og:image" content="https://thefakezach.com/og-image.jpg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Zachary Lewis - Detroit Developer & Designer" />
-    <meta property="og:site_name" content="{zachary.name}" />
-    <meta property="og:locale" content="en_US" />
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://thefakezach.com/" />
-    <meta name="twitter:title" content="{zachary.name} | Designer & Developer" />
-    <meta name="twitter:description" content="Detroit-based developer and designer creating innovative web solutions. Building AI voice agents, business maps, and digital experiences from Motor City." />
-    <meta name="twitter:image" content="https://thefakezach.com/og-image.jpg" />
-    <meta name="twitter:image:alt" content="Zachary Lewis - Detroit Developer & Designer" />
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    
-    <!-- Preload Critical Resources -->
-    
-    <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "{zachary.name}",
-      "url": "https://thefakezach.com",
-      "image": "https://thefakezach.com/og-image.jpg",
-      "jobTitle": "Developer & Designer",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Freelance"
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Detroit",
-        "addressRegion": "MI",
-        "addressCountry": "US"
-      },
-      "alumniOf": "University",
-      "knowsAbout": ["Web Development", "AI Voice Agents", "Business Mapping", "Software Engineering", "Product Design"],
-      "description": "Detroit-based developer and designer creating innovative web solutions.",
-      "sameAs": [
-        "https://github.com/thefakezach",
-        "https://linkedin.com/in/thefakezach"
-      ]
-    }
-    </script>
-  </head>
+<BrandLayout active="home">
+  <!-- HERO / SHOWREEL -->
+  <section class="border-b border-ink">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 md:py-20 grid lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+      <div>
+        <span class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-ink/60 mb-6">
+          <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+          Zachary Lewis — a one-person media co.
+        </span>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-ink leading-[1.05]">
+          I build and design AI systems that
+          <span class="text-accent"> change the way you work.</span>
+        </h1>
+        <p class="mt-6 text-lg md:text-xl text-ink/80 leading-relaxed max-w-xl">
+          I integrate AI into real projects. I work with founders and creative teams to design,
+          build, and ship systems that actually do the work — not demos, not decks.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <a href="/work" class="group px-6 py-3.5 bg-accent text-white border border-ink font-bold text-center hover:shadow-lg transition-all inline-flex items-center justify-center gap-2">
+            <span class="text-lg leading-none">▶</span> Watch the Work
+          </a>
+          <a href="/contact" class="px-6 py-3.5 border border-ink text-ink font-bold text-center hover:bg-paper2 transition-colors">
+            Work With Me
+          </a>
+        </div>
+      </div>
 
-  <body class="bg-zinc-950 text-zinc-50 font-sans min-h-screen flex flex-col">
-    <!-- Hero Header -->
-    <header class="relative overflow-hidden">
-      <!-- Gradient Banner -->
-      <div class="h-48 bg-gradient-to-br from-pink-600 via-purple-600 to-indigo-700"></div>
+      <!-- Showreel player (drop a video in below) -->
+      <figure class="border border-ink bg-ink shadow-xl">
+        <!-- top bar -->
+        <div class="flex items-center justify-between px-3 py-2 border-b border-paper/20 font-mono text-[10px] uppercase tracking-widest text-paper/60">
+          <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span> REC · REEL 2026</span>
+          <span>16:9</span>
+        </div>
+        <div class="relative aspect-video w-full overflow-hidden group">
+          <!-- Replace this placeholder with a <video> or <img>:
+               <video src="/hero.mp4" autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover"></video> -->
+          <div class="absolute inset-0 flex items-center justify-center bg-ink">
+            <span class="font-mono text-[10px] uppercase tracking-widest text-paper/30">[ drop showreel here ]</span>
+          </div>
+          <!-- play button -->
+          <div class="absolute inset-0 flex items-center justify-center">
+            <span class="w-16 h-16 rounded-full bg-accent text-white border border-paper/30 flex items-center justify-center text-2xl pl-1 group-hover:scale-110 transition-transform">▶</span>
+          </div>
+        </div>
+        <!-- scrubber -->
+        <figcaption class="flex items-center gap-3 px-3 py-2 border-t border-paper/20 font-mono text-[10px] text-paper/60">
+          <span>00:00</span>
+          <span class="flex-1 h-1 bg-paper/15 relative overflow-hidden"><span class="absolute inset-y-0 left-0 w-1/4 bg-accent"></span></span>
+          <span>02:14</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
 
-      <!-- Profile Card (Overlaps Banner) -->
-      <div class="relative -mt-20 px-4 sm:px-6 max-w-5xl mx-auto">
-        <div class="bg-zinc-900/80 backdrop-blur-sm rounded-2xl p-6 shadow-2xl border border-zinc-800">
-          <div class="flex flex-col sm:flex-row items-center sm:items-end gap-5">
-            <!-- Avatar -->
-            <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-zinc-800 border-4 border-zinc-950 shadow-xl flex-shrink-0 overflow-hidden">
-              <img 
-                src={zachary.avatarPhoto} 
-                alt={`${zachary.name} profile photo`}
-                class="w-full h-full object-cover"
-                loading="eager"
-              />
-            </div>
+  <!-- MARQUEE -->
+  <div class="marquee bg-ink text-paper border-b border-ink py-3">
+    <div class="marquee__track font-mono text-sm uppercase tracking-widest">
+      {[...marqueeItems, ...marqueeItems].map((m) => (
+        <span class="mx-6 inline-flex items-center gap-6"><span>{m}</span><span class="text-accent">✦</span></span>
+      ))}
+    </div>
+  </div>
 
-            <!-- Name & Info -->
-            <div class="flex-1 text-center sm:text-left">
-              <h1 class="text-2xl sm:text-3xl font-bold text-white">{zachary.name}</h1>
-              <p class="text-pink-400 text-lg font-medium" role="complementary">@{zachary.username}</p>
-              <p class="text-sm text-zinc-400 mt-1">{zachary.joinDate}</p>
-            </div>
+  <!-- BY THE NUMBERS + ORIGINALS (one section) -->
+  <section class="border-b border-ink bg-paper2">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 md:py-20">
+      <!-- stats -->
+      <p class="font-mono text-[11px] uppercase tracking-widest text-ink/50 mb-6">// By the numbers</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {stats.map((s) => (
+          <div>
+            <div class="text-4xl md:text-5xl font-black tracking-tight text-ink">{s.value}</div>
+            <div class="text-sm md:text-base font-medium text-ink/70 mt-1.5">{s.label}</div>
+          </div>
+        ))}
+      </div>
 
+      <!-- originals -->
+      <div class="flex items-end justify-between mb-8 mt-16 md:mt-20">
+        <h2 class="font-mono text-[11px] uppercase tracking-widest text-ink/50">// Originals</h2>
+        <a href="/work" class="font-mono text-[11px] uppercase tracking-widest text-accent hover:text-accent-dark">All work →</a>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-3">
+      {featuredProjects.map((p) => (
+        <a href={p.href} class="group no-underline border border-ink bg-white hover:shadow-lg transition-all">
+          <!-- thumbnail / channel-bug -->
+          <div class="relative aspect-video w-full overflow-hidden border-b border-ink bg-paper2 flex items-center justify-center">
+            {p.logo ? (
+              <img src={p.logo} alt={`${p.name}`} class="max-h-20 max-w-[70%] object-contain" loading="lazy" />
+            ) : (
+              <span class="text-2xl font-black tracking-tight text-accent">{p.name}</span>
+            )}
+            <span class="absolute top-2 left-2 font-mono text-[10px] uppercase tracking-widest text-ink/50">{p.ep}</span>
+            <span class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-accent text-white flex items-center justify-center text-sm pl-0.5 opacity-0 group-hover:opacity-100 transition-opacity">▶</span>
+          </div>
+          <div class="p-4">
+            <span class="font-mono text-[10px] uppercase tracking-widest text-accent">{p.category}</span>
+            <h3 class="mt-1 font-bold text-ink group-hover:text-accent transition-colors">{p.name}</h3>
+            <p class="mt-1 text-sm text-ink/60">{p.tagline}</p>
+          </div>
+        </a>
+      ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- BIO -->
+  <section class="border-y border-ink bg-paper2">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-20 grid md:grid-cols-5 gap-10 items-center">
+      <div class="md:col-span-2">
+        <div class="aspect-square w-full max-w-sm rounded-2xl overflow-hidden border border-ink bg-paper2">
+          <img src="/profile-photo.jpg" alt="Zachary Lewis" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+      </div>
+      <div class="md:col-span-3">
+        <h2 class="text-3xl md:text-4xl font-bold text-ink mb-4">From video to AI operator</h2>
+        <p class="text-ink/80 leading-relaxed mb-4">
+          I spent years building a video production business — growing an audience of 100K+ followers and 25M+ views.
+          In 2024 I went all-in on AI, and I haven't stopped building since: voice agents, mobile apps, real-time
+          platforms, and an operating system that runs my own businesses.
+        </p>
+        <p class="text-ink/60 leading-relaxed mb-6">
+          I learn by doing and ship fast. That means when I help you, you get working systems — not slide decks.
+        </p>
+        <a href="/about" class="inline-block px-5 py-3 rounded-xl border border-ink text-ink font-semibold hover:bg-paper2 transition-colors">
+          More about me
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW I CAN HELP + PROOF / TOOLS -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-20 md:py-28">
+    <div class="max-w-2xl mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-ink">How I can help</h2>
+      <p class="mt-3 text-ink/60 text-lg">Two ways to put applied AI to work in your business.</p>
+    </div>
+    <div class="grid gap-6 md:grid-cols-2">
+      {services.map((s) => (
+        <a href={s.href} class="group block no-underline rounded-2xl border border-ink bg-white p-8 hover:border-accent hover:bg-white transition-all">
+          <div class="text-3xl mb-4">{s.icon}</div>
+          <h3 class="text-xl font-bold text-ink mb-2 group-hover:text-accent transition-colors">{s.title}</h3>
+          <p class="text-ink/60 text-sm leading-relaxed">{s.desc}</p>
+          <span class="mt-4 inline-block text-sm font-semibold text-accent group-hover:translate-x-1 transition-transform">Learn more →</span>
+        </a>
+      ))}
+
+      <div class="rounded-2xl border border-ink bg-white p-8 flex flex-col hover:border-accent transition-all">
+        <span class="text-xs font-semibold uppercase tracking-wider text-accent mb-3">The proof</span>
+        <h3 class="text-xl font-bold text-ink mb-2">Real systems I've shipped</h3>
+        <p class="text-ink/60 text-sm leading-relaxed flex-1">
+          AgentlandOS, TraceTrack, an agent-based trading system — software that handles real work, not slideware.
+        </p>
+        <a href="/work" class="mt-6 inline-block text-sm font-semibold text-accent hover:translate-x-1 transition-transform w-fit">See my work →</a>
+      </div>
+      <div class="rounded-2xl border border-ink bg-accent/10 p-8 flex flex-col hover:border-accent transition-all">
+        <span class="text-xs font-semibold uppercase tracking-wider text-accent mb-3">Free, no signup</span>
+        <h3 class="text-xl font-bold text-ink mb-2">Try my tools</h3>
+        <p class="text-ink/80 text-sm leading-relaxed flex-1">
+          Open-source utilities and free tools — including the <strong>USER.md generator</strong> that gives any AI assistant your full context in one file.
+        </p>
+        <a href="/tools" class="mt-6 inline-block text-sm font-semibold text-accent hover:translate-x-1 transition-transform w-fit">Browse free tools →</a>
+      </div>
+    </div>
+  </section>
+
+  {/* TESTIMONIALS — hidden for now, kept for later
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-20 md:py-28 pt-0">
+    <h2 class="text-3xl md:text-4xl font-bold text-ink text-center mb-12">What people say</h2>
+    <div class="grid gap-6 md:grid-cols-3">
+      {testimonials.map((t) => (
+        <figure class="rounded-2xl border border-ink bg-white p-7">
+          <div class="text-accent text-3xl leading-none mb-3">&ldquo;</div>
+          <blockquote class="text-ink/80 text-sm leading-relaxed">{t.quote}</blockquote>
+          <figcaption class="mt-5 pt-5 border-t border-ink">
+            <div class="font-semibold text-ink text-sm">{t.name}</div>
+            <div class="text-ink/50 text-xs">{t.org}</div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+  */}
+
+  {/* FAKE MONEY — saved, hidden for now
+  <section class="border-t border-ink">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+      <div class="rounded-3xl bg-accent/10 border border-ink p-8 md:p-12">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-accent mb-3">Fake Money</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-ink mb-3">Follow my journey to make money with AI</h2>
+            <p class="text-ink/80 leading-relaxed mb-5">
+              <strong>Fake Money</strong> — an AI trading platform that analyzes, never auto-fires.
+            </p>
+            <ul class="space-y-2 text-sm text-ink/80 mb-6">
+              <li class="flex gap-2"><span>🧠</span> Agents read companies and live charts to call the signals</li>
+              <li class="flex gap-2"><span>🛡️</span> Every order clears a risk pipeline — no entry without a stop</li>
+              <li class="flex gap-2"><span>🎚️</span> Autonomous execution off by default — you stay in control</li>
+            </ul>
+            <p class="text-xs font-semibold uppercase tracking-wider text-ink/50 mb-2">What you'll need to run it</p>
+            <ul class="space-y-2 text-sm text-ink/80">
+              <li class="flex gap-2"><span class="text-accent">→</span> A <span class="font-medium">tastytrade</span> brokerage account</li>
+              <li class="flex gap-2"><span class="text-accent">→</span> Your own LLM API keys — Gemini's free tier works,
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" class="text-accent font-medium hover:text-accent-dark">grab keys from the Gemini dashboard ↗</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <form name="journey" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you" class="space-y-3">
+              <input type="hidden" name="form-name" value="journey" />
+              <input type="text" name="name" placeholder="Your name" required class="w-full px-4 py-3 rounded-xl bg-white border border-ink text-ink placeholder-ink/40 focus:outline-none focus:border-accent" />
+              <input type="email" name="email" placeholder="you@email.com" required class="w-full px-4 py-3 rounded-xl bg-white border border-ink text-ink placeholder-ink/40 focus:outline-none focus:border-accent" />
+              <button type="submit" class="w-full px-6 py-3.5 rounded-xl bg-accent text-white border border-ink font-semibold hover:opacity-90 transition-opacity">Follow the journey</button>
+            </form>
           </div>
         </div>
       </div>
-    </header>
+    </div>
+  </section>
+  */}
 
-    <!-- Tab Navigation -->
-    <nav class="sticky top-0 z-10 bg-zinc-950/95 backdrop-blur-sm border-b border-zinc-800">
-      <div class="max-w-5xl mx-auto px-4 sm:px-6">
-        <div class="flex justify-center gap-1">
-          <button
-            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative active"
-            data-tab="0"
-            aria-label="About tab"
-          >
-            About
-            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform transition-transform"></span>
-          </button>
-          <button
-            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative"
-            data-tab="1"
-            aria-label="Projects tab"
-          >
-            Projects
-            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
-          </button>
-          <button
-            class="tab-button px-6 py-4 text-sm font-medium text-zinc-400 hover:text-white transition-colors relative"
-            data-tab="2"
-            aria-label="Blog tab"
-          >
-            Blog
-            <span class="tab-indicator absolute bottom-0 left-0 right-0 h-0.5 bg-pink-500 transform scale-x-0 transition-transform"></span>
-          </button>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Swipeable Container -->
-    <div class="swipe-wrapper overflow-hidden">
-      <div class="swipe-container flex transition-transform duration-300 ease-out" style="transform: translateX(0%)">
-
-        <!-- Panel 1: About -->
-        <div class="swipe-panel flex-shrink-0 w-full">
-          <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-            <div class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-6">
-              <h2 class="text-2xl font-bold text-white mb-4">About</h2>
-              <div class="prose prose-invert max-w-none text-zinc-300 text-base md:text-lg leading-relaxed">
-                {zachary.about.split("\n").map(line =>
-                  line.trim() && <p class="mb-3">{line}</p>
-                )}
-              </div>
+  <!-- USER.MD CTA -->
+  <section class="border-t border-ink">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+      <div class="rounded-3xl bg-accent/10 border border-ink p-8 md:p-12">
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+          <div>
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-accent mb-3">Free tool · No signup</span>
+            <h2 class="text-2xl md:text-3xl font-bold text-ink mb-3">USER.md — one file that tells any AI who you are</h2>
+            <p class="text-ink/80 leading-relaxed mb-7">
+              Build a <strong>USER.md</strong> — one file that tells any AI assistant who you are, your goals, and how
+              you like to work. Fill it out, watch it build live, then copy or download.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a href="/tools/user-md" class="no-underline px-7 py-3.5 rounded-xl bg-accent text-white border border-ink font-semibold text-center hover:opacity-90 transition-opacity">Build your USER.md →</a>
+              <a href="/tools" class="no-underline px-7 py-3.5 rounded-xl border border-ink text-ink font-semibold text-center hover:bg-paper2 transition-colors">More free tools →</a>
             </div>
-          </main>
+          </div>
+          <div class="flex items-center justify-center">
+            <!-- Drop your graphic at public/user-md-cta.png (or .svg) -->
+            <img
+              src="/user-md-cta.png"
+              alt="USER.md — a single file that gives any AI assistant your full context"
+              class="w-full max-w-md rounded-2xl"
+              loading="lazy"
+              onerror="this.style.display='none'"
+            />
+          </div>
         </div>
-
-        <!-- Panel 2: Projects -->
-        <div class="swipe-panel flex-shrink-0 w-full">
-          <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-            <ProjectsSection projects={zachary.projects} />
-          </main>
-        </div>
-
-        <!-- Panel 3: Blog -->
-        <div class="swipe-panel flex-shrink-0 w-full">
-          <main class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
-            <BlogSection />
-          </main>
-        </div>
-
       </div>
     </div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="mt-auto border-t border-zinc-800 py-8 text-center text-xs text-zinc-500">
-      <p>© {new Date().getFullYear()} {zachary.name}. All Rights Reserved.</p>
-    </footer>
-
-    <!-- Modals -->
-    {zachary.projects.map(project => (
-      <Modal project={project} />
-    ))}
-
-    <!-- Modal Script -->
-    <script define:vars={{ projects: zachary.projects }}>
-      for (const project of projects) {
-        const slug = project.title.toLowerCase().replace(/ /g, "-");
-        const openButton = document.getElementById(`open-${slug}`);
-        const closeButton = document.getElementById(`close-${slug}`);
-        const modal = document.getElementById(`modal-${slug}`);
-
-        if (!openButton || !modal) continue;
-
-        openButton.addEventListener("click", () => {
-          modal.classList.remove("hidden");
-          modal.classList.add("flex");
-          modal.setAttribute("aria-hidden", "false");
-          document.body.style.overflow = "hidden";
-        });
-
-        if (closeButton) {
-          closeButton.addEventListener("click", () => {
-            modal.classList.add("hidden");
-            modal.classList.remove("flex");
-            modal.setAttribute("aria-hidden", "true");
-            document.body.style.overflow = "";
-          });
-        }
-
-        modal.addEventListener("click", (e) => {
-          if (e.target === modal) {
-            modal.classList.add("hidden");
-            modal.classList.remove("flex");
-            modal.setAttribute("aria-hidden", "true");
-            document.body.style.overflow = "";
-          }
-        });
-      }
-    </script>
-
-    <!-- Swipe Functionality Script -->
-    <script>
-      let currentTab = 0; // Start with About (index 0)
-      const container = document.querySelector('.swipe-container');
-      const tabButtons = document.querySelectorAll('.tab-button');
-      const totalTabs = 3;
-
-      let touchStartX = 0;
-      let touchEndX = 0;
-      let isDragging = false;
-      let startX = 0;
-      let currentTranslate = 0;
-      let prevTranslate = 0;
-
-      // Update active tab and position
-      function switchToTab(index) {
-        if (index < 0 || index >= totalTabs) return;
-
-        currentTab = index;
-        const offset = -index * 100;
-        container.style.transform = `translateX(${offset}%)`;
-
-        // Update tab button states
-        tabButtons.forEach((btn, i) => {
-          if (i === index) {
-            btn.classList.add('active');
-            btn.classList.remove('text-zinc-400');
-            btn.classList.add('text-white');
-            btn.querySelector('.tab-indicator').style.transform = 'scaleX(1)';
-          } else {
-            btn.classList.remove('active');
-            btn.classList.add('text-zinc-400');
-            btn.classList.remove('text-white');
-            btn.querySelector('.tab-indicator').style.transform = 'scaleX(0)';
-          }
-        });
-      }
-
-      // Tab button clicks
-      tabButtons.forEach((button, index) => {
-        button.addEventListener('click', () => {
-          switchToTab(index);
-        });
-      });
-
-      // Touch events for mobile swipe
-      const wrapper = document.querySelector('.swipe-wrapper');
-
-      wrapper.addEventListener('touchstart', (e) => {
-        // Don't start drag if touching form elements or clickable elements (like project cards)
-        if (e.target.matches('input, textarea, button, select, a') ||
-            e.target.closest('form') ||
-            e.target.closest('button') ||
-            e.target.closest('a')) {
-          return;
-        }
-        
-        touchStartX = e.touches[0].clientX;
-        isDragging = true;
-        container.style.transition = 'none';
-      });
-
-      wrapper.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-
-        // Don't swipe if touching form elements or clickable elements
-        if (e.target.matches('input, textarea, button, select, a') ||
-            e.target.closest('form') ||
-            e.target.closest('button') ||
-            e.target.closest('a')) {
-          return;
-        }
-
-        touchEndX = e.touches[0].clientX;
-        const diff = touchEndX - touchStartX;
-        const maxTranslate = 0;
-        const minTranslate = -(totalTabs - 1) * 100;
-        const baseTranslate = -currentTab * 100;
-        const movePercent = (diff / window.innerWidth) * 100;
-
-        let newTranslate = baseTranslate + movePercent;
-        newTranslate = Math.max(minTranslate, Math.min(maxTranslate, newTranslate));
-
-        container.style.transform = `translateX(${newTranslate}%)`;
-      });
-
-      wrapper.addEventListener('touchend', () => {
-        if (!isDragging) return;
-
-        isDragging = false;
-        container.style.transition = 'transform 0.3s ease-out';
-
-        const diff = touchEndX - touchStartX;
-        const threshold = 50; // minimum swipe distance
-
-        if (Math.abs(diff) > threshold) {
-          if (diff > 0 && currentTab > 0) {
-            // Swipe right - go to previous tab
-            switchToTab(currentTab - 1);
-          } else if (diff < 0 && currentTab < totalTabs - 1) {
-            // Swipe left - go to next tab
-            switchToTab(currentTab + 1);
-          } else {
-            // Not enough distance, snap back
-            switchToTab(currentTab);
-          }
-        } else {
-          // Not enough distance, snap back
-          switchToTab(currentTab);
-        }
-
-        touchStartX = 0;
-        touchEndX = 0;
-      });
-
-      // Mouse drag for desktop
-      wrapper.addEventListener('mousedown', (e) => {
-        // Don't start drag if clicking form elements or clickable buttons
-        if (e.target.matches('input, textarea, button, select, a') ||
-            e.target.closest('form') ||
-            e.target.closest('button') ||
-            e.target.closest('a')) {
-          return;
-        }
-
-        isDragging = true;
-        startX = e.clientX;
-        container.style.transition = 'none';
-        wrapper.style.cursor = 'grabbing';
-      });
-
-      wrapper.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-
-        e.preventDefault();
-        const currentX = e.clientX;
-        const diff = currentX - startX;
-        const maxTranslate = 0;
-        const minTranslate = -(totalTabs - 1) * 100;
-        const baseTranslate = -currentTab * 100;
-        const movePercent = (diff / window.innerWidth) * 100;
-
-        let newTranslate = baseTranslate + movePercent;
-        newTranslate = Math.max(minTranslate, Math.min(maxTranslate, newTranslate));
-
-        container.style.transform = `translateX(${newTranslate}%)`;
-      });
-
-      wrapper.addEventListener('mouseup', (e) => {
-        if (!isDragging) return;
-
-        isDragging = false;
-        container.style.transition = 'transform 0.3s ease-out';
-        wrapper.style.cursor = 'grab';
-
-        const diff = e.clientX - startX;
-        const threshold = 50;
-
-        if (Math.abs(diff) > threshold) {
-          if (diff > 0 && currentTab > 0) {
-            switchToTab(currentTab - 1);
-          } else if (diff < 0 && currentTab < totalTabs - 1) {
-            switchToTab(currentTab + 1);
-          } else {
-            switchToTab(currentTab);
-          }
-        } else {
-          switchToTab(currentTab);
-        }
-      });
-
-      wrapper.addEventListener('mouseleave', () => {
-        if (isDragging) {
-          isDragging = false;
-          container.style.transition = 'transform 0.3s ease-out';
-          wrapper.style.cursor = 'grab';
-          switchToTab(currentTab);
-        }
-      });
-
-      // Keyboard navigation (arrow keys)
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft' && currentTab > 0) {
-          switchToTab(currentTab - 1);
-        } else if (e.key === 'ArrowRight' && currentTab < totalTabs - 1) {
-          switchToTab(currentTab + 1);
-        }
-      });
-
-      // Initialize
-      wrapper.style.cursor = 'grab';
-      switchToTab(currentTab);
-    </script>
-
-    <style>
-      .tab-button.active {
-        color: white;
-      }
-
-      .swipe-wrapper {
-        min-height: 60vh;
-        touch-action: pan-y; /* Allow vertical scrolling within panels */
-      }
-
-      .swipe-wrapper form,
-      .swipe-wrapper input,
-      .swipe-wrapper textarea {
-        touch-action: auto; /* Allow normal touch behavior for form elements */
-      }
-
-      .swipe-container {
-        will-change: transform;
-      }
-
-      .swipe-panel {
-        min-height: 60vh;
-      }
-    </style>
-  </body>
-</html>
+  {/* FINAL CTA — hidden for now, kept for later
+  <section class="border-t border-ink bg-paper2">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-20 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-ink mb-4">Ready to put AI to work?</h2>
+      <p class="text-ink/60 text-lg mb-8">Tell me what you're trying to build or automate. I'll tell you the fastest path to a working system.</p>
+      <a href="/contact" class="inline-block px-8 py-4 rounded-xl bg-accent text-white border border-ink font-semibold text-lg hover:opacity-90 transition-opacity">
+        Start the conversation
+      </a>
+    </div>
+  </section>
+  */}
+</BrandLayout>

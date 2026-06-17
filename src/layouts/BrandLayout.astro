@@ -1,0 +1,204 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  active?: string; // which nav item is active
+  theme?: "warm" | "dark"; // "dark" = original purple theme (project/tool detail pages)
+}
+
+const {
+  title = "Zachary Lewis | I Build AI That Runs Businesses",
+  description = "Zachary Lewis builds and operates AI systems that run real businesses. Consulting and workshops on applied AI and automation.",
+  active = "home",
+  theme = "warm",
+} = Astro.props;
+
+const dark = theme === "dark";
+const C = dark
+  ? {
+      body: "theme-dark bg-zinc-950 text-zinc-50 font-sans",
+      header: "bg-zinc-950/90 border-zinc-800",
+      logo: "bg-gradient-to-br from-pink-600 via-purple-600 to-indigo-700",
+      name: "text-white",
+      navActive: "text-white bg-zinc-800/60",
+      navIdle: "text-zinc-400 hover:text-white hover:bg-zinc-800/40",
+      cta: "bg-gradient-to-r from-pink-600 to-purple-600 text-white",
+      toggle: "text-zinc-300 hover:text-white",
+      mobileMenu: "border-zinc-800 bg-zinc-950/95",
+      footer: "border-zinc-800 bg-zinc-950",
+      footText: "text-zinc-100",
+      footMuted: "text-zinc-500",
+      footLink: "text-zinc-400 hover:text-pink-400",
+      footRule: "border-zinc-800",
+    }
+  : {
+      body: "theme-brand bg-paper text-ink font-display",
+      header: "bg-paper/90 border-ink",
+      logo: "bg-accent",
+      name: "text-ink",
+      navActive: "text-ink bg-paper2",
+      navIdle: "text-ink/60 hover:text-ink hover:bg-paper2",
+      cta: "bg-accent text-white border border-ink",
+      toggle: "text-ink/80 hover:text-ink",
+      mobileMenu: "border-ink bg-paper/95",
+      footer: "border-ink bg-ink",
+      footText: "text-paper",
+      footMuted: "text-paper/40",
+      footLink: "text-paper/70 hover:text-accent",
+      footRule: "border-paper/20",
+    };
+
+const nav = [
+  { label: "Home", href: "/", key: "home" },
+  { label: "Work", href: "/work", key: "work" },
+  { label: "Free Tools", href: "/tools", key: "tools" },
+  { label: "Services", href: "/services", key: "services" },
+  { label: "About", href: "/about", key: "about" },
+  { label: "Contact", href: "/contact", key: "contact" },
+];
+
+// Top nav omits Services & Contact (still in footer; Contact also reachable via the CTA button).
+const topNav = nav.filter((item) => !["services", "contact"].includes(item.key));
+
+const year = new Date().getFullYear();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#B8702E" />
+
+    <!-- Fonts: Archivo (display/body) + Space Mono (labels/code) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://thefakezach.com/og-image.jpg" />
+    <meta property="og:site_name" content="Zachary Lewis" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://thefakezach.com/og-image.jpg" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+
+  <body class={`${C.body} min-h-screen flex flex-col antialiased`}>
+    <!-- Top Nav -->
+    <header class={`sticky top-0 z-40 backdrop-blur-md border-b ${C.header}`}>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2 group">
+          <span class={`w-8 h-8 rounded-lg ${C.logo} flex items-center justify-center text-sm font-black text-white`}>Z</span>
+          <span class={`font-bold tracking-tight ${C.name}`}>Zachary Lewis</span>
+        </a>
+
+        <!-- Desktop nav -->
+        <nav class="hidden lg:flex items-center gap-0.5">
+          {topNav.map((item) => (
+            <a
+              href={item.href}
+              class={`px-2.5 py-2 text-sm font-medium rounded-lg transition-colors whitespace-nowrap ${
+                active === item.key ? C.navActive : C.navIdle
+              }`}
+            >
+              {item.label}
+            </a>
+          ))}
+          <a
+            href="/contact"
+            class={`ml-1.5 px-3.5 py-2 text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity whitespace-nowrap ${C.cta}`}
+          >
+            Work With Me
+          </a>
+        </nav>
+
+        <!-- Mobile toggle -->
+        <button id="mobile-toggle" class={`lg:hidden p-2 ${C.toggle}`} aria-label="Toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <nav id="mobile-menu" class={`hidden lg:hidden border-t backdrop-blur-md ${C.mobileMenu}`}>
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1">
+          {topNav.map((item) => (
+            <a
+              href={item.href}
+              class={`px-3 py-2 text-sm font-medium rounded-lg ${
+                active === item.key ? C.navActive : C.navIdle
+              }`}
+            >
+              {item.label}
+            </a>
+          ))}
+          <a href="/contact" class={`mt-1 px-3 py-2 text-sm font-semibold rounded-lg text-center ${C.cta}`}>
+            Work With Me
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class={`border-t ${C.footer}`}>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 grid gap-10 md:grid-cols-12">
+        <!-- Brand -->
+        <div class="md:col-span-5">
+          <a href="/" class="flex items-center gap-2.5">
+            <span class={`w-9 h-9 rounded-lg ${C.logo} flex items-center justify-center text-sm font-black text-white`}>Z</span>
+            <span class={`text-lg font-bold tracking-tight ${C.footText}`}>Zachary Lewis</span>
+          </a>
+          <p class={`mt-4 text-sm leading-relaxed max-w-xs ${C.footMuted}`}>AI systems, built and designed in Detroit, MI.</p>
+        </div>
+
+        <!-- Explore -->
+        <div class="md:col-span-4">
+          <h4 class={`text-[11px] font-mono uppercase tracking-widest mb-4 ${C.footMuted}`}>Explore</h4>
+          <ul class="grid grid-cols-2 gap-x-8 gap-y-2.5 text-sm">
+            {nav.map((item) => (
+              <li><a href={item.href} class={`transition-colors ${C.footLink}`}>{item.label}</a></li>
+            ))}
+            <li><a href="/portfolio" class={`transition-colors ${C.footLink}`}>Portfolio</a></li>
+          </ul>
+        </div>
+
+        <!-- Connect -->
+        <div class="md:col-span-3">
+          <h4 class={`text-[11px] font-mono uppercase tracking-widest mb-4 ${C.footMuted}`}>Connect</h4>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="mailto:zach@takedetroit.com" class={`transition-colors ${C.footLink}`}>zach@takedetroit.com</a></li>
+            <li><a href="/contact" class={`transition-colors ${C.footLink}`}>Start a project</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class={`border-t py-5 ${C.footRule}`}>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+          <span class={C.footMuted}>© {year} Zachary Lewis</span>
+          <span class={`font-mono uppercase tracking-widest ${C.footMuted}`}>Detroit, MI</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const toggle = document.getElementById("mobile-toggle");
+      const menu = document.getElementById("mobile-menu");
+      toggle?.addEventListener("click", () => menu?.classList.toggle("hidden"));
+    </script>
+  </body>
+</html>

@@ -28,9 +28,48 @@ body.modal-open {
 
 a {
   color: #f472b6; /* Tailwind pink-400 */
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:hover {
   color: #fb7185; /* Tailwind pink-500 */
+}
+
+/* Brand site (warm editorial theme) — scoped so the main portfolio is untouched.
+   Only color *bare* links (no text-* utility); buttons/links that set their own
+   text color via Tailwind keep it, so amber text never lands on amber buttons. */
+.theme-brand a:not([class*="text-"]) {
+  color: #B8702E; /* muted amber */
+}
+.theme-brand a:not([class*="text-"]):hover {
+  color: #935724;
+}
+.theme-brand ::selection {
+  background: #B8702E;
+  color: #F4EFE7;
+}
+/* Dark code/terminal panels (bg-ink) keep light text regardless of utility classes */
+.theme-brand pre {
+  color: #E9E2D6;
+}
+
+/* Media-company motifs */
+.theme-brand .marquee {
+  overflow: hidden;
+  white-space: nowrap;
+}
+.theme-brand .marquee__track {
+  display: inline-block;
+  will-change: transform;
+  animation: marquee 32s linear infinite;
+}
+.theme-brand .marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-brand .marquee__track { animation: none; }
 }
