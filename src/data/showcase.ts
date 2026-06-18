@@ -24,6 +24,7 @@ export const projects: ShowcaseItem[] = [
     status: "In development",
     href: "#",
     cta: "Learn more",
+    image: "/project-shots/agentland-os-cover.png",
     featured: true,
   },
   {
