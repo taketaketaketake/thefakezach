@@ -110,7 +110,7 @@ const year = new Date().getFullYear();
           {topNav.map((item) => (
             <a
               href={item.href}
-              class={`px-2.5 py-2 text-sm font-medium rounded-lg transition-colors whitespace-nowrap ${
+              class={`px-2.5 py-2 text-sm font-semibold rounded-lg transition-colors whitespace-nowrap ${
                 active === item.key ? C.navActive : C.navIdle
               }`}
             >
@@ -137,7 +137,7 @@ const year = new Date().getFullYear();
           {topNav.map((item) => (
             <a
               href={item.href}
-              class={`px-3 py-2 text-sm font-medium rounded-lg ${
+              class={`px-3 py-2 text-sm font-semibold rounded-lg ${
                 active === item.key ? C.navActive : C.navIdle
               }`}
             >
