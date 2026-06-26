@@ -25,9 +25,9 @@ const stats = [
 
 // Featured projects, framed as "originals" (logo shown when available; text mark otherwise).
 const featuredProjects = [
-  { ep: "EP.01", category: "PLATFORM", name: "AgentlandOS", tagline: "AI agents that run a business", logo: "/project-logos/agentland-logo.png", href: "/work#agentlandos" },
+  { ep: "EP.01", category: "PLATFORM", name: "AgentlandOS", tagline: "AI Agents for small business owners", logo: "/project-logos/agentland-logo.png", cover: true, href: "/work#agentlandos" },
   { ep: "EP.02", category: "DEV TOOL", name: "TraceTrack", tagline: "GitHub for AI workflows", logo: null, href: "/work#tracetrack" },
-  { ep: "EP.03", category: "QUANT", name: "Trading System", tagline: "Agent-based market signals", logo: "/project-logos/trading-logo.png", href: "/work#trading-system" },
+  { ep: "EP.03", category: "QUANT", name: "Trading System", tagline: "Agent-based market signals", logo: "/project-logos/trading-logo.png", cover: true, href: "/work#trading-system" },
 ];
 
 // Scrolling marquee strip (broadcast/editorial motif)
@@ -73,7 +73,7 @@ const testimonials = [
         </h1>
         <p class="mt-6 text-lg md:text-xl text-ink/80 leading-relaxed max-w-xl">
           I integrate AI into real projects. I work with founders and creative teams to design,
-          build, and ship systems that actually do the work — not demos, not decks.
+          build, and ship systems that actually do work.
         </p>
         <div class="mt-8 flex flex-col sm:flex-row gap-3">
           <a href="/work" class="group px-6 py-3.5 bg-accent text-white border border-ink font-bold text-center hover:shadow-lg transition-all inline-flex items-center justify-center gap-2">
@@ -147,7 +147,7 @@ const testimonials = [
           <!-- thumbnail / channel-bug -->
           <div class="relative aspect-video w-full overflow-hidden border-b border-ink bg-paper2 flex items-center justify-center">
             {p.logo ? (
-              <img src={p.logo} alt={`${p.name}`} class="max-h-20 max-w-[70%] object-contain" loading="lazy" />
+              <img src={p.logo} alt={`${p.name}`} class={p.cover ? "absolute inset-0 w-full h-full object-cover" : "max-h-20 max-w-[70%] object-contain"} loading="lazy" />
             ) : (
               <span class="text-2xl font-black tracking-tight text-accent">{p.name}</span>
             )}
