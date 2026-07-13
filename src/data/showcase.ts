@@ -39,14 +39,16 @@ export const projects: ShowcaseItem[] = [
     featured: true,
   },
   {
-    title: "Trading System",
-    tagline: "Agent-based multi-factor signals",
+    title: "Fake Money",
+    tagline: "Decentralized financial intelligence",
     description:
-      "A multi-factor trading system with agent-based signal generation, Polymarket smart-wallet tracking, and a React dashboard. FastAPI + Postgres backend with automated scanners.",
-    tags: ["Quant", "FastAPI", "Agents", "Dashboard"],
-    status: "Private build",
-    href: "#",
-    cta: "Ask me about it",
+      "An AI-powered trading workspace where every member runs their own prompts, shares analysis with the club, and connects their own broker. Nine scanner strategies on automated schedules, agent-written signal theses and daily retrospectives, and live real-money trading behind ~2,100 tests. The intelligence isn't in the model — it's in the people using it.",
+    tags: ["Quant", "FastAPI", "AI agents", "Live trading"],
+    status: "Live",
+    href: "https://www.fakemoney.club",
+    cta: "Visit fakemoney.club",
+    image: "/project-shots/fakemoney-cover.png",
+    featured: true,
   },
 ];
 
