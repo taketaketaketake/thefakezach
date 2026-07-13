@@ -1,5 +1,6 @@
 ---
 import BrandLayout from "../layouts/BrandLayout.astro";
+import FakeMoneyHero from "../components/FakeMoneyHero.astro";
 import { projects } from "../data/showcase";
 ---
 
@@ -25,7 +26,9 @@ import { projects } from "../data/showcase";
         <div class="grid md:grid-cols-2 gap-8 items-center">
           <!-- Image slot (alternates sides) -->
           <div class={i % 2 === 1 ? "md:order-last" : ""}>
-            {p.image ? (
+            {p.title === "Fake Money" ? (
+              <FakeMoneyHero />
+            ) : p.image ? (
               <img src={p.image} alt={`${p.title} screenshot`} class="w-full aspect-[16/10] object-cover rounded-xl border border-ink" loading="lazy" />
             ) : (
               <div class="w-full aspect-[16/10] rounded-xl border border-dashed border-ink bg-white flex items-center justify-center text-ink/45 text-sm">

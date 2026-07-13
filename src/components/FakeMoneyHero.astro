@@ -1,0 +1,48 @@
+---
+// Recreates the fakemoney.club hero as a crisp CSS card (no screenshot).
+const signals = [
+  { n: "01", t: "NVDA", s: "squeeze_breakout", v: "3.21" },
+  { n: "02", t: "AMD", s: "news_event", v: "2.40" },
+  { n: "03", t: "MSFT", s: "smart_money_accum", v: "2.20" },
+  { n: "04", t: "TSLA", s: "squeeze_breakout", v: "1.82" },
+  { n: "05", t: "PANW", s: "trend_pullback", v: "1.41" },
+];
+---
+
+<div
+  class="w-full aspect-[16/10] rounded-xl border border-ink overflow-hidden relative flex flex-col justify-between gap-3 p-5 sm:p-6"
+  style="background: radial-gradient(130% 100% at 88% 8%, #2b2214 0%, #181510 48%, #0f0d0a 100%);"
+>
+  <!-- top bar -->
+  <div class="flex items-center justify-between">
+    <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-[#E5D7B8]/80 flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-[#FFA028] to-[#C99A2E] inline-block"></span>
+      The Fake Money Club
+    </span>
+    <span class="font-mono text-[10px] uppercase tracking-widest text-[#FFA028] flex items-center gap-1.5">
+      <span class="w-1.5 h-1.5 rounded-full bg-[#FFA028] animate-pulse"></span>
+      6 firing
+    </span>
+  </div>
+
+  <!-- headline -->
+  <h3 class="text-white font-black leading-[1.05] text-xl sm:text-2xl max-w-[16ch]">
+    Decentralized Financial <span class="text-[#FFA028]">Intelligence</span>
+  </h3>
+
+  <!-- live signals panel -->
+  <div class="rounded-lg bg-[#F6EFDD] border border-[#E5D7B8] px-3.5 py-2.5 font-mono text-[11px] shadow-[0_8px_30px_rgba(0,0,0,0.45)]">
+    <div class="flex items-center justify-between text-[#8a7a55] text-[9px] uppercase tracking-[0.18em] pb-1.5 border-b border-[#E5D7B8]">
+      <span>Top Signals · Live</span>
+      <span class="text-[#C99A2E]">▲</span>
+    </div>
+    {signals.map((s) => (
+      <div class="flex items-center gap-2.5 pt-1.5">
+        <span class="text-[#b3a37e]">{s.n}</span>
+        <span class="font-bold text-[#26221a] w-12">{s.t}</span>
+        <span class="text-[#8a7a55] flex-1 truncate">{s.s}</span>
+        <span class="text-[#b07d14] font-bold">{s.v}</span>
+      </div>
+    ))}
+  </div>
+</div>

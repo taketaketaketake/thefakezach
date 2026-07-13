@@ -47,7 +47,6 @@ export const projects: ShowcaseItem[] = [
     status: "Live",
     href: "https://www.fakemoney.club",
     cta: "Visit fakemoney.club",
-    image: "/project-shots/fakemoney-cover.png",
     featured: true,
   },
 ];
