@@ -1,0 +1,194 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+
+const handles = [
+  { title: "Missed & after-hours calls", desc: "Nights, weekends, lunch rush, hands-under-a-furnace — every call gets answered in two rings, every time." },
+  { title: "Bookings & appointments", desc: "Takes the job details, checks what you offer, books the appointment or pickup, and confirms with the caller." },
+  { title: "Price & hours questions", desc: "Answers the questions that eat your day — hours, service area, pricing ranges — exactly the way you'd answer them." },
+  { title: "Lead capture that sticks", desc: "Name, number, address, and what they need — captured and texted to you before the call even ends." },
+  { title: "Overflow on busy days", desc: "When you're slammed, callers don't hear voicemail. The agent picks up line two, three, and ten at the same time." },
+  { title: "Every call on record", desc: "Full transcripts and AI summaries of every conversation in a simple dashboard. Know exactly what your phone did today." },
+];
+
+const steps = [
+  { n: "01", title: "We talk for 20 minutes", desc: "I learn how you answer your phone — your services, prices, service area, and how you like jobs booked." },
+  { n: "02", title: "I build your agent in 48 hours", desc: "Trained on your business, speaking in a natural voice, with your rules for what it books and when it hands off to you." },
+  { n: "03", title: "Your missed calls forward to it", desc: "Your number doesn't change. Calls you don't pick up roll to the agent instead of voicemail — and you get a text summary of every call." },
+];
+
+const faqs = [
+  { q: "Does it sound like a robot?", a: "Call the demo line and judge for yourself — (833) 494-8669. It's a natural, low-latency voice that answers in under half a second. Most callers never realize, and the ones who do are impressed you have it." },
+  { q: "What happens when it can't answer something?", a: "It does what a great receptionist does: takes a message, captures the caller's info, and texts you immediately. You set the rules for what it handles and what comes straight to you." },
+  { q: "Do I have to change my phone number?", a: "No. Your number stays exactly the same. We just change where unanswered calls go — to the agent instead of voicemail." },
+  { q: "How fast can I be live?", a: "48 hours from our first call, usually less. There's no hardware and nothing to install." },
+  { q: "What if I want it off?", a: "It's month to month, no contract. Turn it off any time and your calls roll back to voicemail like before." },
+  { q: "Who built this?", a: "Me — Zach, a Detroit builder. These agents already answer real calls for my own companies every day. You're not buying software from a call center in the cloud; you're hiring a neighbor whose own businesses run on this." },
+];
+---
+
+<BrandLayout
+  active="services"
+  title="AI Receptionist for Detroit Businesses | Zachary Lewis"
+  description="An AI phone agent that answers every call your business misses — 24/7, in a natural voice, booking jobs and capturing leads. Built and operated in Detroit. Call the live demo: (833) 494-8669."
+>
+  <!-- HERO -->
+  <section class="border-b border-ink">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+      <span class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-accent mb-6">
+        <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+        AI Receptionist · Built &amp; run in Detroit
+      </span>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-ink leading-[1.05] max-w-3xl">
+        Your business never misses <span class="text-accent">another call.</span>
+      </h1>
+      <p class="mt-6 text-lg md:text-xl text-ink/80 leading-relaxed max-w-2xl">
+        Every call you can't pick up gets answered by an AI receptionist trained on your business —
+        in a natural voice, 24/7. It books the job, captures the lead, and texts you the summary
+        before the caller hangs up.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-3">
+        <a href="tel:+18334948669" class="px-6 py-3.5 bg-accent text-white border border-ink font-bold text-center hover:shadow-lg transition-all">📞 Call the live demo — (833) 494-8669</a>
+        <a href="#get-started" class="px-6 py-3.5 border border-ink text-ink font-bold text-center hover:bg-paper2 transition-colors">Get set up in 48 hours</a>
+      </div>
+      <p class="mt-4 font-mono text-xs text-ink/50">That demo number is a real line answering real customer calls for a real business — mine.</p>
+    </div>
+  </section>
+
+  <!-- PAIN -->
+  <section class="border-b border-ink bg-paper2">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-20 grid md:grid-cols-2 gap-10">
+      <div>
+        <h2 class="font-mono text-[11px] uppercase tracking-widest text-ink/50 mb-3">// The problem</h2>
+        <p class="text-ink/80 text-lg leading-relaxed">
+          You're on a job, with a customer, or it's 9pm — and the phone rings. That caller needed a plumber,
+          a table, a pickup, a quote. Almost nobody leaves a voicemail anymore. They just call
+          the next name on Google, and your competitor picks up.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-mono text-[11px] uppercase tracking-widest text-ink/50 mb-3">// The math</h2>
+        <p class="text-ink/80 text-lg leading-relaxed">
+          If an average job is worth a few hundred dollars, <strong class="text-ink">one saved call pays for this for a month.</strong>
+          The agent answers every call you miss, all month, for less than what losing one customer costs you.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT IT HANDLES -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+    <h2 class="text-3xl md:text-4xl font-bold text-ink mb-3">What it handles for you</h2>
+    <p class="text-ink/60 mb-10 max-w-2xl">A receptionist that never sleeps, never puts anyone on hold, and never forgets to write down a number.</p>
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {handles.map((h) => (
+        <div class="rounded-2xl border border-ink bg-white p-7">
+          <h3 class="text-xl font-bold text-ink">{h.title}</h3>
+          <p class="mt-2 text-ink/60 leading-relaxed">{h.desc}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="border-y border-ink bg-paper2">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+      <h2 class="text-3xl md:text-4xl font-bold text-ink mb-10">Live in 48 hours, in three steps</h2>
+      <div class="grid gap-6 md:grid-cols-3">
+        {steps.map((s) => (
+          <div class="rounded-2xl border border-ink bg-white p-7">
+            <div class="text-2xl font-black text-accent font-mono">{s.n}</div>
+            <h3 class="mt-3 text-xl font-bold text-ink">{s.title}</h3>
+            <p class="mt-2 text-ink/60 leading-relaxed">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-20">
+    <h2 class="font-mono text-[11px] uppercase tracking-widest text-ink/50 mb-3">// Why trust it</h2>
+    <p class="text-ink/80 text-lg md:text-xl leading-relaxed">
+      I don't sell software I don't use. These agents answer the phones for my own Detroit companies —
+      booking laundry pickups and fielding furnace-repair calls — every single day. Sub-500ms responses,
+      every call transcribed and summarized, running for over a year in production.
+      <a href="tel:+18334948669" class="text-accent font-bold underline underline-offset-4">Call one right now</a> and hear it.
+    </p>
+  </section>
+
+  <!-- PRICING -->
+  <section class="border-y border-ink bg-paper2">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-20">
+      <h2 class="text-3xl font-bold text-ink mb-8">Simple pricing</h2>
+      <div class="rounded-2xl border border-ink bg-white p-8">
+        <div class="flex flex-wrap items-baseline gap-3">
+          <span class="text-5xl font-black text-ink">$299</span>
+          <span class="text-ink/60 text-lg">/ month · no contract · cancel anytime</span>
+        </div>
+        <ul class="mt-6 space-y-3">
+          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-accent font-bold">✓</span><span>24/7 answering on unlimited missed calls</span></li>
+          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-accent font-bold">✓</span><span>Trained on your business, your services, your rules</span></li>
+          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-accent font-bold">✓</span><span>Instant text summaries + full transcripts of every call</span></li>
+          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-accent font-bold">✓</span><span>Setup included (normally $499) for the first 10 Detroit businesses</span></li>
+          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-accent font-bold">✓</span><span>If it doesn't save you a job in the first month, I'll refund it</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="max-w-4xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+    <h2 class="text-3xl font-bold text-ink mb-10">Questions owners ask me</h2>
+    <div class="space-y-6">
+      {faqs.map((f) => (
+        <div class="rounded-2xl border border-ink bg-white p-7">
+          <h3 class="text-lg font-bold text-ink">{f.q}</h3>
+          <p class="mt-2 text-ink/70 leading-relaxed">{f.a}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- LEAD FORM -->
+  <section id="get-started" class="scroll-mt-20 border-t border-ink bg-paper2">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 md:py-24">
+      <h2 class="text-3xl md:text-4xl font-bold text-ink mb-3">Stop losing calls this week</h2>
+      <p class="text-ink/60 mb-8">Tell me about your business and I'll call you back — personally, same day — to scope your agent.</p>
+      <form
+        name="ai-receptionist"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+        action="/thank-you"
+        class="space-y-5 rounded-2xl border border-ink bg-white p-6 md:p-8"
+      >
+        <input type="hidden" name="form-name" value="ai-receptionist" />
+        <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
+        <div class="grid gap-5 sm:grid-cols-2">
+          <label class="block">
+            <span class="font-mono text-[11px] uppercase tracking-widest text-ink/50">Your name</span>
+            <input required name="name" type="text" class="mt-1 w-full border border-ink rounded-lg px-4 py-3 bg-paper focus:outline-none focus:ring-2 focus:ring-accent" />
+          </label>
+          <label class="block">
+            <span class="font-mono text-[11px] uppercase tracking-widest text-ink/50">Business name</span>
+            <input required name="business" type="text" class="mt-1 w-full border border-ink rounded-lg px-4 py-3 bg-paper focus:outline-none focus:ring-2 focus:ring-accent" />
+          </label>
+          <label class="block">
+            <span class="font-mono text-[11px] uppercase tracking-widest text-ink/50">Best phone number</span>
+            <input required name="phone" type="tel" class="mt-1 w-full border border-ink rounded-lg px-4 py-3 bg-paper focus:outline-none focus:ring-2 focus:ring-accent" />
+          </label>
+          <label class="block">
+            <span class="font-mono text-[11px] uppercase tracking-widest text-ink/50">Type of business</span>
+            <input name="type" type="text" placeholder="HVAC, restaurant, salon…" class="mt-1 w-full border border-ink rounded-lg px-4 py-3 bg-paper focus:outline-none focus:ring-2 focus:ring-accent" />
+          </label>
+        </div>
+        <label class="block">
+          <span class="font-mono text-[11px] uppercase tracking-widest text-ink/50">What's your biggest phone headache?</span>
+          <textarea name="pain" rows="3" placeholder="After-hours calls, missed calls during jobs, phone orders during rush…" class="mt-1 w-full border border-ink rounded-lg px-4 py-3 bg-paper focus:outline-none focus:ring-2 focus:ring-accent"></textarea>
+        </label>
+        <button type="submit" class="w-full px-6 py-4 bg-accent text-white border border-ink font-bold text-lg hover:shadow-lg transition-all">Get my agent built →</button>
+        <p class="text-center font-mono text-xs text-ink/50">Or just call the demo and press 0 to leave your info: (833) 494-8669</p>
+      </form>
+    </div>
+  </section>
+</BrandLayout>
