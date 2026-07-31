@@ -6,12 +6,12 @@ const pageTitle = "Resume | Zachary Lewis";
 const skills = {
   languages: ["TypeScript", "JavaScript", "Python", "SQL"],
   frontend: ["React", "React Native", "Astro", "Expo", "Tailwind CSS", "Vite", "Three.js"],
-  backend: ["Node.js", "Bun", "Express", "FastAPI", "Prisma", "Socket.io", "BullMQ", "Microservices", "REST APIs"],
-  "ai & agents": ["Telnyx AI", "Deepgram", "Gemini", "LLM Evaluation", "Multi-Agent Systems", "A2A Protocol", "LangChain", "Claude SDK"],
-  databases: ["PostgreSQL", "SQLite", "Redis", "Supabase"],
+  backend: ["Node.js", "Bun", "Express", "Fastify", "Hono", "FastAPI", "Prisma", "SQLAlchemy", "Socket.io", "BullMQ", "Microservices", "REST APIs"],
+  "ai & agents": ["Anthropic Claude", "OpenAI", "Gemini", "LangGraph", "MCP", "Temporal", "Langfuse", "LLM Evaluation", "Prompt Registries", "Multi-Agent Systems", "A2A Protocol", "Deepgram", "Telnyx AI"],
+  databases: ["PostgreSQL", "pgvector", "PostGIS", "SQL Server", "Redis", "SQLite", "Supabase"],
   "auth & payments": ["Stripe", "Better Auth", "JWT", "Magic Links", "OAuth"],
   "real-time": ["WebSocket", "Socket.io", "SSE", "Message Queues"],
-  "cloud & infra": ["AWS", "GCP", "Docker", "Railway", "Netlify", "GitHub Actions", "Sentry", "CI/CD"],
+  "cloud & infra": ["AWS (RDS, DMS, EC2)", "Terraform", "Docker", "Railway", "Netlify", "Cloudflare R2", "GitHub Actions", "OpenTelemetry", "Prometheus", "Grafana", "Sentry", "CI/CD"],
   integrations: ["Twilio", "Resend", "Shopify", "Mapbox", "Google Places"],
   video: ["Live Streaming", "Multi-Camera Production", "OBS", "vMix", "Remotion"]
 };
@@ -19,36 +19,143 @@ const skills = {
 const projects = [
   {
     title: "AgentlandOS",
-    subtitle: "AI Agent Operating System",
-    tech: ["React", "Python", "Vite", "Better Auth", "Sentry"],
+    subtitle: "Multi-Tenant AI Agent Platform",
+    tech: ["Python", "FastAPI", "Temporal", "React 19", "PostgreSQL", "pgvector", "Docker"],
     website: "agentlandos.com",
     highlights: [
-      "Microservices architecture with 15+ service modules across orchestration, planning, and execution",
-      "Agent routing, tool invocation, and human-in-the-loop workflows",
-      "Telemetry, billing, and multi-tenant auth with observability layers"
+      "11 FastAPI microservices behind one authenticated gateway — ~292 endpoints, 80 tables across 4 isolated Postgres instances, ~1,550 backend tests",
+      "Durable execution on Temporal: 15 workflows across 3 queues covering scheduled work, agent-to-agent messaging, and human approval gates",
+      "Provider-agnostic LLM gateway enforcing per-agent dollar budgets — auto-downgrade at 80% of ceiling, circuit breaker at 100%"
+    ]
+  },
+  {
+    title: "The Fake Money Club",
+    subtitle: "Trading Research Platform",
+    tech: ["Python", "FastAPI", "React", "PostgreSQL", "TA-Lib", "WebSockets"],
+    website: "fakemoney.club",
+    highlights: [
+      "139K lines of Python and 68K of TypeScript; 153 endpoints, ~50 tables, 2,249 Python tests plus 815 frontend tests",
+      "Deterministic code owns every number the user acts on — the model only writes the explanation around it",
+      "Members bring their own AI key and brokerage; tenant separation enforced by Postgres row-level security, not application filtering"
+    ]
+  },
+  {
+    title: "Agent Observability",
+    subtitle: "Mission Control for AI Coding Agents",
+    tech: ["Bun", "TypeScript", "SQLite", "React 19", "WebSocket", "Python hooks"],
+    website: "github.com/taketaketaketake/agentland-observability",
+    highlights: [
+      "Captured 174,691 events across 381 sessions from 10+ projects over four months of daily use",
+      "Four independent ingestion paths — agent hooks, a second runtime's hooks, git hooks, and transcript backfill with high-water marks",
+      "Pluggable evaluators scoring runs on tool success, LLM-judged reasoning quality, and statistical regression against baselines"
+    ]
+  },
+  {
+    title: "spec-driven-docs",
+    subtitle: "Documentation That Can't Rot",
+    tech: ["Node CLI", "GitHub Actions", "Zero dependencies"],
+    website: "npmjs.com/package/spec-driven-docs",
+    highlights: [
+      "Published to npm; treats documentation as enforceable contracts rather than good intentions",
+      "Routing table maps each type of code change to the documents it invalidates, injected into agent context at session start",
+      "CI gate blocks marking a phase complete without a passing audit, and enforces the invariants file append-only"
+    ]
+  },
+  {
+    title: "Financial Database Migration",
+    subtitle: "Family Office — Client Engagement",
+    tech: ["SQL Server 2022", "AWS RDS", "AWS DMS", "Terraform", "Python", "T-SQL"],
+    highlights: [
+      "Modernized a 121-table, 849-column legacy schema: 84 timezone-naive datetime columns classified by semantic, 227 foreign keys added",
+      "Code-generated, idempotent pipeline with a regeneration gate that fails CI if committed DDL drifts from its generator",
+      "Production load passed with financial reconciliation to the cent, preserving 33 pre-existing orphan rows for client decision rather than dropping them"
+    ]
+  },
+  {
+    title: "Yard Line",
+    subtitle: "Reentry & Family Support Platform",
+    tech: ["TypeScript", "Express", "Prisma", "PostgreSQL", "Socket.io", "Better Auth", "Mapbox"],
+    website: "yardlinechat.com",
+    highlights: [
+      "Pivoted a product with no traction into one serving families of incarcerated people — a strictly additive rebuild reusing auth, chat, and moderation untouched",
+      "5,845 open correctional facilities imported with fuzzy geo search; geo-tiered reentry directory for housing, legal aid, bail funds, and jobs",
+      "30 data models, 57 endpoints, 226 backend tests; empty searches logged as demand signal for what to source next"
+    ]
+  },
+  {
+    title: "On The Floor",
+    subtitle: "Patient Care Experience Platform",
+    tech: ["React 19", "Vite", "Express", "Prisma", "PostgreSQL", "Socket.io", "Better Auth"],
+    website: "onthefloor.app",
+    highlights: [
+      "Patients and families score nursing care across five signals — every score requires a written explanation, enforced on both client and server",
+      "Minimum-review threshold applied inside the aggregation query per unit-and-shift cell, so thin data can never re-identify an individual",
+      "Published policy and pre-publication moderation block naming individuals; 21 routes, 69 components, built in 12 days"
+    ]
+  },
+  {
+    title: "Bags of Laundry",
+    subtitle: "Laundry Pickup & Delivery Marketplace",
+    tech: ["Astro 5 SSR", "React 19", "Prisma", "PostgreSQL", "Stripe", "Cloudflare R2"],
+    website: "bagsoflaundry.com",
+    highlights: [
+      "Three-sided marketplace — customers, partner laundromats, and drivers — with four role-specific surfaces over one order state machine",
+      "Stripe manual-capture flow: authorization hold at booking, capture after weighing, off-session top-up when weight exceeds the hold, daily re-auth before expiry",
+      "Claim-based driver dispatch with atomic conflict handling; capacity derived per date rather than counted, so cancellations release slots automatically"
+    ]
+  },
+  {
+    title: "Detroit Small Business Map",
+    subtitle: "Self-Enriching Business Directory",
+    tech: ["Hono", "Prisma", "PostgreSQL", "PostGIS", "Redis", "Astro", "React", "Gemini"],
+    website: "detroitsmallbusinessmap.com",
+    highlights: [
+      "Enrichment pipeline across 10+ external APIs that discovers, enriches, and quality-gates listings from staging into production automatically",
+      "221 endpoints across 31 route modules over a 47-model schema; 67-route frontend with PostGIS proximity search",
+      "LLM editorial agent drafts five article formats on cron for human review; ~183 tests in CI against live Postgres and Redis"
+    ]
+  },
+  {
+    title: "White-Label Course Platform",
+    subtitle: "One Codebase, Three Client Deployments",
+    tech: ["TypeScript", "Fastify", "React", "Prisma", "PostgreSQL", "Stripe", "Cloudflare R2"],
+    highlights: [
+      "A new client is a theme, a content manifest, and environment variables — zero client-specific code; third client live in a day",
+      "Passwordless auth, admin approval gating, Stripe billing, and per-lesson progress over a 24-model schema; 231 tests",
+      "Diagnosed corporate email scanners silently consuming single-use sign-in links before recipients could click them"
+    ]
+  },
+  {
+    title: "Fix My Furnace",
+    subtitle: "Two-Sided HVAC Lead Marketplace",
+    tech: ["Astro 5 SSR", "PostgreSQL", "Cloudflare R2", "Telnyx", "Mapbox"],
+    website: "fixmyfurnacemi.com",
+    highlights: [
+      "Exclusive, time-limited lead offers to verified contractors — exclusivity guaranteed by partial unique indexes in the database, not application logic",
+      "License, liability, and workers' comp verified independently with their own statuses and expiry dates before a contractor appears publicly",
+      "Public pricing-transparency database built from real submitted service contracts, plus an AI phone line for intake"
+    ]
+  },
+  {
+    title: "Enter-Great 313",
+    subtitle: "Detroit Reentry Nonprofit",
+    tech: ["Astro 7", "Preact", "Tailwind", "Netlify"],
+    highlights: [
+      "Site for a nonprofit supporting returning citizens, replacing a template build",
+      "Parole-board letter builder generates PDFs entirely in-browser — no letter is ever transmitted, logged, or stored",
+      "Enforced as a project invariant: there is no database, so there is no version of this where a supporter's letter can leak"
     ]
   },
   {
     title: "Voice AI Systems",
     subtitle: "Production Voice Agents",
-    tech: ["Node.js", "Express", "Telnyx", "Python", "SQLite", "Supabase"],
+    tech: ["Node.js", "Express", "Telnyx", "Deepgram", "Python", "SQLite"],
     phone: "(833) FIX-IT-NOW",
     phoneLink: "tel:+18333498669",
     highlights: [
-      "Deployed production voice AI agents handling live customer calls with sub-500ms response latency",
-      "Built real-time call monitoring dashboard with conversation memory and context persistence",
-      "Architected for 1000+ concurrent calls with graceful failover"
-    ]
-  },
-  {
-    title: "AgentLand Observability",
-    subtitle: "Multi-Agent Monitoring Dashboard",
-    tech: ["Bun", "SQLite", "React", "WebSocket", "Python"],
-    website: "github.com/thefakezach",
-    highlights: [
-      "Real-time observability for Claude Code and Gemini CLI agent sessions",
-      "Live event streaming with agent tracking, transcript viewing, and session replay",
-      "LLM-powered evaluation system for scoring agent quality across runs"
+      "Deployed voice agents that answer live business calls and extract structured booking details from natural speech",
+      "Webhook-driven call handling with transcription, conversation memory, and an admin review dashboard",
+      "Separate agents wired into two live businesses for intake and scheduling"
     ]
   },
   {
@@ -74,17 +181,6 @@ const projects = [
     ]
   },
   {
-    title: "On The Floor",
-    subtitle: "Patient Care Experience Platform",
-    tech: ["React Native", "Expo", "Express", "Prisma", "PostgreSQL", "Socket.io"],
-    website: "onthefloor.app",
-    highlights: [
-      "Full-stack platform: React Native mobile app + Express API + PostgreSQL",
-      "Real-time chat rooms with Socket.io for in-hospital patient expression",
-      "Magic Link + OAuth auth, structured care reviews with scored signals"
-    ]
-  },
-  {
     title: "SeatBites",
     subtitle: "SMS-First Food Ordering Platform",
     tech: ["Express", "Prisma", "PostgreSQL", "Redis", "Stripe", "Twilio"],
@@ -107,36 +203,14 @@ const projects = [
     ]
   },
   {
-    title: "Fix My Furnace",
-    subtitle: "HVAC Lead Generation Platform",
-    tech: ["Astro", "Supabase", "Tailwind CSS"],
-    website: "fixmyfurnacemi.com",
+    title: "NLSR",
+    subtitle: "Non-Linear Stream Renderer",
+    tech: ["React", "TypeScript", "Vite", "Vitest"],
+    website: "github.com/taketaketaketake/non-linear-stream-renderer",
     highlights: [
-      "Smart lead capture with phone validation and address autocomplete",
-      "Contractor application portal with admin moderation",
-      "Real pricing transparency system from actual service contracts"
-    ]
-  },
-  {
-    title: "Bags of Laundry",
-    subtitle: "Laundry Pickup & Delivery Platform",
-    tech: ["Astro", "Prisma", "PostgreSQL", "Redis", "Stripe"],
-    website: "bagsoflaundry.com",
-    highlights: [
-      "Guest ordering with secure access tokens",
-      "Service zone capacity management and scheduling",
-      "Magic link auth with Stripe subscription billing"
-    ]
-  },
-  {
-    title: "Detroit Small Business Map",
-    subtitle: "Self-Enriching Business Directory",
-    tech: ["Hono", "Prisma", "PostgreSQL", "Redis", "Gemini AI", "Mapbox", "Astro", "React"],
-    website: "github.com/thefakezach",
-    highlights: [
-      "Automated data enrichment pipeline using SERP, Google Places, Geoapify, and Gemini AI",
-      "Quality-gated promotion system from staging to production listings",
-      "Neighborhood-based discovery with Mapbox interactive maps and S3 image storage"
+      "Rendering engine for concurrent multi-agent text output on a fixed character grid at 60fps",
+      "Primary and revision agents write and edit simultaneously without blocking",
+      "Published as npm package with coordinator API for agent registration and routing"
     ]
   },
   {
@@ -151,21 +225,10 @@ const projects = [
     ]
   },
   {
-    title: "NLSR",
-    subtitle: "Non-Linear Stream Renderer",
-    tech: ["React", "TypeScript", "Vite", "Vitest"],
-    website: "github.com/taketaketaketake/non-linear-stream-renderer",
-    highlights: [
-      "Rendering engine for concurrent multi-agent text output on a fixed character grid at 60fps",
-      "Primary and revision agents write and edit simultaneously without blocking",
-      "Published as npm package with coordinator API for agent registration and routing"
-    ]
-  },
-  {
     title: "Penalty Box",
     subtitle: "E-Commerce for Darren McCarty",
     tech: ["Astro", "React", "Shopify API", "Nanostores"],
-    website: "github.com/thefakezach",
+    website: "github.com/taketaketaketake",
     highlights: [
       "Shopify storefront integration for 4x Stanley Cup champion",
       "Event booking system with product catalog",
@@ -332,9 +395,12 @@ const zachary = {
       <!-- Software Projects -->
       <section class="mb-10">
         <div class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-6">
-          <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+          <h2 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
             <span class="text-pink-400">Software Projects</span>
           </h2>
+          <p class="text-sm text-zinc-400 mb-6">
+            Want the depth? <a href="/selected-work" class="text-pink-400 hover:text-pink-300 underline underline-offset-2">Read the long-form write-ups</a> — what each system does, what was hard, and where it actually stands.
+          </p>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             {projects.map((project) => (
               <div class="bg-zinc-800/50 rounded-xl p-5 border border-zinc-700/50 hover:border-pink-500/30 transition-colors">
