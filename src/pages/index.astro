@@ -3,14 +3,14 @@ import BrandLayout from "../layouts/BrandLayout.astro";
 
 const services = [
   {
-    title: "AI Strategy & Build",
-    desc: "I architect and ship AI systems that run real operations — voice agents, automations, and multi-agent platforms. Done-with-you or done-for-you.",
+    title: "Systems Design & Build",
+    desc: "I design and ship agent systems that run real operations — voice agents, automations, multi-agent platforms — each one bounded by a budget and a permission scope you set. Done-with-you or done-for-you.",
     href: "/services#build",
     icon: "⚙️",
   },
   {
     title: "Workshops & Training",
-    desc: "Hands-on sessions that take your team from “AI-curious” to shipping. Half-day to multi-day, built around your actual workflows.",
+    desc: "Hands-on sessions that take your team from experimenting to shipping. Half-day to multi-day, built around your actual workflows.",
     href: "/services#training",
     icon: "🎓",
   },
@@ -25,14 +25,14 @@ const stats = [
 
 // Featured projects, framed as "originals" (logo shown when available; text mark otherwise).
 const featuredProjects = [
-  { ep: "EP.01", category: "PLATFORM", name: "AgentlandOS", tagline: "AI Agents for small business owners", logo: "/project-logos/agentland-logo.png", cover: true, href: "/work#agentlandos" },
+  { ep: "EP.01", category: "PLATFORM", name: "AgentlandOS", tagline: "Agents that run small-business operations", logo: "/project-logos/agentland-logo.png", cover: true, href: "/work#agentlandos" },
   { ep: "EP.02", category: "CIVIC TECH", name: "Yard Line", tagline: "Support for families on the outside", logo: null, href: "/work#yard-line" },
   { ep: "EP.03", category: "QUANT", name: "Trading System", tagline: "Agent-based market signals", logo: "/project-logos/trading-logo.png", cover: true, href: "/work#fake-money" },
 ];
 
 // Scrolling marquee strip (broadcast/editorial motif)
 const marqueeItems = [
-  "AI AGENT PLATFORMS", "VOICE AGENTS", "MARKETPLACES", "DATA PIPELINES",
+  "AGENT PLATFORMS", "VOICE AGENTS", "MARKETPLACES", "DATA PIPELINES",
   "REAL-TIME SYSTEMS", "FREE TOOLS", "BUILT IN DETROIT", "25M+ VIEWS",
 ];
 
@@ -68,7 +68,7 @@ const testimonials = [
           Zachary Lewis — a one-person media co.
         </span>
         <h1 class="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-ink leading-[1.05]">
-          I build and design AI systems that
+          I build and design systems that
           <span class="text-accent"> change the way you work.</span>
         </h1>
         <p class="mt-6 text-lg md:text-xl text-ink/80 leading-relaxed max-w-xl">
@@ -174,10 +174,10 @@ const testimonials = [
         </div>
       </div>
       <div class="md:col-span-3">
-        <h2 class="text-3xl md:text-4xl font-bold text-ink mb-4">From video to AI operator</h2>
+        <h2 class="text-3xl md:text-4xl font-bold text-ink mb-4">From video to production systems</h2>
         <p class="text-ink/80 leading-relaxed mb-4">
           I spent years building a video production business, growing an audience of 100K+ followers and 25M+ views
-          while building the websites and automations my clients ran on. In 2024 I turned that toward AI full-time.
+          while building the websites and automations my clients ran on. In 2024 I turned that toward agent systems full-time.
           Since then: an agent platform that runs my own companies, a trading workspace, a laundry marketplace, a
           self-enriching map of Detroit's small businesses, and a support platform for families of incarcerated people.
         </p>
@@ -195,7 +195,7 @@ const testimonials = [
   <section class="max-w-6xl mx-auto px-4 sm:px-6 py-20 md:py-28">
     <div class="max-w-2xl mb-12">
       <h2 class="text-3xl md:text-4xl font-bold text-ink">How I can help</h2>
-      <p class="mt-3 text-ink/60 text-lg">Two ways to put applied AI to work in your business.</p>
+      <p class="mt-3 text-ink/60 text-lg">Two ways to put this to work in your business.</p>
     </div>
     <div class="grid gap-6 md:grid-cols-2">
       {services.map((s) => (
@@ -251,9 +251,9 @@ const testimonials = [
         <div class="grid md:grid-cols-2 gap-8 items-center">
           <div>
             <span class="inline-block text-xs font-semibold uppercase tracking-wider text-accent mb-3">Fake Money</span>
-            <h2 class="text-2xl md:text-3xl font-bold text-ink mb-3">Follow my journey to make money with AI</h2>
+            <h2 class="text-2xl md:text-3xl font-bold text-ink mb-3">Follow the build, in public</h2>
             <p class="text-ink/80 leading-relaxed mb-5">
-              <strong>Fake Money</strong> — an AI trading platform that analyzes, never auto-fires.
+              <strong>Fake Money</strong> — a trading platform where the scanners run on a schedule and nothing ever auto-fires.
             </p>
             <ul class="space-y-2 text-sm text-ink/80 mb-6">
               <li class="flex gap-2"><span>🧠</span> Agents read companies and live charts to call the signals</li>
@@ -323,7 +323,7 @@ const testimonials = [
 
               <!-- giant wordmark + super-sized tagline -->
               <h3 class="relative font-black text-white tracking-tight leading-[0.85]" style="font-size:clamp(3rem,15vw,10rem);">Agentland</h3>
-              <p class="relative mt-2 md:mt-4 font-bold text-zinc-200 leading-[0.95]" style="font-size:clamp(2rem,10vw,6.5rem);">AI agents that operate your business</p>
+              <p class="relative mt-2 md:mt-4 font-bold text-zinc-200 leading-[0.95]" style="font-size:clamp(2rem,10vw,6.5rem);">Agents that operate your business</p>
               <span class="relative mt-6 md:mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold text-sm">
                 Visit AgentlandOS →
               </span>
@@ -365,7 +365,7 @@ const testimonials = [
   {/* FINAL CTA — hidden for now, kept for later
   <section class="border-t border-ink bg-paper2">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 py-20 text-center">
-      <h2 class="text-3xl md:text-4xl font-bold text-ink mb-4">Ready to put AI to work?</h2>
+      <h2 class="text-3xl md:text-4xl font-bold text-ink mb-4">Ready to put this to work?</h2>
       <p class="text-ink/60 text-lg mb-8">Tell me what you're trying to build or automate. I'll tell you the fastest path to a working system.</p>
       <a href="/contact" class="inline-block px-8 py-4 rounded-xl bg-accent text-white border border-ink font-semibold text-lg hover:opacity-90 transition-opacity">
         Start the conversation

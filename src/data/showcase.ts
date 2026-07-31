@@ -17,10 +17,10 @@ export interface ShowcaseItem {
 export const projects: ShowcaseItem[] = [
   {
     title: "AgentlandOS",
-    tagline: "AI agents that run a business",
+    tagline: "Agents that run a business",
     description:
-      "A platform that gives non-technical business owners the power of AI agents to operate and grow their business. React 19 + TypeScript frontend talking to 11 backend microservices through a single gateway. Every agent runs under a spending ceiling and a permission scope its owner sets. This is the system that runs my own companies.",
-    tags: ["AI agents", "React 19", "Microservices", "SaaS"],
+      "A platform that gives non-technical business owners a fleet of agents that operate and grow their business. React 19 + TypeScript frontend talking to 11 backend microservices through a single gateway. Every agent runs under a spending ceiling and a permission scope its owner sets. This is the system that runs my own companies.",
+    tags: ["Agent platform", "React 19", "Microservices", "SaaS"],
     status: "Live",
     href: "https://agentlandos.com",
     cta: "Visit agentlandos.com",
@@ -31,8 +31,8 @@ export const projects: ShowcaseItem[] = [
     title: "Fake Money",
     tagline: "Decentralized financial intelligence",
     description:
-      "An AI-powered trading workspace where every member runs their own prompts, shares analysis with the club, and connects their own broker. Scanner strategies on automated schedules, agent-written signal theses and daily retrospectives, and live real-money trading behind ~2,200 tests. The intelligence isn't in the model — it's in the people using it.",
-    tags: ["Quant", "FastAPI", "AI agents", "Live trading"],
+      "A trading workspace where every member runs their own prompts, shares analysis with the club, and connects their own broker. Scanner strategies on automated schedules, agent-written signal theses and daily retrospectives, and live real-money trading behind ~2,200 tests. The intelligence isn't in the model — it's in the people using it.",
+    tags: ["Quant", "FastAPI", "Agents", "Live trading"],
     status: "Live",
     href: "https://www.fakemoney.club",
     cta: "Visit fakemoney.club",
@@ -87,7 +87,7 @@ export const tools: ShowcaseItem[] = [
   },
   {
     title: "Multi-Agent Observability",
-    tagline: "Mission control for your AI coding sessions",
+    tagline: "Mission control for your coding agents",
     description:
       "A real-time observability dashboard for Claude Code and Gemini CLI. Captures hook events, streams them over WebSocket, and shows a live feed with agent tracking, transcripts, analytics, and LLM-powered evaluation.",
     tags: ["Open source", "Claude Code", "Observability"],
@@ -97,7 +97,7 @@ export const tools: ShowcaseItem[] = [
   },
   {
     title: "Spec-Driven Docs",
-    tagline: "Keep docs in sync with AI-written code",
+    tagline: "Keep docs in sync with agent-written code",
     description:
       "A documentation framework that treats docs as enforceable contracts. When code changes, it knows which docs are stale and blocks progress until they're current. Drop it into any project in one command.",
     tags: ["Open source", "DX", "Docs"],
