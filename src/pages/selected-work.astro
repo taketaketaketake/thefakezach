@@ -1,0 +1,662 @@
+---
+import BrandLayout from "../layouts/BrandLayout.astro";
+---
+
+<BrandLayout
+  theme="dark"
+  active="work"
+  title="Selected Work — Production Systems, in Depth | Zachary Lewis"
+  description="The long version: twelve production systems, what each does, what was genuinely hard about it, and where it actually stands today."
+>
+  <div class="sw">
+<div class="shell">
+  <nav class="rail" aria-label="Project index">
+    <p class="rail-label">Selected work</p>
+    <ol>
+      <li><a href="#agentland">AgentlandOS</a></li>
+      <li><a href="#fakemoney">The Fake Money Club</a></li>
+      <li><a href="#observability">Agent Observability</a></li>
+      <li><a href="#specdocs">spec-driven-docs</a></li>
+      <li><a href="#migration">Financial DB Migration</a></li>
+      <li><a href="#yardline">Yard Line</a></li>
+      <li><a href="#onthefloor">On the Floor</a></li>
+      <li><a href="#bol">Bags of Laundry</a></li>
+      <li><a href="#dsbm">Detroit Business Map</a></li>
+      <li><a href="#course">Course Platform</a></li>
+      <li><a href="#fmf">Fix My Furnace</a></li>
+      <li><a href="#entergreat">Enter-Great 313</a></li>
+    </ol>
+  </nav>
+
+  <div class="swmain">
+    <header class="masthead">
+      <p class="eyebrow">Selected work · Detroit</p>
+      <h1>Zachary Lewis</h1>
+      <p class="standfirst">I build and operate production systems end to end — architecture through deployment through the 2 a.m. incident. What follows is the long version of my resume: what each system does, what was genuinely hard about it, and where it actually stands today.</p>
+      <p class="contact">
+        <span><a href="mailto:Zach@TakeDetroit.com">Zach@TakeDetroit.com</a></span>
+        <span>(248) 550-5061</span>
+        <span><a href="https://github.com/taketaketaketake">github.com/taketaketaketake</a></span>
+        <span><a href="https://thefakezach.com">thefakezach.com</a></span>
+      </p>
+    </header>
+
+    <section class="record" id="agentland">
+      <p class="kicker">Sole architect · 2026 · Live</p>
+      <h2>AgentlandOS</h2>
+      <p class="summary">A platform where someone who doesn't write code can set up AI agents that actually do work — send the email, run the workflow, make the call — inside limits they control.</p>
+      <div class="meta">
+        <span class="status live">Live</span>
+        <a class="visit" href="https://agentlandos.com">agentlandos.com</a>
+        <span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Temporal</span><span class="chip">React 19</span><span class="chip">PostgreSQL + pgvector</span><span class="chip">Docker</span>
+      </div>
+      <dl class="metrics">
+        <div><dt>Services</dt><dd>11</dd></div>
+        <div><dt>Endpoints</dt><dd>~292</dd></div>
+        <div><dt>Tables</dt><dd>80</dd></div>
+        <div><dt>Backend tests</dt><dd>~1,550</dd></div>
+        <div><dt>Lines</dt><dd>~228K</dd></div>
+        <div><dt>Decision records</dt><dd>120</dd></div>
+      </dl>
+
+      <h3>What it does</h3>
+      <p>A user describes a goal in plain language. The system turns that into a plan, shows it to them for approval, and then executes the approved steps — sending email, generating documents, querying data they've connected, placing phone calls. Every agent runs under a spending ceiling and a permission scope its owner sets.</p>
+      <p>It's eleven separate services behind one front door: planning, orchestration, memory, model access, execution, billing, identity, and a directory of available agents. The gateway is the only thing exposed to the internet; everything else talks over a private network.</p>
+
+      <h3>The hard part</h3>
+      <p>An agent that runs for two seconds is a function call. An agent that runs for two hours, waits on a human to approve something, survives a deployment, and picks up where it left off is a different problem entirely. I built that layer on <strong>Temporal</strong> — fifteen workflow definitions across three queues, covering scheduled work, agent-to-agent messaging, and human approval gates that can sit open indefinitely without holding a process open.</p>
+      <p>The second hard part was money. Language models cost real money per call, and an agent in a loop can spend a lot of it quickly. Every call routes through one service that knows what each model costs. Each agent has a dollar ceiling; at 80% of it the system silently switches to a cheaper model, and at 100% a circuit breaker stops the agent rather than letting it run up a bill.</p>
+      <p>Because customers share the platform, everything is scoped to a workspace — requests, agent actions, model preferences, and API keys. Anything an agent actually executes runs inside a locked-down container with capabilities dropped and outbound traffic logged, because "the agent decided to run this code" is only acceptable if the code can't reach anything it shouldn't.</p>
+
+      <h3>Where it stands</h3>
+      <p>Deployed and running. The core services are substantial — eight to eighteen thousand lines each with real test coverage — and the LLM, gateway, and user services were still getting commits the week I wrote this. A few peripheral repos from early exploration are dormant, and I'd rather say that than pretend a twenty-one-repo system is uniformly polished.</p>
+    </section>
+
+    <section class="record" id="fakemoney">
+      <p class="kicker">Solo founder · 2026 · Live</p>
+      <h2>The Fake Money Club</h2>
+      <p class="summary">A workspace for self-directed traders: ten scanners surface setups, a language model drafts the reasoning, the user's own brokerage takes the order, and a journal measures — honestly — whether any of it worked.</p>
+      <div class="meta">
+        <span class="status live">Live</span>
+        <a class="visit" href="https://fakemoney.club">fakemoney.club</a>
+        <span class="chip">Python 3.10</span><span class="chip">FastAPI</span><span class="chip">React</span><span class="chip">PostgreSQL</span><span class="chip">TA-Lib</span><span class="chip">WebSockets</span>
+      </div>
+      <dl class="metrics">
+        <div><dt>Python</dt><dd>139K lines</dd></div>
+        <div><dt>TypeScript</dt><dd>68K lines</dd></div>
+        <div><dt>Endpoints</dt><dd>153</dd></div>
+        <div><dt>Python tests</dt><dd>2,249</dd></div>
+        <div><dt>Frontend tests</dt><dd>815</dd></div>
+        <div><dt>Scheduled jobs</dt><dd>~34</dd></div>
+      </dl>
+
+      <h3>What it does</h3>
+      <p>Scanners run on a schedule against a universe of roughly two thousand symbols, looking for technical setups. When one fires, the platform assembles a deterministic packet of context — price action, fundamentals, earnings dates, options positioning, sector comparison — and asks a model to write the thesis and the levels. The user reads it, decides, and if they act, the order goes through their own brokerage account. Afterward, a journal tracks what actually happened.</p>
+      <p>The business model follows from the architecture: users bring their own AI key and their own broker. The platform never takes custody of anyone's money and doesn't mark up tokens.</p>
+
+      <h3>The hard part</h3>
+      <p>Everything here is downstream of one decision: <strong>a model is never allowed to produce a number a user might act on.</strong> Prices, levels, position sizes, and risk calculations all come from ordinary Python. The model writes the explanation around them. This sounds restrictive until you consider the alternative — a plausible-sounding model hallucinating a stop-loss price for someone about to risk real money.</p>
+      <p>That principle shaped the safety work. The endpoints that can place an irreversible order bind to localhost by default, so remote access is an explicit opt-in rather than an accident of configuration. Each user's API keys are encrypted individually. Separation between members is enforced in the database itself — row-level security tied to a per-connection identity — rather than by application code remembering to filter every query, because application code eventually forgets.</p>
+      <p>The part I'm most pleased with is the grading. Four separate pipelines compare what the model said against what actually happened: a trade thesis checked against real forward price bars including whether its stated confidence was calibrated, scanner retrospectives, intraday scalps, and news tagging. Each pairs a deterministic ground truth with a second model judging whether the writing was actually supported by the data. Every result is keyed to the version of the instructions that produced it, which means changing a prompt is an experiment with a measurable outcome rather than a vibe.</p>
+
+      <h3>Where it stands</h3>
+      <p>Live and free while the workflow proves itself. One deliberate gap: a brokerage integration that would let agents place orders directly is code-complete but sitting behind a legal review I haven't cleared, and I'd rather ship it late than ship it wrong.</p>
+    </section>
+
+    <section class="record" id="observability">
+      <p class="kicker">Internal tooling · 2026 · Ran daily for four months</p>
+      <h2>Agent Observability</h2>
+      <p class="summary">Mission control for AI coding agents. When you have several running across different projects, the terminal scrolls away and you have no idea what any of them actually did. This records all of it.</p>
+      <div class="meta">
+        <span class="status archived">Local tool · data through Jun 2026</span>
+        <span class="chip">Bun</span><span class="chip">TypeScript</span><span class="chip">SQLite</span><span class="chip">React 19</span><span class="chip">WebSocket</span><span class="chip">Python hooks</span>
+      </div>
+      <dl class="metrics">
+        <div><dt>Events captured</dt><dd>174,691</dd></div>
+        <div><dt>Sessions</dt><dd>381</dd></div>
+        <div><dt>Messages</dt><dd>150,749</dd></div>
+        <div><dt>Projects covered</dt><dd>10+</dd></div>
+        <div><dt>Tests</dt><dd>241</dd></div>
+        <div><dt>Lines</dt><dd>~26K</dd></div>
+      </dl>
+
+      <h3>What it does</h3>
+      <p>Coding agents fire lifecycle events as they work — about to use a tool, tool succeeded, tool failed, needs permission, finished. This captures all of them, writes them to a local database, streams them live to a dashboard, and scores the sessions afterward. Live view shows what every agent is doing right now in colour-coded lanes; the historical view shows volume, tool reliability, quality trends, and token usage over months.</p>
+
+      <h3>The hard part</h3>
+      <p>Getting the data in reliably, from systems that were never designed to report to me. There are <strong>four independent ingestion paths</strong>: hooks from one agent runtime covering fourteen event types, hooks from a second runtime mapped onto the same schema, git hooks tying commits back to the session that produced them, and a file-tailer that reads session transcripts from disk with a high-water mark so sessions that ran while the collector was down get backfilled rather than lost.</p>
+      <p>The design rule I'm happiest about is small: <strong>every hook fails open.</strong> A two-second timeout and a swallowed exception, so if the collector is down, the agent doesn't stall. Observability that can break the thing it observes is worse than none.</p>
+      <p>Scoring is pluggable. One evaluator is purely deterministic — did the tool call succeed. Others use a model as a judge for transcript quality and reasoning depth. One is statistical, flagging regressions against stored baselines. The charts are hand-written SVG; pulling in a charting library for five charts wasn't worth the dependency.</p>
+
+      <h3>Where it stands</h3>
+      <p>It ran every day for four months across more than ten of my own projects and kept collecting for ten weeks after I stopped adding features, which is the most honest endorsement I can give a tool. It's deliberately local-only — no auth, no cloud — because it was built for one person and I'd have to do real security work before it could be anything else.</p>
+    </section>
+
+    <section class="record" id="specdocs">
+      <p class="kicker">Open source · 2026 · Published</p>
+      <h2>spec-driven-docs</h2>
+      <p class="summary">Documentation that can't quietly rot. A small framework that treats docs as contracts and blocks progress when they fall out of date.</p>
+      <div class="meta">
+        <span class="status live">On npm · v1.1.0</span>
+        <a class="visit" href="https://www.npmjs.com/package/spec-driven-docs">npmjs.com/package/spec-driven-docs</a>
+        <span class="chip">Node CLI</span><span class="chip">GitHub Actions</span><span class="chip">Zero dependencies</span>
+      </div>
+
+      <h3>What it does</h3>
+      <p>The premise came from watching my own repos: when an AI agent can write a week of code in an afternoon, documentation goes stale in hours rather than months. So the docs get a routing table — a mapping from <em>type of change</em> to <em>which documents that change invalidates</em> — and three enforcement layers that make ignoring it inconvenient.</p>
+      <p>Running <code>npx spec-driven-docs init</code> walks you through five questions about the system you're building and writes a starting set of templates. A session hook injects the routing table into the agent's context at the start of every session, so it knows the rules without being told. A CI workflow enforces the parts that matter: a phase can't be marked complete without an audit file recording a passing verdict, and the file declaring the system's invariants is enforced <strong>append-only</strong> — you can add a constraint, but you cannot quietly delete one.</p>
+
+      <h3>Where it stands</h3>
+      <p>Published, MIT, zero runtime dependencies. Small — about 640 lines of executable code plus templates — and I use it across my own projects, which is how the audit gate got strict enough to be useful.</p>
+    </section>
+
+    <section class="record" id="migration">
+      <p class="kicker">Lead consultant · Client engagement · 2026</p>
+      <h2>Financial Database Migration</h2>
+      <p class="summary">Moving a family office's accounting system off an unsupported database server onto managed, encrypted infrastructure — without rewriting the desktop application, the service layer, or twenty-four financial reports that depend on it.</p>
+      <div class="meta">
+        <span class="status progress">Data migrated · cutover pending</span>
+        <span class="chip">SQL Server 2022</span><span class="chip">AWS RDS + DMS</span><span class="chip">Terraform</span><span class="chip">Python</span><span class="chip">T-SQL</span>
+      </div>
+      <dl class="metrics">
+        <div><dt>Tables</dt><dd>121</dd></div>
+        <div><dt>Columns mapped</dt><dd>849</dd></div>
+        <div><dt>Foreign keys added</dt><dd>227</dd></div>
+        <div><dt>Datetime columns classified</dt><dd>84</dd></div>
+        <div><dt>Tests</dt><dd>128</dd></div>
+        <div><dt>Decision records</dt><dd>25</dd></div>
+      </dl>
+
+      <h3>What it does</h3>
+      <p>The client runs a private-wealth accounting system — entities, ledgers, transactions, investments, real assets, liabilities, insurance, taxes. It sat on a database version that stopped receiving security updates, on a single virtual machine. The job was to move it somewhere supported and encrypted while modernising a schema that had accumulated fifteen years of shortcuts, and to do it without touching the desktop client, the service layer, or the reports — all of which had to keep working on day one.</p>
+
+      <h3>The hard part</h3>
+      <p>Financial data doesn't tolerate "mostly right." The governing rule I set was that no money could be lost or silently altered: every entity's debits and credits had to reconcile end to end, and that wasn't negotiable for schedule reasons.</p>
+      <p>The subtlest problem was time. Eighty-four date columns had no timezone information — some meant a calendar date, some a wall-clock time, some an actual instant. I classified every one individually with a written rationale, because getting it wrong shifts an audit timestamp by five hours and nobody notices until it matters. A later regeneration silently dropped the timezone conversion on six of them; the tests caught it.</p>
+      <p>Rather than hand-write the migration, I generated it — the schema, the column mapping, and the transformation logic all derive from a parse of the source database, with a gate that fails the build if the committed output ever drifts from what the generator produces. Then I rehearsed the entire thing on a disposable copy of production, and tore it down.</p>
+      <div class="aside">Adding real foreign keys to a schema that never had them exposed 33 rows pointing at records that no longer existed. The easy move is to drop them. I kept them, reported them individually with their values, and routed them to the client for a decision — because whether a financial account with a missing owner should be deleted is a judgment about their business, not a mechanical cleanup for me to perform silently.</div>
+
+      <h3>Where it stands</h3>
+      <p>The production data load passed with reconciliation to the cent, surfacing exactly the same 33 pre-existing orphans found in rehearsal — which is what you want, because it means the migration introduced nothing new. What remains is application-side: certificate trust configuration, report verification, and the cutover window itself.</p>
+    </section>
+
+    <section class="record" id="yardline">
+      <p class="kicker">Founder · 2026 · Live</p>
+      <h2>Yard Line</h2>
+      <p class="summary">A support platform for families of incarcerated people and for those coming home — built by repurposing a product that had failed to find users.</p>
+      <div class="meta">
+        <span class="status live">Live</span>
+        <a class="visit" href="https://yardlinechat.com">yardlinechat.com</a>
+        <span class="chip">TypeScript</span><span class="chip">Express</span><span class="chip">Prisma</span><span class="chip">PostgreSQL</span><span class="chip">Socket.io</span><span class="chip">Mapbox</span>
+      </div>
+      <dl class="metrics">
+        <div><dt>Facilities imported</dt><dd>5,845</dd></div>
+        <div><dt>Data models</dt><dd>30</dd></div>
+        <div><dt>Endpoints</dt><dd>57</dd></div>
+        <div><dt>Backend tests</dt><dd>226</dd></div>
+        <div><dt>Web pages</dt><dd>29</dd></div>
+      </dl>
+
+      <h3>What it does</h3>
+      <p>Families trying to stay connected to someone inside face a series of unglamorous problems: which facility is this person in, what are the visiting rules, how does the phone system work, what does money transfer cost. People coming home face harder ones: housing, legal aid, identification, work. Yard Line is a directory of every open correctional facility in the country, guides for the common tasks, moderated support rooms, and a geographically tiered directory of reentry resources with verification dates attached, so nobody drives to an organisation that closed last year.</p>
+
+      <h3>The hard part</h3>
+      <p>The interesting decision here wasn't technical, it was what to do with a failure. I'd spent four months building a platform for nurses. It worked and almost nobody used it. The obvious options were to keep pushing on distribution or start over.</p>
+      <p>Instead, through conversations with a Detroit organisation supporting people re-entering society, I realised I'd already built most of what they needed — the shapes matched even though the domains didn't. A facility directory instead of a hospital directory. Moderated support rooms instead of nurse discussions. Structured reviews of the visiting experience instead of the working one.</p>
+      <p>So I did the pivot as a <strong>strictly additive build</strong>: nothing deleted, nothing rewritten. New tables alongside the old ones in the same database, reusing the authentication, the real-time chat, the moderation pipeline, and the rate limiting untouched. It felt wrong — like leaving dead code in production — but it meant working software in weeks instead of quarters.</p>
+      <div class="aside">One moment convinced me it was the right call. The moderation rules I'd written to stop nurses from naming individual coworkers already blocked named individuals — which is exactly the guardrail a correctional context requires. A constraint solved for one audience turned out to be load-bearing for another. A rewrite would have thrown it away.</div>
+
+      <h3>Where it stands</h3>
+      <p>Live, with the backend in active development. The design detail I care most about: the resource directory logs every search that returns nothing. When someone looks for transitional housing in a county we don't cover, that becomes the signal for what to source next — the people being failed tell us what to build without anyone having to ask them.</p>
+    </section>
+
+    <section class="record" id="onthefloor">
+      <p class="kicker">Founder · 2026 · Live, without traction</p>
+      <h2>On the Floor</h2>
+      <p class="summary">A place for patients and families to describe the nursing care they actually received, and for nurses to use that same data to decide where they want to work. It shipped. Almost nobody used it — and its backend became Yard Line.</p>
+      <div class="meta">
+        <span class="status live">Live</span>
+        <a class="visit" href="https://onthefloor.app">onthefloor.app</a>
+        <span class="chip">React 19</span><span class="chip">Vite</span><span class="chip">Socket.io</span><span class="chip">Better Auth</span><span class="chip">Tailwind v4</span><span class="chip">PWA</span>
+      </div>
+      <dl class="metrics">
+        <div><dt>Routes</dt><dd>21</dd></div>
+        <div><dt>Components</dt><dd>69</dd></div>
+        <div><dt>Feature areas</dt><dd>9</dd></div>
+        <div><dt>Frontend lines</dt><dd>7,454</dd></div>
+        <div><dt>Built in</dt><dd>12 days</dd></div>
+        <div><dt>Decision records</dt><dd>13</dd></div>
+      </dl>
+
+      <h3>What it does</h3>
+      <p>A patient or family member walks a seven-step wizard describing their care across five dimensions — communication, emotional support, responsiveness, advocacy, respect. Every score requires a written explanation; there is no way to leave a number without a reason. Those reviews aggregate into a picture of a hospital, broken down by unit type and shift.</p>
+      <p>Nurses are the second audience for the same data. Someone deciding whether to take a contract at a particular hospital can look at how care there is actually experienced, unit by unit, and can talk to other nurses in real-time rooms that clear themselves after 72 hours, or in persistent topic discussions.</p>
+
+      <h3>The hard part</h3>
+      <p>Everything about this product is legally and ethically loaded, and almost all the engineering went into that rather than into features.</p>
+      <p>The first problem is naming people. A patient describing a bad night, or a nurse describing a bad manager, will name someone if you let them — and that exposes the person named, the author, and the platform. The published policy is explicit: describe people by <em>role, unit, and shift</em>, never by name. That isn't just a policy page; content is screened before it publishes, and when something is blocked the form state is preserved so the author can revise rather than lose what they wrote. Reporting categories include identifying information and doxxing as first-class reasons.</p>
+      <p>The second problem is subtler and it's the one I'm proudest of solving. Aggregate statistics leak identity. If a hospital's night-shift NICU has exactly one review, publishing its average tells you precisely who wrote it. So the minimum threshold isn't applied to the hospital — it's applied <strong>inside the aggregation query, to every unit-and-shift cell independently</strong>. A cell with fewer than three reviews is dropped from the response entirely, even when the hospital overall has plenty. The API returns a clear "not enough reviews yet" rather than a thin, re-identifiable number, and there are backend tests asserting exactly that.</p>
+
+      <h3>Where it stands</h3>
+      <p>Live and complete-feeling — nine feature areas, all wired to real endpoints, built in twelve days across fifteen documented phases. Dormant since March. The honest summary: I built a careful product for an audience I had no route to reach. The value that survived wasn't the product, it was the backend — four months later it became Yard Line.</p>
+    </section>
+
+    <section class="record" id="bol">
+      <p class="kicker">Founder · 2025–2026 · Live</p>
+      <h2>Bags of Laundry</h2>
+      <p class="summary">Laundry pickup and delivery across metro Detroit — a three-sided marketplace connecting households, partner laundromats, and drivers, with the money movement that implies.</p>
+      <div class="meta">
+        <span class="status live">Live</span>
+        <a class="visit" href="https://bagsoflaundry.com">bagsoflaundry.com</a>
+        <span class="chip">Astro 5 SSR</span><span class="chip">React 19</span><span class="chip">Prisma</span><span class="chip">PostgreSQL</span><span class="chip">Stripe</span><span class="chip">Cloudflare R2</span>
+      </div>
+      <dl class="metrics">
+        <div><dt>Lines</dt><dd>~26K</dd></div>
+        <div><dt>Pages</dt><dd>38</dd></div>
+        <div><dt>API handlers</dt><dd>26</dd></div>
+        <div><dt>Data models</dt><dd>19</dd></div>
+        <div><dt>User roles</dt><dd>4</dd></div>
+        <div><dt>Decision records</dt><dd>13</dd></div>
+      </dl>
+
+      <h3>What it does</h3>
+      <p>A customer books a pickup and gets charged by weight, with a membership tier that lowers the rate. A driver collects the bags and photographs them as proof. A partner laundromat weighs, washes, and marks it ready. A driver returns it. Four roles, four different web surfaces, one order moving through a state machine with an audit trail at every transition.</p>
+
+      <h3>The hard part</h3>
+      <p>Payment, and it isn't close. You cannot charge a customer at booking, because nobody knows what the load weighs yet. So the system places an <strong>authorisation hold</strong> for the estimate, and captures the real amount after weighing. Which opens a series of problems that only exist in the real world: what if the actual weight exceeds the hold, what happens when a card authorisation expires after seven days, and how do you know your books match the payment processor's.</p>
+      <p>The answers, in order: capture what the hold allows and charge the difference as a separate off-session payment against the card saved at booking; run a daily job that re-authorises holds approaching expiry before they die; and write anything that doesn't reconcile into a dedicated anomalies table rather than letting it vanish into a log.</p>
+      <p>Dispatch is deliberately unglamorous. Rather than build an admin console to assign drivers, unassigned orders simply appear in every driver's list as claimable, and starting a route claims it atomically — losing races get a clean conflict rather than two drivers at one address. Laundromat capacity is <em>derived</em> by counting orders for a date rather than kept as a counter, because the counter version had a bug where cancelling an order never gave the slot back.</p>
+      <div class="aside">Before launch I ran a line-by-line audit of the whole system against a 54-item checklist and concluded, in writing, that it was <em>not</em> ready. It found that orders booked through the UI were silently losing their ZIP code, so they never got routed to a laundromat, and that no code path ever set the driver on an order — meaning every driver's task list was permanently empty. Fourteen launch blockers, fixed in a day. I'd rather find that in an audit than from a customer standing outside with two bags.</div>
+
+      <h3>Where it stands</h3>
+      <p>Live, with one real partner laundromat in Detroit and an eighteen-ZIP service area computed from their delivery radius. The blockers are cleared; a longer tail of known issues is tracked openly rather than pretended away. There's also a business phone line with an AI voice agent that takes booking details from natural speech, and a half-built second version that captured the two lessons worth keeping — shared pricing logic so the checkout estimate and the server can't disagree, and a real migration history — before I decided the running system deserved the attention more.</p>
+    </section>
+
+    <section class="record" id="dsbm">
+      <p class="kicker">Founder · 2025–2026 · Live</p>
+      <h2>Detroit Small Business Map</h2>
+      <p class="summary">A directory of Detroit's small businesses that fills in its own gaps, plus an editorial pipeline that drafts local stories for a human to approve.</p>
+      <div class="meta">
+        <span class="status live">Live</span>
+        <a class="visit" href="https://www.detroitsmallbusinessmap.com">detroitsmallbusinessmap.com</a>
+        <span class="chip">Hono</span><span class="chip">Prisma</span><span class="chip">PostGIS</span><span class="chip">Redis</span><span class="chip">Astro</span><span class="chip">Gemini</span>
+      </div>
+      <dl class="metrics">
+        <div><dt>Endpoints</dt><dd>221</dd></div>
+        <div><dt>Route modules</dt><dd>31</dd></div>
+        <div><dt>Data models</dt><dd>47</dd></div>
+        <div><dt>Frontend routes</dt><dd>67</dd></div>
+        <div><dt>Tests</dt><dd>~183</dd></div>
+        <div><dt>Neighborhoods</dt><dd>50</dd></div>
+      </dl>
+
+      <h3>What it does</h3>
+      <p>Businesses get discovered automatically, land in a staging table, and are enriched from a series of external sources — contact details, geocoding, neighbourhood assignment, photos, categories, a written description. If the result clears a quality bar, it publishes itself to the live directory. If it doesn't, it waits for a human.</p>
+      <p>A second pipeline reads local news, video, and community posts on a schedule, scores relevance, groups related stories, and drafts articles in several formats. Nothing auto-publishes — everything lands in a review queue.</p>
+
+      <h3>The hard part</h3>
+      <p>Ten external services, each with its own rate limits, failure modes, and pricing. The interesting work isn't calling them, it's the promotion gate: deciding what "good enough to publish" means for a record assembled by machines, and building a staging-to-production path where the answer is enforced rather than assumed. Searches run against PostGIS for proximity, with a debounced typeahead over live results.</p>
+
+      <h3>Where it stands</h3>
+      <p>Live, with 221 published businesses across 50 Detroit neighbourhoods, and still under active development. The editorial pipeline works end to end but I haven't turned the firehose on yet — an empty article feed is better than a feed full of things I haven't read.</p>
+    </section>
+
+    <section class="record" id="course">
+      <p class="kicker">Client work · 2026 · Three deployments</p>
+      <h2>White-Label Course Platform</h2>
+      <p class="summary">One codebase that deploys as a completely different-looking learning platform for each client — no client-specific code anywhere in it.</p>
+      <div class="meta">
+        <span class="status live">3 live deployments</span>
+        <span class="chip">TypeScript</span><span class="chip">Fastify</span><span class="chip">React</span><span class="chip">Prisma</span><span class="chip">Stripe</span><span class="chip">Cloudflare R2</span>
+      </div>
+      <dl class="metrics">
+        <div><dt>Deployments</dt><dd>3</dd></div>
+        <div><dt>Data models</dt><dd>24</dd></div>
+        <div><dt>Route modules</dt><dd>15</dd></div>
+        <div><dt>Tests</dt><dd>231</dd></div>
+      </dl>
+
+      <h3>What it does</h3>
+      <p>Members sign in with an emailed link, work through narrated lessons at their own pace, take knowledge checks and module quizzes, and pick up exactly where they left off. Administrators approve new members and manage content. Each client gets their own branding, their own domain, their own database — and, from my side, no forked code.</p>
+
+      <h3>The hard part</h3>
+      <p>Resisting the fork. The tempting move with a second client is to copy the repo and change things; six months later you have two codebases and every fix has to be applied twice. Instead, a new client is a colour theme, a content manifest, and a set of environment variables. The third client went from nothing to live in a day.</p>
+      <div class="aside">A bug worth remembering: enterprise users kept reporting that their sign-in links didn't work. Their corporate email security scanners were <em>opening every link</em> before delivery — and since a magic link is single-use by design, the scanner consumed it, and the actual human arrived to a dead link. The fix was to stop treating a link click as proof of intent and require an action on the page instead. I'd never have found it locally; it only happens inside corporate mail.</div>
+
+      <h3>Where it stands</h3>
+      <p>Three deployments running, each on its own infrastructure with its own branding and content.</p>
+    </section>
+
+    <section class="record" id="fmf">
+      <p class="kicker">Founder · 2025–2026 · Live</p>
+      <h2>Fix My Furnace</h2>
+      <p class="summary">A two-sided HVAC marketplace for Michigan: homeowners get a free diagnosis and real price transparency, verified contractors get exclusive leads on a clock.</p>
+      <div class="meta">
+        <span class="status live">Live</span>
+        <a class="visit" href="https://fixmyfurnacemi.com">fixmyfurnacemi.com</a>
+        <span class="chip">Astro 5 SSR</span><span class="chip">PostgreSQL</span><span class="chip">Cloudflare R2</span><span class="chip">Telnyx</span><span class="chip">Mapbox</span><span class="chip">Netlify</span>
+      </div>
+      <dl class="metrics">
+        <div><dt>Pages</dt><dd>28</dd></div>
+        <div><dt>API handlers</dt><dd>25</dd></div>
+        <div><dt>Tables</dt><dd>10</dd></div>
+        <div><dt>Lines</dt><dd>~18.8K</dd></div>
+        <div><dt>Commits</dt><dd>145</dd></div>
+      </dl>
+
+      <h3>What it does</h3>
+      <p>A homeowner with a dead furnace uploads a photo, describes the symptom, and gets a diagnosis — or calls a phone line answered by an AI agent that takes the details in natural speech. Separately, anyone can browse a database of real submitted service contracts, because the thing people most want to know before calling an HVAC company is what this is supposed to cost.</p>
+      <p>Contractors apply, get their license, liability insurance, and workers' comp verified independently, and only then appear publicly. When a lead comes in, one contractor at a time receives an <em>exclusive</em>, time-limited offer through a tokenized link — accept, decline, propose an appointment, report the outcome.</p>
+
+      <h3>The hard part</h3>
+      <p>Exclusivity has to be true, or the whole proposition collapses. If two contractors are ever working the same lead, you've sold the same thing twice and burned both relationships. The obvious approach is careful application code, which fails the moment two requests arrive together.</p>
+      <p>Instead the guarantee lives in the database: <strong>partial unique indexes</strong> that make it structurally impossible for a lead to have more than one open offer, or more than one accepted offer, no matter what the application does. A scheduled job every five minutes expires stale offers and passes them to the next contractor in sequence, so a lead never dies because someone was at lunch.</p>
+      <p>The verification model is deliberately granular — license, liability, and workers' comp each carry their own status and expiry, rather than one "verified" flag — because those credentials lapse independently and a homeowner letting a stranger into their basement deserves better than an approximation.</p>
+
+      <h3>Where it stands</h3>
+      <p>Live and functional, and honestly: never monetized. The lead pipeline works end to end, but the billing side is a written plan rather than code, and there are no tests. It's a complete platform waiting on a go-to-market push rather than an engineering one.</p>
+      <div class="aside">One thing I found while writing this page: the site's configured canonical URL points at a domain whose certificate no longer resolves, while the domain that actually works is a different one. Every canonical tag and sitemap entry has been pointing somewhere dead. That's now top of the list.</div>
+    </section>
+
+    <section class="record" id="entergreat">
+      <p class="kicker">Client work · 2026 · Built</p>
+      <h2>Enter-Great 313</h2>
+      <p class="summary">A website for a Detroit nonprofit supporting returning citizens, including a tool that helps supporters write letters to parole boards without their words ever leaving the browser.</p>
+      <div class="meta">
+        <span class="status progress">Deployed · awaiting domain cutover</span>
+        <span class="chip">Astro 7</span><span class="chip">Preact islands</span><span class="chip">Tailwind</span><span class="chip">Netlify</span>
+      </div>
+
+      <h3>What it does</h3>
+      <p>Twelve pages covering the organisation's programs, events, and donations, replacing a template site. The piece that matters is the letter builder: supporters writing to a parole board or court on someone's behalf get help structuring the letter, then export it as a PDF.</p>
+
+      <h3>The hard part</h3>
+      <p>Not the code — the constraint. A letter to a parole board about an incarcerated person is among the most sensitive things someone will ever type into a web form. The obvious build sends the text to a server to render the PDF. I made it an enforced invariant that <strong>nothing is transmitted, logged, or stored</strong> — the document is generated entirely in the browser. There's no database in this project at all, which means there is no version of this where I'm the reason someone's letter leaked.</p>
+
+      <h3>Where it stands</h3>
+      <p>Built and deployed. A few sections are waiting on content from the organisation, and the domain hasn't been pointed at it yet.</p>
+    </section>
+
+
+    <div class="swfoot">
+      <p>Every figure on this page was counted from the source at the time of writing, not estimated. Where something is unfinished, it says so.</p>
+    </div>
+  </div>
+</div>
+  </div>
+</BrandLayout>
+
+<style is:global>
+
+  /* ---------- tokens ---------- */
+  .sw {
+    --paper:   #F5F7F9;
+    --surface: #FFFFFF;
+    --ink:     #12171E;
+    --body:    #2E3843;
+    --muted:   #5E6B7A;
+    --rule:    #D5DCE4;
+    --accent:  #0E6C84;
+    --metric:  #8A5A18;
+    --good:    #1F6F4A;
+    --warn:    #8A5A18;
+    --idle:    #5E6B7A;
+
+    --serif: Charter, "Bitstream Charter", "Iowan Old Style", Georgia, serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+    --measure: 68ch;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .sw {
+      --paper:   #0E1319;
+      --surface: #151B23;
+      --ink:     #E8ECF2;
+      --body:    #C3CCD7;
+      --muted:   #8D9BAB;
+      --rule:    #252E39;
+      --accent:  #52C2DC;
+      --metric:  #D8A755;
+      --good:    #5FBF8E;
+      --warn:    #D8A755;
+      --idle:    #8D9BAB;
+    }
+  }
+  :root[data-theme="dark"] .sw {
+    --paper:#0E1319; --surface:#151B23; --ink:#E8ECF2; --body:#C3CCD7;
+    --muted:#8D9BAB; --rule:#252E39; --accent:#52C2DC; --metric:#D8A755;
+    --good:#5FBF8E; --warn:#D8A755; --idle:#8D9BAB;
+  }
+  :root[data-theme="light"] .sw {
+    --paper:#F5F7F9; --surface:#FFFFFF; --ink:#12171E; --body:#2E3843;
+    --muted:#5E6B7A; --rule:#D5DCE4; --accent:#0E6C84; --metric:#8A5A18;
+    --good:#1F6F4A; --warn:#8A5A18; --idle:#5E6B7A;
+  }
+
+  .sw *, .sw *::before, .sw *::after { box-sizing: border-box; }
+
+  .sw {
+    background: var(--paper);
+    color: var(--body);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- shell ---------- */
+  .shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+  @media (min-width: 1040px) {
+    .shell { grid-template-columns: 210px minmax(0, 1fr); gap: 56px; }
+  }
+
+  /* ---------- index rail ---------- */
+  .rail { display: none; }
+  @media (min-width: 1040px) {
+    .rail {
+      display: block;
+      position: sticky;
+      top: 0;
+      align-self: start;
+      padding-top: 96px;
+      max-height: 100vh;
+      overflow-y: auto;
+    }
+  }
+  .rail-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .rail ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  .rail a {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.35;
+    color: var(--muted);
+    text-decoration: none;
+    display: block;
+    border-left: 2px solid transparent;
+    padding-left: 10px;
+  }
+  .rail a:hover, .rail a:focus-visible { color: var(--accent); border-left-color: var(--accent); }
+
+  .sw .swmain { padding-top: 72px; min-width: 0; }
+
+  /* ---------- masthead ---------- */
+  .masthead { border-bottom: 1px solid var(--rule); padding-bottom: 34px; margin-bottom: 12px; }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 16px;
+  }
+  .sw h1 {
+    font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+    color: var(--ink);
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  .standfirst { font-size: 19px; max-width: min(var(--measure), 100%); margin: 0 0 24px; }
+  .contact {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+  }
+  .contact a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--rule); overflow-wrap: anywhere; }
+  .contact a:hover, .contact a:focus-visible { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ---------- project record ---------- */
+  .record { border-bottom: 1px solid var(--rule); padding: 44px 0 40px; scroll-margin-top: 24px; }
+  .record:last-of-type { border-bottom: 0; }
+
+  .sw h2 {
+    font-size: clamp(25px, 3.6vw, 33px);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 0 0 10px;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  .kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 12px;
+  }
+  .summary { font-size: 18px; max-width: min(var(--measure), 100%); margin: 0 0 20px; }
+
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; align-items: center; }
+  .chip {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 3px 8px;
+    background: var(--surface);
+  }
+  .status {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 2px;
+    border: 1px solid currentColor;
+  }
+  .status.live { color: var(--good); }
+  .status.progress { color: var(--warn); }
+  .status.archived { color: var(--idle); }
+
+  .visit {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 1px;
+  }
+  .visit:hover, .visit:focus-visible { opacity: 0.75; }
+  .visit { overflow-wrap: anywhere; }
+
+  /* ---------- metric strip ---------- */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 0 0 26px;
+    overflow: hidden;
+  }
+  .metrics div { background: var(--surface); padding: 12px 14px; }
+  .metrics dt {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .metrics dd {
+    font-family: var(--mono);
+    font-size: 17px;
+    color: var(--metric);
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.2;
+  }
+
+  .sw h3 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 26px 0 10px;
+    font-weight: 400;
+  }
+  .sw p { max-width: min(var(--measure), 100%); margin: 0 0 14px; }
+  .sw p:last-child { margin-bottom: 0; }
+  .sw strong { color: var(--ink); font-weight: 700; }
+  .sw em { color: var(--ink); font-style: italic; }
+
+  ul.points { max-width: min(var(--measure), 100%); margin: 0 0 14px; padding-left: 20px; }
+  ul.points li { margin-bottom: 9px; }
+
+  .aside {
+    border-left: 2px solid var(--accent);
+    padding: 2px 0 2px 18px;
+    margin: 0 0 16px;
+    max-width: min(var(--measure), 100%);
+    color: var(--muted);
+    font-size: 16px;
+  }
+
+  .sw code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 1px 5px;
+    color: var(--ink);
+  }
+
+  .sw .swfoot {
+    border-top: 1px solid var(--rule);
+    margin-top: 44px;
+    padding-top: 26px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .sw .swfoot a { color: var(--accent); text-decoration: none; }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+</style>
