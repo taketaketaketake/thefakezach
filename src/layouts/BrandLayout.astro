@@ -35,19 +35,19 @@ const C = dark
     }
   : {
       body: "theme-brand bg-paper text-ink font-display",
-      header: "bg-paper/90 border-ink",
+      header: "bg-paper/95 border-ink",
       logo: "bg-accent",
       name: "text-ink",
-      navActive: "text-ink bg-paper2",
-      navIdle: "text-ink/60 hover:text-ink hover:bg-paper2",
-      cta: "bg-accent text-white border border-ink",
-      toggle: "text-ink/80 hover:text-ink",
-      mobileMenu: "border-ink bg-paper/95",
-      footer: "border-ink bg-ink",
-      footText: "text-paper",
-      footMuted: "text-paper/40",
-      footLink: "text-paper/70 hover:text-accent",
-      footRule: "border-paper/20",
+      navActive: "text-ink",
+      navIdle: "text-muted hover:text-ink",
+      cta: "bg-ink text-white border border-ink hover:bg-accent hover:border-accent",
+      toggle: "text-muted hover:text-ink",
+      mobileMenu: "border-ink bg-paper/98",
+      footer: "border-ink bg-paper",
+      footText: "text-ink",
+      footMuted: "text-muted",
+      footLink: "text-muted hover:text-ink",
+      footRule: "border-ink",
     };
 
 const nav = [
@@ -75,10 +75,10 @@ const year = new Date().getFullYear();
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#B8702E" />
 
-    <!-- Fonts: Archivo (display/body) + Space Mono (labels/code) -->
+    <!-- Font: Inter (display, body, and labels — one family, set at different weights) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -100,17 +100,19 @@ const year = new Date().getFullYear();
     <!-- Top Nav -->
     <header class={`sticky top-0 z-40 backdrop-blur-md border-b ${C.header}`}>
       <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-2 group">
-          <span class={`w-8 h-8 rounded-lg ${C.logo} flex items-center justify-center text-sm font-black text-white`}>Z</span>
-          <span class={`font-bold tracking-tight ${C.name}`}>Zachary Lewis</span>
+        <a href="/" class="flex items-center group">
+          {dark ? (
+            <span class={`w-8 h-8 rounded-lg ${C.logo} flex items-center justify-center text-sm font-black text-white mr-2`}>Z</span>
+          ) : null}
+          <span class={`font-semibold tracking-tight ${C.name}`}>Zachary Lewis<span class="text-accent">.</span></span>
         </a>
 
         <!-- Desktop nav -->
-        <nav class="hidden lg:flex items-center gap-0.5">
+        <nav class="hidden lg:flex items-center gap-7">
           {topNav.map((item) => (
             <a
               href={item.href}
-              class={`px-2.5 py-2 text-sm font-semibold rounded-lg transition-colors whitespace-nowrap ${
+              class={`text-sm transition-colors whitespace-nowrap ${
                 active === item.key ? C.navActive : C.navIdle
               }`}
             >
@@ -119,7 +121,7 @@ const year = new Date().getFullYear();
           ))}
           <a
             href="/contact"
-            class={`ml-1.5 px-3.5 py-2 text-sm font-semibold rounded-lg hover:opacity-90 transition-opacity whitespace-nowrap ${C.cta}`}
+            class={`px-4 py-2 text-sm font-medium transition-colors whitespace-nowrap ${C.cta}`}
           >
             Work With Me
           </a>
@@ -161,8 +163,10 @@ const year = new Date().getFullYear();
         <!-- Brand -->
         <div class="md:col-span-5">
           <a href="/" class="flex items-center gap-2.5">
-            <span class={`w-9 h-9 rounded-lg ${C.logo} flex items-center justify-center text-sm font-black text-white`}>Z</span>
-            <span class={`text-lg font-bold tracking-tight ${C.footText}`}>Zachary Lewis</span>
+            {dark ? (
+              <span class={`w-9 h-9 rounded-lg ${C.logo} flex items-center justify-center text-sm font-black text-white`}>Z</span>
+            ) : null}
+            <span class={`text-lg font-semibold tracking-tight ${C.footText}`}>Zachary Lewis{dark ? "" : "."}</span>
           </a>
           <p class={`mt-4 text-sm leading-relaxed max-w-xs ${C.footMuted}`}>Systems built and operated from Detroit, MI.</p>
         </div>

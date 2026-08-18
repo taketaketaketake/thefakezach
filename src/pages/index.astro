@@ -6,13 +6,13 @@ const services = [
     title: "Systems Design & Build",
     desc: "I design and ship agent systems that run real operations — voice agents, automations, multi-agent platforms — each one bounded by a budget and a permission scope you set. Done-with-you or done-for-you.",
     href: "/services#build",
-    icon: "⚙️",
+    tag: "Build",
   },
   {
     title: "Workshops & Training",
     desc: "Hands-on sessions that take your team from experimenting to shipping. Half-day to multi-day, built around your actual workflows.",
     href: "/services#training",
-    icon: "🎓",
+    tag: "Train",
   },
 ];
 
@@ -75,38 +75,35 @@ const testimonials = [
           Agent platforms, marketplaces, data pipelines, and voice systems — running in production
           for real businesses in Detroit and beyond. I design them, build them, and keep them running.
         </p>
-        <div class="mt-8 flex flex-col sm:flex-row gap-3">
-          <a href="/work" class="group px-6 py-3.5 bg-accent text-white border border-ink font-bold text-center hover:shadow-lg transition-all inline-flex items-center justify-center gap-2">
-            <span class="text-lg leading-none">▶</span> Watch the Work
+        <div class="mt-8 flex flex-col sm:flex-row gap-2.5">
+          <a href="/work" class="px-6 py-3.5 bg-ink text-white border border-ink font-medium text-center hover:bg-accent hover:border-accent transition-colors">
+            Watch the Work
           </a>
-          <a href="/contact" class="px-6 py-3.5 border border-ink text-ink font-bold text-center hover:bg-paper2 transition-colors">
+          <a href="/contact" class="px-6 py-3.5 border border-ink text-ink font-medium text-center hover:bg-paper2 transition-colors">
             Work With Me
           </a>
         </div>
       </div>
 
       <!-- Showreel player (drop a video in below) -->
-      <figure class="border border-ink bg-ink shadow-xl">
+      <figure class="border border-ink bg-paper2">
         <!-- top bar -->
-        <div class="flex items-center justify-between px-3 py-2 border-b border-paper/20 font-mono text-[10px] uppercase tracking-widest text-paper/60">
-          <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span> REC · REEL 2026</span>
+        <div class="flex items-center justify-between px-3 py-2.5 border-b border-ink font-mono text-[10px] uppercase tracking-widest text-muted">
+          <span>Reel 2026</span>
           <span>16:9</span>
         </div>
         <div class="relative aspect-video w-full overflow-hidden group">
           <!-- Replace this placeholder with a <video> or <img>:
                <video src="/hero.mp4" autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover"></video> -->
-          <div class="absolute inset-0 flex items-center justify-center bg-ink">
-            <span class="font-mono text-[10px] uppercase tracking-widest text-paper/30">[ drop showreel here ]</span>
-          </div>
           <!-- play button -->
           <div class="absolute inset-0 flex items-center justify-center">
-            <span class="w-16 h-16 rounded-full bg-accent text-white border border-paper/30 flex items-center justify-center text-2xl pl-1 group-hover:scale-110 transition-transform">▶</span>
+            <span class="w-14 h-14 rounded-full border border-ink text-ink flex items-center justify-center text-sm pl-0.5 group-hover:bg-ink group-hover:text-white transition-colors">▶</span>
           </div>
         </div>
         <!-- scrubber -->
-        <figcaption class="flex items-center gap-3 px-3 py-2 border-t border-paper/20 font-mono text-[10px] text-paper/60">
+        <figcaption class="flex items-center gap-3 px-3 py-2.5 border-t border-ink font-mono text-[10px] text-muted">
           <span>00:00</span>
-          <span class="flex-1 h-1 bg-paper/15 relative overflow-hidden"><span class="absolute inset-y-0 left-0 w-1/4 bg-accent"></span></span>
+          <span class="flex-1 h-0.5 bg-hair relative overflow-hidden"><span class="absolute inset-y-0 left-0 w-1/4 bg-accent"></span></span>
           <span>02:14</span>
         </figcaption>
       </figure>
@@ -114,50 +111,49 @@ const testimonials = [
   </section>
 
   <!-- MARQUEE -->
-  <div class="marquee bg-ink text-paper border-b border-ink py-3">
-    <div class="marquee__track font-mono text-sm uppercase tracking-widest">
+  <div class="marquee bg-paper text-ink border-b border-ink py-3">
+    <div class="marquee__track font-mono text-[11px] font-medium uppercase tracking-widest">
       {[...marqueeItems, ...marqueeItems].map((m) => (
-        <span class="mx-6 inline-flex items-center gap-6"><span>{m}</span><span class="text-accent">✦</span></span>
+        <span class="mx-5 inline-flex items-center gap-5"><span>{m}</span><span class="text-accent">—</span></span>
       ))}
     </div>
   </div>
 
   <!-- BY THE NUMBERS + ORIGINALS (one section) -->
-  <section class="border-b border-ink bg-paper2">
+  <section class="border-b border-ink bg-paper">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 md:py-20">
       <!-- stats -->
-      <p class="font-mono text-[11px] uppercase tracking-widest text-ink/50 mb-6">// By the numbers</p>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <p class="font-mono text-[11px] font-medium uppercase tracking-widest text-muted mb-5">By the numbers</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 border-t border-ink">
         {stats.map((s) => (
-          <div>
-            <div class="text-4xl md:text-5xl font-black tracking-tight text-ink">{s.value}</div>
-            <div class="text-sm md:text-base font-medium text-ink/70 mt-1.5">{s.label}</div>
+          <div class="pt-5 pr-6 pb-5 md:pb-0 border-b md:border-b-0 md:border-r border-ink last:border-r-0">
+            <div class="text-4xl md:text-5xl font-medium tracking-tight text-ink leading-none">{s.value}</div>
+            <div class="text-sm text-muted mt-3 max-w-[18ch]">{s.label}</div>
           </div>
         ))}
       </div>
 
       <!-- originals -->
-      <div class="flex items-end justify-between mb-8 mt-16 md:mt-20">
-        <h2 class="font-mono text-[11px] uppercase tracking-widest text-ink/50">// Originals</h2>
+      <div class="flex items-end justify-between mb-6 mt-16 md:mt-24">
+        <h2 class="font-mono text-[11px] font-medium uppercase tracking-widest text-muted">Selected work</h2>
         <a href="/work" class="font-mono text-[11px] uppercase tracking-widest text-accent hover:text-accent-dark">All work →</a>
       </div>
-      <div class="grid gap-6 sm:grid-cols-3">
+      <div class="grid gap-5 sm:grid-cols-3">
       {featuredProjects.map((p) => (
-        <a href={p.href} class="group no-underline border border-ink bg-white hover:shadow-lg transition-all">
+        <a href={p.href} class="group no-underline border border-ink bg-paper hover:bg-paper2 transition-colors">
           <!-- thumbnail / channel-bug -->
           <div class="relative aspect-video w-full overflow-hidden border-b border-ink bg-paper2 flex items-center justify-center">
             {p.logo ? (
               <img src={p.logo} alt={`${p.name}`} class={p.cover ? "absolute inset-0 w-full h-full object-cover" : "max-h-20 max-w-[70%] object-contain"} loading="lazy" />
             ) : (
-              <span class="text-2xl font-black tracking-tight text-accent">{p.name}</span>
+              <span class="text-xl font-medium tracking-tight text-ink">{p.name}</span>
             )}
-            <span class="absolute top-2 left-2 font-mono text-[10px] uppercase tracking-widest text-ink/50">{p.ep}</span>
-            <span class="absolute bottom-2 right-2 w-9 h-9 rounded-full bg-accent text-white flex items-center justify-center text-sm pl-0.5 opacity-0 group-hover:opacity-100 transition-opacity">▶</span>
+            <span class="absolute top-2.5 left-3 font-mono text-[10px] uppercase tracking-widest text-muted">{p.ep}</span>
           </div>
-          <div class="p-4">
+          <div class="px-4 py-4">
             <span class="font-mono text-[10px] uppercase tracking-widest text-accent">{p.category}</span>
-            <h3 class="mt-1 font-bold text-ink group-hover:text-accent transition-colors">{p.name}</h3>
-            <p class="mt-1 text-sm text-ink/60">{p.tagline}</p>
+            <h3 class="mt-1.5 text-lg font-medium text-ink">{p.name}</h3>
+            <p class="mt-1 text-sm text-muted">{p.tagline}</p>
           </div>
         </a>
       ))}
@@ -166,25 +162,26 @@ const testimonials = [
   </section>
 
   <!-- BIO -->
-  <section class="border-y border-ink bg-paper2">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-20 grid md:grid-cols-5 gap-10 items-center">
+  <section class="border-y border-ink bg-paper">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-20 grid md:grid-cols-5 gap-12 items-start">
       <div class="md:col-span-2">
-        <div class="aspect-square w-full max-w-sm rounded-2xl overflow-hidden border border-ink bg-paper2">
+        <div class="aspect-square w-full max-w-sm overflow-hidden border border-ink bg-paper2">
           <img src="/profile-photo.jpg" alt="Zachary Lewis" class="w-full h-full object-cover" loading="lazy" />
         </div>
       </div>
       <div class="md:col-span-3">
-        <h2 class="text-3xl md:text-4xl font-bold text-ink mb-4">From video to production systems</h2>
-        <p class="text-ink/80 leading-relaxed mb-4">
+        <p class="font-mono text-[11px] font-medium uppercase tracking-widest text-muted mb-5">Background</p>
+        <h2 class="text-3xl md:text-4xl font-semibold text-ink mb-5">From video to production systems</h2>
+        <p class="text-muted leading-relaxed mb-4">
           I spent years building a video production business, growing an audience of 100K+ followers and 25M+ views
           while building the websites and automations my clients ran on. In 2024 I turned that toward agent systems full-time.
           Since then: an agent platform that runs my own companies, a trading workspace, a laundry marketplace, a
           self-enriching map of Detroit's small businesses, and a support platform for families of incarcerated people.
         </p>
-        <p class="text-ink/60 leading-relaxed mb-6">
+        <p class="text-muted leading-relaxed mb-7">
           I learn by building the thing. When I work with you, what you get is software you can open in a browser.
         </p>
-        <a href="/about" class="inline-block px-5 py-3 rounded-xl border border-ink text-ink font-semibold hover:bg-paper2 transition-colors">
+        <a href="/about" class="inline-block px-5 py-3 border border-ink text-ink font-medium hover:bg-paper2 transition-colors">
           More about me
         </a>
       </div>
@@ -193,36 +190,36 @@ const testimonials = [
 
   <!-- HOW I CAN HELP + PROOF / TOOLS -->
   <section class="max-w-6xl mx-auto px-4 sm:px-6 py-20 md:py-28">
-    <div class="max-w-2xl mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold text-ink">How I can help</h2>
-      <p class="mt-3 text-ink/60 text-lg">Two ways to put this to work in your business.</p>
+    <div class="max-w-2xl mb-10">
+      <p class="font-mono text-[11px] font-medium uppercase tracking-widest text-muted mb-5">How I can help</p>
+      <h2 class="text-3xl md:text-4xl font-semibold text-ink">Two ways to put this to work in your business.</h2>
     </div>
-    <div class="grid gap-6 md:grid-cols-2">
-      {services.map((s) => (
-        <a href={s.href} class="group block no-underline rounded-2xl border border-ink bg-white p-8 hover:border-accent hover:bg-white transition-all">
-          <div class="text-3xl mb-4">{s.icon}</div>
-          <h3 class="text-xl font-bold text-ink mb-2 group-hover:text-accent transition-colors">{s.title}</h3>
-          <p class="text-ink/60 text-sm leading-relaxed">{s.desc}</p>
-          <span class="mt-4 inline-block text-sm font-semibold text-accent group-hover:translate-x-1 transition-transform">Learn more →</span>
+    <div class="grid md:grid-cols-2 border-t border-ink">
+      {services.map((s, i) => (
+        <a href={s.href} class="group block no-underline border-b border-ink md:odd:border-r py-8 md:pr-8 md:odd:pl-0 md:even:pl-8">
+          <span class="font-mono text-[10px] uppercase tracking-widest text-muted">{`0${i + 1} / ${s.tag}`}</span>
+          <h3 class="text-xl font-medium text-ink mb-2 mt-3 group-hover:text-accent transition-colors">{s.title}</h3>
+          <p class="text-muted text-sm leading-relaxed max-w-[46ch]">{s.desc}</p>
+          <span class="mt-5 inline-block text-sm text-accent">Learn more →</span>
         </a>
       ))}
 
-      <div class="rounded-2xl border border-ink bg-white p-8 flex flex-col hover:border-accent transition-all">
-        <span class="text-xs font-semibold uppercase tracking-wider text-accent mb-3">The proof</span>
-        <h3 class="text-xl font-bold text-ink mb-2">Real systems I've shipped</h3>
-        <p class="text-ink/60 text-sm leading-relaxed flex-1">
+      <a href="/work" class="group block no-underline border-b border-ink md:border-r py-8 md:pr-8">
+        <span class="font-mono text-[10px] uppercase tracking-widest text-muted">03 / Proof</span>
+        <h3 class="text-xl font-medium text-ink mb-2 mt-3 group-hover:text-accent transition-colors">Real systems I've shipped</h3>
+        <p class="text-muted text-sm leading-relaxed max-w-[46ch]">
           AgentlandOS, an agent-based trading platform, a laundry marketplace, a city business map — software that handles real work, not slideware.
         </p>
-        <a href="/work" class="mt-6 inline-block text-sm font-semibold text-accent hover:translate-x-1 transition-transform w-fit">See my work →</a>
-      </div>
-      <div class="rounded-2xl border border-ink bg-accent/10 p-8 flex flex-col hover:border-accent transition-all">
-        <span class="text-xs font-semibold uppercase tracking-wider text-accent mb-3">Free, no signup</span>
-        <h3 class="text-xl font-bold text-ink mb-2">Try my tools</h3>
-        <p class="text-ink/80 text-sm leading-relaxed flex-1">
-          Open-source utilities and free tools — including the <strong>USER.md generator</strong> that gives any AI assistant your full context in one file.
+        <span class="mt-5 inline-block text-sm text-accent">See my work →</span>
+      </a>
+      <a href="/tools" class="group block no-underline border-b border-ink py-8 md:pl-8">
+        <span class="font-mono text-[10px] uppercase tracking-widest text-muted">04 / Free, no signup</span>
+        <h3 class="text-xl font-medium text-ink mb-2 mt-3 group-hover:text-accent transition-colors">Try my tools</h3>
+        <p class="text-muted text-sm leading-relaxed max-w-[46ch]">
+          Open-source utilities and free tools — including the <strong class="text-ink font-medium">USER.md generator</strong> that gives any AI assistant your full context in one file.
         </p>
-        <a href="/tools" class="mt-6 inline-block text-sm font-semibold text-accent hover:translate-x-1 transition-transform w-fit">Browse free tools →</a>
-      </div>
+        <span class="mt-5 inline-block text-sm text-accent">Browse free tools →</span>
+      </a>
     </div>
   </section>
 
@@ -286,10 +283,10 @@ const testimonials = [
   <section class="border-t border-ink">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 py-16 md:py-24">
       <div class="flex items-end justify-between mb-6">
-        <h2 class="font-mono text-[11px] uppercase tracking-widest text-ink/50">// Featured</h2>
+        <h2 class="font-mono text-[11px] font-medium uppercase tracking-widest text-muted">Featured</h2>
         <div class="flex gap-2">
-          <button id="promo-prev" aria-label="Previous" class="w-10 h-10 rounded-full border border-ink text-ink flex items-center justify-center hover:bg-paper2 transition-colors">←</button>
-          <button id="promo-next" aria-label="Next" class="w-10 h-10 rounded-full border border-ink text-ink flex items-center justify-center hover:bg-paper2 transition-colors">→</button>
+          <button id="promo-prev" aria-label="Previous" class="w-10 h-10 border border-ink text-ink flex items-center justify-center hover:bg-paper2 transition-colors">←</button>
+          <button id="promo-next" aria-label="Next" class="w-10 h-10 border border-ink text-ink flex items-center justify-center hover:bg-paper2 transition-colors">→</button>
         </div>
       </div>
 
@@ -309,22 +306,20 @@ const testimonials = [
 
         <!-- Slide 2: Agentland (custom card) -->
         <a href="https://agentlandos.com" target="_blank" rel="noopener noreferrer" class="snap-start shrink-0 w-full no-underline">
-          <div class="border border-ink overflow-hidden bg-zinc-950">
-            <div class="flex items-center justify-between px-4 py-2.5 border-b border-zinc-800 font-mono text-[10px] md:text-[11px] uppercase tracking-widest">
-              <span class="text-purple-300">AgentlandOS · Platform</span>
-              <span class="text-zinc-500">agentlandos.com ↗</span>
+          <div class="border border-ink overflow-hidden bg-ink">
+            <div class="flex items-center justify-between px-4 py-2.5 border-b border-white/15 font-mono text-[10px] md:text-[11px] uppercase tracking-widest">
+              <span class="text-white">AgentlandOS · Platform</span>
+              <span class="text-white/50">agentlandos.com ↗</span>
             </div>
 
             <div class="relative aspect-[4/3] md:aspect-[3/2] w-full overflow-hidden p-6 md:p-10 flex flex-col items-start justify-center text-left">
-              <!-- ambient glows + grid -->
-              <div class="absolute -top-16 -right-12 w-64 h-64 rounded-full bg-purple-600/30 blur-3xl"></div>
-              <div class="absolute -bottom-20 -left-12 w-64 h-64 rounded-full bg-pink-600/20 blur-3xl"></div>
-              <div class="absolute inset-0 opacity-[0.06]" style="background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:40px 40px;"></div>
+              <!-- hairline grid -->
+              <div class="absolute inset-0 opacity-[0.10]" style="background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:48px 48px;"></div>
 
               <!-- giant wordmark + super-sized tagline -->
-              <h3 class="relative font-black text-white tracking-tight leading-[0.85]" style="font-size:clamp(3rem,15vw,10rem);">Agentland</h3>
-              <p class="relative mt-2 md:mt-4 font-bold text-zinc-200 leading-[0.95]" style="font-size:clamp(2rem,10vw,6.5rem);">Agents that operate your business</p>
-              <span class="relative mt-6 md:mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold text-sm">
+              <h3 class="relative font-semibold text-white tracking-[-0.04em] leading-[0.85]" style="font-size:clamp(3rem,15vw,10rem);">Agentland</h3>
+              <p class="relative mt-3 md:mt-5 font-medium text-white/70 tracking-[-0.03em] leading-[0.95]" style="font-size:clamp(1.75rem,8vw,5rem);">Agents that operate your business</p>
+              <span class="relative mt-6 md:mt-8 inline-flex items-center gap-2 px-6 py-3 bg-accent text-white font-medium text-sm">
                 Visit AgentlandOS →
               </span>
             </div>
