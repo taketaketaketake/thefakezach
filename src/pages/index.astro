@@ -67,7 +67,7 @@ const testimonials = [
           <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
           Zachary Lewis — a one-person media co.
         </span>
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-ink leading-[1.05]">
+        <h1 class="text-4xl sm:text-5xl md:text-[3.4rem] font-semibold tracking-tight text-ink leading-[1.04]">
           I build and design systems that
           <span class="text-accent"> change the way you work.</span>
         </h1>
@@ -114,7 +114,7 @@ const testimonials = [
   <div class="marquee bg-paper text-ink border-b border-ink py-3">
     <div class="marquee__track font-mono text-[11px] font-medium uppercase tracking-widest">
       {[...marqueeItems, ...marqueeItems].map((m) => (
-        <span class="mx-5 inline-flex items-center gap-5"><span>{m}</span><span class="text-accent">—</span></span>
+        <span class="mx-5 inline-flex items-center gap-5"><span>{m}</span><span class="text-muted">—</span></span>
       ))}
     </div>
   </div>
@@ -151,7 +151,7 @@ const testimonials = [
             <span class="absolute top-2.5 left-3 font-mono text-[10px] uppercase tracking-widest text-muted">{p.ep}</span>
           </div>
           <div class="px-4 py-4">
-            <span class="font-mono text-[10px] uppercase tracking-widest text-accent">{p.category}</span>
+            <span class="font-mono text-[10px] uppercase tracking-widest text-muted">{p.category}</span>
             <h3 class="mt-1.5 text-lg font-medium text-ink">{p.name}</h3>
             <p class="mt-1 text-sm text-muted">{p.tagline}</p>
           </div>
@@ -229,7 +229,7 @@ const testimonials = [
     <div class="grid gap-6 md:grid-cols-3">
       {testimonials.map((t) => (
         <figure class="rounded-2xl border border-ink bg-white p-7">
-          <div class="text-accent text-3xl leading-none mb-3">&ldquo;</div>
+          <div class="text-hair text-3xl leading-none mb-3">&ldquo;</div>
           <blockquote class="text-ink/80 text-sm leading-relaxed">{t.quote}</blockquote>
           <figcaption class="mt-5 pt-5 border-t border-ink">
             <div class="font-semibold text-ink text-sm">{t.name}</div>
@@ -244,10 +244,10 @@ const testimonials = [
   {/* FAKE MONEY — saved, hidden for now
   <section class="border-t border-ink">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-20">
-      <div class="rounded-3xl bg-accent/10 border border-ink p-8 md:p-12">
+      <div class="rounded-3xl bg-paper2 border border-ink p-8 md:p-12">
         <div class="grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-accent mb-3">Fake Money</span>
+            <span class="inline-block text-xs font-semibold uppercase tracking-wider text-muted mb-3">Fake Money</span>
             <h2 class="text-2xl md:text-3xl font-bold text-ink mb-3">Follow the build, in public</h2>
             <p class="text-ink/80 leading-relaxed mb-5">
               <strong>Fake Money</strong> — a trading platform where the scanners run on a schedule and nothing ever auto-fires.
@@ -270,7 +270,7 @@ const testimonials = [
               <input type="hidden" name="form-name" value="journey" />
               <input type="text" name="name" placeholder="Your name" required class="w-full px-4 py-3 rounded-xl bg-white border border-ink text-ink placeholder-ink/40 focus:outline-none focus:border-accent" />
               <input type="email" name="email" placeholder="you@email.com" required class="w-full px-4 py-3 rounded-xl bg-white border border-ink text-ink placeholder-ink/40 focus:outline-none focus:border-accent" />
-              <button type="submit" class="w-full px-6 py-3.5 rounded-xl bg-accent text-white border border-ink font-semibold hover:opacity-90 transition-opacity">Follow the journey</button>
+              <button type="submit" class="w-full px-6 py-3.5 rounded-xl bg-ink text-white border border-ink font-medium hover:bg-accent hover:border-accent transition-opacity">Follow the journey</button>
             </form>
           </div>
         </div>
@@ -319,7 +319,7 @@ const testimonials = [
               <!-- giant wordmark + super-sized tagline -->
               <h3 class="relative font-semibold text-white tracking-[-0.04em] leading-[0.85]" style="font-size:clamp(3rem,15vw,10rem);">Agentland</h3>
               <p class="relative mt-3 md:mt-5 font-medium text-white/70 tracking-[-0.03em] leading-[0.95]" style="font-size:clamp(1.75rem,8vw,5rem);">Agents that operate your business</p>
-              <span class="relative mt-6 md:mt-8 inline-flex items-center gap-2 px-6 py-3 bg-accent text-white font-medium text-sm">
+              <span class="relative mt-6 md:mt-8 inline-flex items-center gap-2 px-6 py-3 bg-ink text-white font-medium text-sm hover:bg-accent">
                 Visit AgentlandOS →
               </span>
             </div>
@@ -362,7 +362,7 @@ const testimonials = [
     <div class="max-w-3xl mx-auto px-4 sm:px-6 py-20 text-center">
       <h2 class="text-3xl md:text-4xl font-bold text-ink mb-4">Ready to put this to work?</h2>
       <p class="text-ink/60 text-lg mb-8">Tell me what you're trying to build or automate. I'll tell you the fastest path to a working system.</p>
-      <a href="/contact" class="inline-block px-8 py-4 rounded-xl bg-accent text-white border border-ink font-semibold text-lg hover:opacity-90 transition-opacity">
+      <a href="/contact" class="inline-block px-8 py-4 rounded-xl bg-ink text-white border border-ink font-medium hover:bg-accent hover:border-accent text-lg hover:opacity-90 transition-opacity">
         Start the conversation
       </a>
     </div>

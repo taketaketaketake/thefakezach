@@ -2,8 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* One palette site-wide. Pages that don't use BrandLayout inherit it from here. */
 body {
-  @apply bg-zinc-950 text-zinc-50 antialiased;
+  @apply bg-paper text-ink antialiased;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  letter-spacing: -0.011em;
 }
 
 /* Prevent scroll when modal is open */
@@ -27,60 +30,63 @@ body.modal-open {
 }
 
 a {
-  color: #f472b6; /* Tailwind pink-400 */
+  color: #0000EE; /* accent */
   text-decoration: none;
 }
 
 a:hover {
-  color: #fb7185; /* Tailwind pink-500 */
+  color: #0000B8; /* accent-dark */
 }
 
-/* Brand site (Swiss grid theme) — scoped so the main portfolio is untouched.
+/* Link color — one palette site-wide.
    Only color *bare* links (no text-* utility); buttons/links that set their own
    text color via Tailwind keep it, so blue text never lands on a blue button. */
-.theme-brand a:not([class*="text-"]) {
+body a:not([class*="text-"]) {
   color: #0000EE; /* electric blue */
 }
-.theme-brand a:not([class*="text-"]):hover {
+body a:not([class*="text-"]):hover {
   color: #0000B8;
 }
-.theme-brand ::selection {
+body ::selection {
   background: #0000EE;
   color: #FFFFFF;
 }
-/* Dark code/terminal panels (bg-ink) keep light text regardless of utility classes */
-.theme-brand pre {
+/* Code panels sit on light surfaces now; only invert inside a filled black block. */
+body .bg-ink pre,
+body pre.bg-ink {
   color: #FAFAFA;
 }
 
 /* --- Swiss grid corrections -------------------------------------------------
    The layout was built with soft, rounded, warm detailing. Rather than editing
    every page, flatten it here: square corners, hairline rules instead of solid
-   black boxes, tabular figures, tighter display type. Scoped to .theme-brand. */
-.theme-brand :where(a, div, section, figure, img, input, textarea, button, span, li, article, aside, blockquote, form, p, h1, h2, h3):not(.rounded-full):not(.keep-round) {
+   black boxes, tabular figures, tighter display type. Applies site-wide. */
+body :where(a, div, section, figure, img, input, textarea, button, span, li, article, aside, blockquote, form, p, h1, h2, h3):not(.rounded-full):not(.keep-round) {
   border-radius: 0 !important;
 }
 /* Hairline rules — full-black borders read as heavy frames on a white ground.
    Elements that are themselves a filled block keep their own edge. */
-.theme-brand [class*="border-ink"]:not([class*="bg-accent"]):not([class*="bg-ink"]):not([class*="bg-zinc"]) {
+body [class*="border-ink"]:not([class*="bg-accent"]):not([class*="bg-ink"]):not([class*="bg-zinc"]) {
   border-color: #D9D9D9;
 }
 /* Numerals: Swiss grids live on aligned figures. */
-.theme-brand {
+body {
   font-feature-settings: "tnum" 1, "cv05" 1;
   letter-spacing: -0.011em;
 }
 /* Display type is set tighter than Tailwind's defaults. */
-.theme-brand h1 { letter-spacing: -0.035em; }
-.theme-brand h2, .theme-brand h3 { letter-spacing: -0.025em; }
+body h1 { letter-spacing: -0.035em; }
+body h2, body h3 { letter-spacing: -0.025em; }
 /* Shadows are a warm-UI habit; the grid does the work instead. */
-.theme-brand .shadow-lg,
-.theme-brand .shadow-xl,
-.theme-brand .hover\:shadow-lg:hover {
+body .shadow-lg,
+body .shadow-xl,
+body .hover\:shadow-lg:hover {
   box-shadow: none;
 }
-/* Photography goes monochrome — a color photo undercuts a two-color palette. */
-.theme-brand img:not([src*="logo"]):not(.keep-color) {
+/* Photography and marks go monochrome. Logos were exempt at first, which just
+   made them the only color on an otherwise two-color page. Opt back in per
+   image with .keep-color. */
+body img:not(.keep-color) {
   filter: grayscale(1) contrast(1.03);
 }
 

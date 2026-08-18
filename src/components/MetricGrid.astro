@@ -24,15 +24,15 @@ function formatDelta(d: { window: string; pct: number | null }): {
   text: string;
   cls: string;
 } {
-  const neutral = "text-zinc-400 bg-zinc-800/60 border-zinc-700";
+  const neutral = "text-muted bg-paper2 border-ink";
   if (d.pct === null) {
     return { text: `— ${d.window}`, cls: neutral };
   }
   const text = `${d.pct > 0 ? "+" : ""}${d.pct.toFixed(1)}% ${d.window}`;
   if (d.pct > 0)
-    return { text, cls: "text-green-400 bg-green-500/10 border-green-500/30" };
+    return { text, cls: "text-ink bg-ink/10 border-ink/30" };
   if (d.pct < 0)
-    return { text, cls: "text-red-400 bg-red-500/10 border-red-500/30" };
+    return { text, cls: "text-muted bg-ink/10 border-ink/30" };
   return { text, cls: neutral };
 }
 ---
@@ -42,9 +42,9 @@ function formatDelta(d: { window: string; pct: number | null }): {
     const ref = sourceRef(m.source);
     const delta = formatDelta(m.delta);
     return (
-      <div class="bg-zinc-950/60 border border-zinc-800 rounded-xl p-5">
+      <div class="bg-paper/60 border border-ink rounded-xl p-5">
         <div class="flex items-baseline justify-between mb-2 gap-3">
-          <span class="text-xs font-bold uppercase tracking-wider text-pink-400">
+          <span class="text-xs font-bold uppercase tracking-wider text-muted">
             {m.label}
           </span>
           <span
@@ -54,16 +54,16 @@ function formatDelta(d: { window: string; pct: number | null }): {
             {delta.text}
           </span>
         </div>
-        <div class="text-3xl sm:text-4xl font-extrabold text-white leading-none mb-1">
+        <div class="text-3xl sm:text-4xl font-extrabold text-ink leading-none mb-1">
           {m.value}
         </div>
-        {m.hint && <div class="text-xs text-zinc-500 mb-3">{m.hint}</div>}
+        {m.hint && <div class="text-xs text-muted mb-3">{m.hint}</div>}
         <div
-          class="font-mono text-xs text-zinc-300 bg-black/40 border border-zinc-800 rounded-md px-3 py-2 mb-2 break-all"
+          class="font-mono text-xs text-ink bg-paper2 border border-ink rounded-md px-3 py-2 mb-2 break-all"
         >
           {ref}
         </div>
-        <div class="text-xs text-zinc-500 leading-relaxed">
+        <div class="text-xs text-muted leading-relaxed">
           {m.source.description}
         </div>
       </div>

@@ -121,60 +121,60 @@ const skills = {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
 
-  <body class="bg-zinc-950 text-zinc-50 font-sans min-h-screen">
+  <body class="bg-paper text-ink font-sans min-h-screen">
     <div class="resume-classic max-w-[850px] mx-auto px-4 sm:px-8 py-10 text-[14px] leading-relaxed">
 
       <!-- Name -->
-      <h1 class="text-center text-3xl sm:text-4xl font-bold tracking-tight text-white">{zachary.name}</h1>
+      <h1 class="text-center text-3xl sm:text-4xl font-bold tracking-tight text-ink">{zachary.name}</h1>
 
       <!-- Contact Row -->
-      <div class="text-center text-sm mt-3 mb-6 text-zinc-400">
-        <span class="text-pink-400">{zachary.title}</span>
-        <span class="text-zinc-700 mx-2">|</span>
+      <div class="text-center text-sm mt-3 mb-6 text-muted">
+        <span class="text-muted">{zachary.title}</span>
+        <span class="text-muted mx-2">|</span>
         <span>{zachary.location}</span>
-        <span class="text-zinc-700 mx-2">|</span>
-        <a href={`https://${zachary.website}`} class="text-pink-400 hover:text-pink-300 transition-colors">{zachary.website}</a>
-        <span class="text-zinc-700 mx-2">|</span>
-        <a href={`https://${zachary.github}`} class="text-pink-400 hover:text-pink-300 transition-colors">GitHub</a>
+        <span class="text-muted mx-2">|</span>
+        <a href={`https://${zachary.website}`} class="text-accent hover:text-accent transition-colors">{zachary.website}</a>
+        <span class="text-muted mx-2">|</span>
+        <a href={`https://${zachary.github}`} class="text-accent hover:text-accent transition-colors">GitHub</a>
       </div>
 
       <!-- Summary -->
-      <h2 class="text-pink-400 text-sm font-bold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-zinc-800">Summary</h2>
-      <p class="text-zinc-300">{summary}</p>
+      <h2 class="text-muted text-sm font-semibold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-ink">Summary</h2>
+      <p class="text-ink">{summary}</p>
 
       <!-- Education -->
-      <h2 class="text-pink-400 text-sm font-bold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-zinc-800">Education</h2>
+      <h2 class="text-muted text-sm font-semibold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-ink">Education</h2>
       <div class="mt-2">
         <div class="flex justify-between items-baseline flex-wrap gap-x-2">
           <div>
-            <span class="font-semibold text-white">{education.school}</span>
-            <span class="text-zinc-400"> | {education.degree}</span>
+            <span class="font-semibold text-ink">{education.school}</span>
+            <span class="text-muted"> | {education.degree}</span>
           </div>
-          <div class="text-right text-zinc-400">
-            <span class="font-semibold text-zinc-300">Graduation:</span> {education.graduation}
+          <div class="text-right text-muted">
+            <span class="font-semibold text-ink">Graduation:</span> {education.graduation}
           </div>
         </div>
       </div>
 
       <!-- Experience -->
-      <h2 class="text-pink-400 text-sm font-bold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-zinc-800">Experience</h2>
+      <h2 class="text-muted text-sm font-semibold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-ink">Experience</h2>
       {experience.map((job) => (
         <div class="mt-3">
           <div class="flex justify-between items-baseline flex-wrap gap-x-2">
-            <span class="font-semibold text-white">{job.company}</span>
-            <span class="text-zinc-400">{job.period}</span>
+            <span class="font-semibold text-ink">{job.company}</span>
+            <span class="text-muted">{job.period}</span>
           </div>
           <div class="flex justify-between items-baseline flex-wrap gap-x-2">
-            <span class="italic text-zinc-300">{job.role}</span>
-            <span class="italic text-zinc-500">{job.location}</span>
+            <span class="italic text-ink">{job.role}</span>
+            <span class="italic text-muted">{job.location}</span>
           </div>
-          <ul class="list-disc pl-5 mt-1.5 space-y-1 marker:text-pink-400/60">
+          <ul class="list-disc pl-5 mt-1.5 space-y-1 marker:text-muted">
             {job.bullets.map((b) => (
-              <li class="text-zinc-300">
+              <li class="text-ink">
                 {b.label ? (
-                  <span class="text-zinc-400"><span class="italic">{b.label} used:</span> {b.rest}</span>
+                  <span class="text-muted"><span class="italic">{b.label} used:</span> {b.rest}</span>
                 ) : (
-                  <span><span class="font-semibold text-white">{b.bold}</span>{b.rest}</span>
+                  <span><span class="font-semibold text-ink">{b.bold}</span>{b.rest}</span>
                 )}
               </li>
             ))}
@@ -183,42 +183,42 @@ const skills = {
       ))}
 
       <!-- Projects -->
-      <h2 class="text-pink-400 text-sm font-bold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-zinc-800">Projects</h2>
+      <h2 class="text-muted text-sm font-semibold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-ink">Projects</h2>
       {projects.map((project) => (
         <div class="mt-3">
           <div class="flex justify-between items-baseline flex-wrap gap-x-2">
-            <span class="font-semibold text-white">{project.title}</span>
+            <span class="font-semibold text-ink">{project.title}</span>
             {project.link.startsWith("(") ? (
-              <span class="italic text-zinc-500">{project.link}</span>
+              <span class="italic text-muted">{project.link}</span>
             ) : (
-              <a href={`https://${project.link}`} target="_blank" rel="noopener noreferrer" class="italic text-pink-400 hover:text-pink-300">{project.link}</a>
+              <a href={`https://${project.link}`} target="_blank" rel="noopener noreferrer" class="italic text-accent hover:text-accent">{project.link}</a>
             )}
           </div>
-          <ul class="list-disc pl-5 mt-1 space-y-1 marker:text-pink-400/60">
+          <ul class="list-disc pl-5 mt-1 space-y-1 marker:text-muted">
             {project.bullets.map((bullet) => (
-              <li class="text-zinc-300">{bullet}</li>
+              <li class="text-ink">{bullet}</li>
             ))}
           </ul>
         </div>
       ))}
 
       <!-- Technical Skills -->
-      <h2 class="text-pink-400 text-sm font-bold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-zinc-800">Technical Skills</h2>
-      <ul class="list-disc pl-5 mt-2 space-y-1 marker:text-pink-400/60">
-        <li class="text-zinc-300"><span class="font-semibold text-white">Languages:</span> {skills.languages}</li>
-        <li class="text-zinc-300"><span class="font-semibold text-white">Frontend:</span> {skills.frontend}</li>
-        <li class="text-zinc-300"><span class="font-semibold text-white">Backend:</span> {skills.backend}</li>
-        <li class="text-zinc-300"><span class="font-semibold text-white">AI & Agents:</span> {skills.ai}</li>
-        <li class="text-zinc-300"><span class="font-semibold text-white">Databases:</span> {skills.data}</li>
-        <li class="text-zinc-300"><span class="font-semibold text-white">Cloud & Infra:</span> {skills.infra}</li>
-        <li class="text-zinc-300"><span class="font-semibold text-white">Integrations:</span> {skills.integrations}</li>
+      <h2 class="text-muted text-sm font-semibold tracking-widest uppercase mt-8 mb-3 pb-1 border-b border-ink">Technical Skills</h2>
+      <ul class="list-disc pl-5 mt-2 space-y-1 marker:text-muted">
+        <li class="text-ink"><span class="font-semibold text-ink">Languages:</span> {skills.languages}</li>
+        <li class="text-ink"><span class="font-semibold text-ink">Frontend:</span> {skills.frontend}</li>
+        <li class="text-ink"><span class="font-semibold text-ink">Backend:</span> {skills.backend}</li>
+        <li class="text-ink"><span class="font-semibold text-ink">AI & Agents:</span> {skills.ai}</li>
+        <li class="text-ink"><span class="font-semibold text-ink">Databases:</span> {skills.data}</li>
+        <li class="text-ink"><span class="font-semibold text-ink">Cloud & Infra:</span> {skills.infra}</li>
+        <li class="text-ink"><span class="font-semibold text-ink">Integrations:</span> {skills.integrations}</li>
       </ul>
 
       <!-- Print Button -->
       <div class="mt-10 text-center print:hidden">
         <button
           onclick="window.print()"
-          class="inline-flex items-center gap-2 bg-pink-500 hover:bg-pink-600 text-white font-semibold px-6 py-3 rounded-full transition-colors"
+          class="inline-flex items-center gap-2 bg-accent hover:bg-ink text-white font-medium hover:bg-accent px-6 py-3 rounded-full transition-colors"
         >
           <span>📄</span>
           Print / Save as PDF
@@ -236,7 +236,7 @@ const skills = {
         padding-left: 0.25rem;
       }
       .resume-classic ul li::marker {
-        color: rgba(244, 114, 182, 0.7);
+        color: #6B6B6B;
       }
       .resume-classic a {
         text-decoration: none;
@@ -256,19 +256,19 @@ const skills = {
           print-color-adjust: exact;
         }
         .text-white,
-        .text-zinc-50,
-        .text-zinc-300,
-        .text-zinc-400,
-        .text-zinc-500 {
+        .text-ink,
+        .text-ink,
+        .text-muted,
+        .text-muted {
           color: #222 !important;
         }
-        .text-pink-400 {
-          color: #db2777 !important;
+        .text-accent {
+          color: #0000B8 !important;
         }
-        .border-zinc-800 {
+        .border-ink {
           border-color: #222 !important;
         }
-        .text-zinc-700 {
+        .text-muted {
           color: #999 !important;
         }
         button {

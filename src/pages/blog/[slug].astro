@@ -22,13 +22,13 @@ const { Content } = await post.render();
     <meta name="description" content={post.data.description} />
   </head>
 
-  <body class="bg-zinc-950 text-zinc-50 font-sans min-h-screen">
+  <body class="bg-paper text-ink font-sans min-h-screen">
     <!-- Header -->
-    <header class="border-b border-zinc-800">
+    <header class="border-b border-ink">
       <div class="max-w-2xl mx-auto px-4 py-4">
         <a
           href="/"
-          class="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors"
+          class="inline-flex items-center gap-2 text-muted hover:text-ink transition-colors"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -42,7 +42,7 @@ const { Content } = await post.render();
     <main class="max-w-2xl mx-auto px-4 py-10">
       <article>
         <!-- Meta -->
-        <time class="text-sm text-zinc-500" datetime={post.data.date.toISOString()}>
+        <time class="text-sm text-muted" datetime={post.data.date.toISOString()}>
           {post.data.date.toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
@@ -51,21 +51,21 @@ const { Content } = await post.render();
         </time>
 
         <!-- Title -->
-        <h1 class="text-3xl sm:text-4xl font-bold text-white mt-2 mb-8 leading-tight">
+        <h1 class="text-3xl sm:text-4xl font-bold text-ink mt-2 mb-8 leading-tight">
           {post.data.title}
         </h1>
 
         <!-- Content -->
         <div class="prose prose-invert prose-lg max-w-none
-          prose-p:text-zinc-300 prose-p:leading-relaxed prose-p:my-6
-          prose-headings:text-white prose-headings:font-bold prose-headings:mt-12 prose-headings:mb-6
+          prose-p:text-ink prose-p:leading-relaxed prose-p:my-6
+          prose-headings:text-ink prose-headings:font-bold prose-headings:mt-12 prose-headings:mb-6
           prose-h3:mt-10
-          prose-a:text-pink-400 prose-a:no-underline hover:prose-a:underline
-          prose-strong:text-white
-          prose-code:text-pink-400 prose-code:bg-zinc-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-          prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-800 prose-pre:my-6
-          prose-blockquote:border-pink-500 prose-blockquote:text-zinc-400 prose-blockquote:my-6
-          prose-li:text-zinc-300 prose-li:my-2
+          prose-a:text-accent prose-a:no-underline hover:prose-a:underline
+          prose-strong:text-ink
+          prose-code:text-accent prose-code:bg-paper2 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
+          prose-pre:bg-paper2 prose-pre:border prose-pre:border-ink prose-pre:my-6
+          prose-blockquote:border-accent prose-blockquote:text-muted prose-blockquote:my-6
+          prose-li:text-ink prose-li:my-2
           prose-ul:my-6 prose-ol:my-6
         ">
           <Content />
@@ -74,8 +74,8 @@ const { Content } = await post.render();
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-zinc-800 py-8 text-center text-xs text-zinc-500">
-      <a href="/" class="hover:text-white transition-colors">thefakezach.com</a>
+    <footer class="border-t border-ink py-8 text-center text-xs text-muted">
+      <a href="/" class="hover:text-ink transition-colors">thefakezach.com</a>
     </footer>
   </body>
 </html>

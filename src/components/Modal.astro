@@ -28,9 +28,9 @@ const slug = project.title.toLowerCase().replace(/ /g, "-");
 type Status = "shipped" | "in-progress" | "archived";
 
 const statusStyles: Record<Status, string> = {
-  shipped: "bg-green-500/20 text-green-400 border-green-500/30",
-  "in-progress": "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-  archived: "bg-zinc-500/20 text-zinc-400 border-zinc-500/30",
+  shipped: "bg-ink/20 text-ink border-ink/30",
+  "in-progress": "bg-hair/20 text-muted border-ink/30",
+  archived: "bg-hair/20 text-muted border-ink/30",
 };
 
 const statusLabels: Record<Status, string> = {
@@ -50,7 +50,7 @@ const status = (page.status as Status) || "shipped";
 >
   <!-- Modal Content -->
   <div
-    class="bg-zinc-900 text-zinc-50 p-8 rounded-2xl max-w-4xl w-[90%] shadow-lg overflow-y-auto max-h-[90vh] animate-fadeIn"
+    class="bg-paper2 text-ink p-8 rounded-2xl max-w-4xl w-[90%] shadow-lg overflow-y-auto max-h-[90vh] animate-fadeIn"
   >
     <header class="flex justify-between items-start mb-8">
       <div>
@@ -60,14 +60,14 @@ const status = (page.status as Status) || "shipped";
             {statusLabels[status]}
           </span>
         </div>
-        <h1 class="text-3xl font-extrabold text-white mb-2">{page.title}</h1>
-        <p class="text-zinc-400">{page.summary}</p>
-        <p class="text-xs text-zinc-600 mt-2">{page.year}</p>
+        <h1 class="text-3xl font-extrabold text-ink mb-2">{page.title}</h1>
+        <p class="text-muted">{page.summary}</p>
+        <p class="text-xs text-muted mt-2">{page.year}</p>
       </div>
       <button
         id={`close-${slug}`}
         aria-label="Close modal"
-        class="text-3xl leading-none text-zinc-400 hover:text-white transition"
+        class="text-3xl leading-none text-muted hover:text-ink transition"
       >
         &times;
       </button>
@@ -75,25 +75,25 @@ const status = (page.status as Status) || "shipped";
 
     <section class="space-y-10">
       <article>
-        <h2 class="text-2xl font-bold text-white mb-3">The Spark</h2>
-        <p class="text-zinc-400 leading-relaxed whitespace-pre-line">
+        <h2 class="text-2xl font-bold text-ink mb-3">The Spark</h2>
+        <p class="text-muted leading-relaxed whitespace-pre-line">
           {page.spark}
         </p>
       </article>
 
       <article>
-        <h2 class="text-2xl font-bold text-white mb-3">What It Does</h2>
-        <p class="text-zinc-400 leading-relaxed whitespace-pre-line">
+        <h2 class="text-2xl font-bold text-ink mb-3">What It Does</h2>
+        <p class="text-muted leading-relaxed whitespace-pre-line">
           {page.whatItDoes}
         </p>
       </article>
 
       <article>
-        <h2 class="text-2xl font-bold text-white mb-3">Built With</h2>
+        <h2 class="text-2xl font-bold text-ink mb-3">Built With</h2>
         <ul class="flex flex-wrap gap-3">
           {page.tech.map((tool) => (
             <li
-              class="px-3 py-1 text-sm bg-zinc-800 text-zinc-300 rounded-full border border-zinc-700"
+              class="px-3 py-1 text-sm bg-paper2 text-ink rounded-full border border-ink"
             >
               {tool}
             </li>
@@ -103,16 +103,16 @@ const status = (page.status as Status) || "shipped";
 
       {(page.link || page.github) && (
         <article class="space-y-4">
-          <h2 class="text-2xl font-bold text-white mb-3">Links</h2>
+          <h2 class="text-2xl font-bold text-ink mb-3">Links</h2>
           <div class="space-y-2">
             {page.link && (
               <div>
-                <span class="text-zinc-400 text-sm">Live Project: </span>
+                <span class="text-muted text-sm">Live Project: </span>
                 <a
                   href={page.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="text-pink-400 hover:underline break-all"
+                  class="text-accent hover:underline break-all"
                 >
                   {page.link}
                 </a>
@@ -120,12 +120,12 @@ const status = (page.status as Status) || "shipped";
             )}
             {page.github && (
               <div>
-                <span class="text-zinc-400 text-sm">Source Code: </span>
+                <span class="text-muted text-sm">Source Code: </span>
                 <a
                   href={page.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="text-pink-400 hover:underline break-all"
+                  class="text-accent hover:underline break-all"
                 >
                   {page.github}
                 </a>
@@ -137,7 +137,7 @@ const status = (page.status as Status) || "shipped";
     </section>
 
     <footer
-      class="border-t border-zinc-800 mt-16 pt-6 text-center text-sm text-zinc-500"
+      class="border-t border-ink mt-16 pt-6 text-center text-sm text-muted"
     >
       © {new Date().getFullYear()} Zachary
     </footer>

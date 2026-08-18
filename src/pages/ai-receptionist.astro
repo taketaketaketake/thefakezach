@@ -34,7 +34,7 @@ const faqs = [
   <!-- HERO -->
   <section class="border-b border-ink">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
-      <span class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-accent mb-6">
+      <span class="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted mb-6">
         <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
         AI Receptionist · Built &amp; run in Detroit
       </span>
@@ -47,7 +47,7 @@ const faqs = [
         before the caller hangs up.
       </p>
       <div class="mt-8 flex flex-col sm:flex-row gap-3">
-        <a href="tel:+18334948669" class="px-6 py-3.5 bg-accent text-white border border-ink font-bold text-center hover:shadow-lg transition-all">📞 Call the live demo — (833) 494-8669</a>
+        <a href="tel:+18334948669" class="px-6 py-3.5 bg-ink text-white border border-ink font-medium hover:bg-accent hover:border-accent text-center hover:shadow-lg transition-all">📞 Call the live demo — (833) 494-8669</a>
         <a href="#get-started" class="px-6 py-3.5 border border-ink text-ink font-bold text-center hover:bg-paper2 transition-colors">Get set up in 48 hours</a>
       </div>
       <p class="mt-4 font-mono text-xs text-ink/50">That demo number is a real line answering real customer calls for a real business — mine.</p>
@@ -96,7 +96,7 @@ const faqs = [
       <div class="grid gap-6 md:grid-cols-3">
         {steps.map((s) => (
           <div class="rounded-2xl border border-ink bg-white p-7">
-            <div class="text-2xl font-black text-accent font-mono">{s.n}</div>
+            <div class="text-2xl font-medium text-ink font-mono">{s.n}</div>
             <h3 class="mt-3 text-xl font-bold text-ink">{s.title}</h3>
             <p class="mt-2 text-ink/60 leading-relaxed">{s.desc}</p>
           </div>
@@ -126,11 +126,11 @@ const faqs = [
           <span class="text-ink/60 text-lg">/ month · no contract · cancel anytime</span>
         </div>
         <ul class="mt-6 space-y-3">
-          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-accent font-bold">✓</span><span>24/7 answering on unlimited missed calls</span></li>
-          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-accent font-bold">✓</span><span>Trained on your business, your services, your rules</span></li>
-          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-accent font-bold">✓</span><span>Instant text summaries + full transcripts of every call</span></li>
-          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-accent font-bold">✓</span><span>Setup included (normally $499) for the first 10 Detroit businesses</span></li>
-          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-accent font-bold">✓</span><span>If it doesn't save you a job in the first month, I'll refund it</span></li>
+          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-ink font-medium">✓</span><span>24/7 answering on unlimited missed calls</span></li>
+          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-ink font-medium">✓</span><span>Trained on your business, your services, your rules</span></li>
+          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-ink font-medium">✓</span><span>Instant text summaries + full transcripts of every call</span></li>
+          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-ink font-medium">✓</span><span>Setup included (normally $499) for the first 10 Detroit businesses</span></li>
+          <li class="flex gap-3 text-ink/80 text-lg"><span class="text-ink font-medium">✓</span><span>If it doesn't save you a job in the first month, I'll refund it</span></li>
         </ul>
       </div>
     </div>
@@ -186,7 +186,7 @@ const faqs = [
           <span class="font-mono text-[11px] uppercase tracking-widest text-ink/50">What's your biggest phone headache?</span>
           <textarea name="pain" rows="3" placeholder="After-hours calls, missed calls during jobs, phone orders during rush…" class="mt-1 w-full border border-ink rounded-lg px-4 py-3 bg-paper focus:outline-none focus:ring-2 focus:ring-accent"></textarea>
         </label>
-        <button type="submit" class="w-full px-6 py-4 bg-accent text-white border border-ink font-bold text-lg hover:shadow-lg transition-all">Get my agent built →</button>
+        <button type="submit" class="w-full px-6 py-4 bg-ink text-white border border-ink font-medium hover:bg-accent hover:border-accent text-lg hover:shadow-lg transition-all">Get my agent built →</button>
         <p class="text-center font-mono text-xs text-ink/50">Or just call the demo and press 0 to leave your info: (833) 494-8669</p>
       </form>
     </div>

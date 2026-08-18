@@ -3,7 +3,6 @@ import BrandLayout from "../layouts/BrandLayout.astro";
 ---
 
 <BrandLayout
-  theme="dark"
   active="work"
   title="Selected Work — Production Systems, in Depth | Zachary Lewis"
   description="The long version: twelve production systems, what each does, what was genuinely hard about it, and where it actually stands today."
@@ -388,50 +387,26 @@ import BrandLayout from "../layouts/BrandLayout.astro";
 
 <style is:global>
 
-  /* ---------- tokens ---------- */
+  /* ---------- tokens ----------
+     Mapped onto the site palette (tailwind.config.cjs). This page keeps its own
+     component CSS but defines no colors of its own — one palette, one source. */
   .sw {
-    --paper:   #F5F7F9;
-    --surface: #FFFFFF;
-    --ink:     #12171E;
-    --body:    #2E3843;
-    --muted:   #5E6B7A;
-    --rule:    #D5DCE4;
-    --accent:  #0E6C84;
-    --metric:  #8A5A18;
-    --good:    #1F6F4A;
-    --warn:    #8A5A18;
-    --idle:    #5E6B7A;
+    --paper:   #FFFFFF;
+    --surface: #FAFAFA;
+    --ink:     #000000;
+    --body:    #000000;
+    --muted:   #6B6B6B;
+    --rule:    #D9D9D9;
+    --accent:  #0000EE;
+    --metric:  #000000;
+    --good:    #0000EE;
+    --warn:    #6B6B6B;
+    --idle:    #6B6B6B;
 
-    --serif: Charter, "Bitstream Charter", "Iowan Old Style", Georgia, serif;
-    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --serif: Inter, system-ui, -apple-system, sans-serif;
+    --mono: Inter, system-ui, sans-serif;
 
     --measure: 68ch;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .sw {
-      --paper:   #0E1319;
-      --surface: #151B23;
-      --ink:     #E8ECF2;
-      --body:    #C3CCD7;
-      --muted:   #8D9BAB;
-      --rule:    #252E39;
-      --accent:  #52C2DC;
-      --metric:  #D8A755;
-      --good:    #5FBF8E;
-      --warn:    #D8A755;
-      --idle:    #8D9BAB;
-    }
-  }
-  :root[data-theme="dark"] .sw {
-    --paper:#0E1319; --surface:#151B23; --ink:#E8ECF2; --body:#C3CCD7;
-    --muted:#8D9BAB; --rule:#252E39; --accent:#52C2DC; --metric:#D8A755;
-    --good:#5FBF8E; --warn:#D8A755; --idle:#8D9BAB;
-  }
-  :root[data-theme="light"] .sw {
-    --paper:#F5F7F9; --surface:#FFFFFF; --ink:#12171E; --body:#2E3843;
-    --muted:#5E6B7A; --rule:#D5DCE4; --accent:#0E6C84; --metric:#8A5A18;
-    --good:#1F6F4A; --warn:#8A5A18; --idle:#5E6B7A;
   }
 
   .sw *, .sw *::before, .sw *::after { box-sizing: border-box; }
@@ -480,7 +455,7 @@ import BrandLayout from "../layouts/BrandLayout.astro";
     margin-bottom: 14px;
   }
   .rail ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
-  .rail a {
+  .sw .rail a {
     font-family: var(--mono);
     font-size: 12.5px;
     line-height: 1.35;
@@ -490,7 +465,7 @@ import BrandLayout from "../layouts/BrandLayout.astro";
     border-left: 2px solid transparent;
     padding-left: 10px;
   }
-  .rail a:hover, .rail a:focus-visible { color: var(--accent); border-left-color: var(--accent); }
+  .sw .rail a:hover, .sw .rail a:focus-visible { color: var(--accent); border-left-color: var(--accent); }
 
   .sw .swmain { padding-top: 72px; min-width: 0; }
 
@@ -501,7 +476,7 @@ import BrandLayout from "../layouts/BrandLayout.astro";
     font-size: 11px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--muted);
     margin: 0 0 16px;
   }
   .sw h1 {
@@ -567,7 +542,7 @@ import BrandLayout from "../layouts/BrandLayout.astro";
     border-radius: 2px;
     border: 1px solid currentColor;
   }
-  .status.live { color: var(--good); }
+  .status.live { color: var(--ink); }
   .status.progress { color: var(--warn); }
   .status.archived { color: var(--idle); }
 
@@ -615,7 +590,7 @@ import BrandLayout from "../layouts/BrandLayout.astro";
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--muted);
     margin: 26px 0 10px;
     font-weight: 400;
   }
@@ -628,7 +603,7 @@ import BrandLayout from "../layouts/BrandLayout.astro";
   ul.points li { margin-bottom: 9px; }
 
   .aside {
-    border-left: 2px solid var(--accent);
+    border-left: 2px solid var(--rule);
     padding: 2px 0 2px 18px;
     margin: 0 0 16px;
     max-width: min(var(--measure), 100%);

@@ -25,18 +25,18 @@ const pageTitle = "PROJECT ARCHIVE – Cosmic Crew Universe";
       }
 
       :root {
-        --aqua: #0EF2D4;
-        --chartreuse: #CEF64D;
-        --amber: #FFD55A;
-        --navy: #0A214B;
-        --indigo: #2B1A55;
-        --pink: #FF0080;
-        --cyan: #00FFFF;
+        --aqua: #0000EE;
+        --chartreuse: #FAFAFA;
+        --amber: #FAFAFA;
+        --navy: #FFFFFF;
+        --indigo: #FAFAFA;
+        --pink: #0000EE;
+        --cyan: #0000EE;
       }
 
       body {
-        background: linear-gradient(180deg, var(--navy), var(--indigo));
-        color: white;
+        background: #FFFFFF;
+        color: #000000;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         line-height: 1.6;
         overflow-x: hidden;
@@ -59,13 +59,13 @@ const pageTitle = "PROJECT ARCHIVE – Cosmic Crew Universe";
       .hero-section {
         text-align: center;
         padding: 6rem 2rem 4rem;
-        background: linear-gradient(135deg, rgba(14, 242, 212, 0.1), rgba(255, 0, 128, 0.1));
+        background: #FAFAFA;
       }
 
       .hero-title {
         font-size: clamp(3rem, 8vw, 6rem);
         font-weight: 900;
-        background: linear-gradient(45deg, var(--aqua), var(--pink), var(--chartreuse));
+        background: #000000;
         background-size: 200% 200%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -76,7 +76,7 @@ const pageTitle = "PROJECT ARCHIVE – Cosmic Crew Universe";
 
       .hero-subtitle {
         font-size: clamp(1.2rem, 3vw, 2rem);
-        color: var(--cyan);
+        color: #6B6B6B;
         margin-bottom: 2rem;
         font-weight: 600;
       }
@@ -85,7 +85,7 @@ const pageTitle = "PROJECT ARCHIVE – Cosmic Crew Universe";
         max-width: 800px;
         margin: 0 auto;
         font-size: 1.2rem;
-        color: #e2e8f0;
+        color: #6B6B6B;
         opacity: 0.9;
       }
 
@@ -103,8 +103,8 @@ const pageTitle = "PROJECT ARCHIVE – Cosmic Crew Universe";
       }
 
       .project-card {
-        background: rgba(0, 0, 0, 0.6);
-        border: 2px solid var(--aqua);
+        background: #FFFFFF;
+        border: 1px solid #D9D9D9;
         border-radius: 1rem;
         backdrop-filter: blur(10px);
         transition: all 0.3s ease;
@@ -119,19 +119,19 @@ const pageTitle = "PROJECT ARCHIVE – Cosmic Crew Universe";
 
       .project-card:hover {
         transform: translateY(-8px) scale(1.02);
-        border-color: var(--pink);
-        background: rgba(0, 0, 0, 0.8);
-        box-shadow: 0 20px 40px rgba(255, 0, 128, 0.3);
+        border-color: #000000;
+        background: #FAFAFA;
+        box-shadow: none;
       }
 
       .project-card.featured {
-        border-color: var(--chartreuse);
-        background: linear-gradient(135deg, rgba(206, 246, 77, 0.1), rgba(14, 242, 212, 0.1));
+        border-color: #000000;
+        background: #FAFAFA;
       }
 
       .project-card.featured:hover {
-        border-color: var(--amber);
-        background: linear-gradient(135deg, rgba(255, 213, 90, 0.2), rgba(255, 0, 128, 0.2));
+        border-color: #000000;
+        background: #F2F2F2;
       }
 
       .project-content {
@@ -160,13 +160,13 @@ const pageTitle = "PROJECT ARCHIVE – Cosmic Crew Universe";
       .project-title {
         font-size: 1.8rem;
         font-weight: 800;
-        color: white;
+        color: #000000;
         flex: 1;
       }
 
       .project-year {
         background: var(--navy);
-        color: var(--aqua);
+        color: #000000;
         padding: 0.25rem 0.75rem;
         border-radius: 2rem;
         font-size: 0.9rem;
@@ -182,7 +182,7 @@ const pageTitle = "PROJECT ARCHIVE – Cosmic Crew Universe";
       }
 
       .project-summary {
-        color: #e2e8f0;
+        color: #6B6B6B;
         font-size: 1.1rem;
         line-height: 1.6;
         margin-bottom: 1.5rem;
@@ -196,13 +196,13 @@ const pageTitle = "PROJECT ARCHIVE – Cosmic Crew Universe";
       }
 
       .tech-tag {
-        background: rgba(255, 255, 255, 0.1);
-        color: var(--aqua);
+        background: #FAFAFA;
+        color: #000000;
         padding: 0.25rem 0.75rem;
         border-radius: 1rem;
         font-size: 0.8rem;
         font-weight: 500;
-        border: 1px solid var(--aqua);
+        border: 1px solid #D9D9D9;
       }
 
       .project-status {
@@ -216,9 +216,9 @@ const pageTitle = "PROJECT ARCHIVE – Cosmic Crew Universe";
         text-transform: uppercase;
       }
 
-      .status-shipped { background: var(--chartreuse); color: var(--navy); }
-      .status-inprogress { background: var(--amber); color: var(--navy); }
-      .status-archived { background: rgba(255, 255, 255, 0.2); color: white; }
+      .status-shipped { background: var(--chartreuse); color: #000000; }
+      .status-inprogress { background: var(--amber); color: #000000; }
+      .status-archived { background: #F2F2F2; color: #000000; }
 
       .project-links {
         display: flex;
@@ -238,25 +238,25 @@ const pageTitle = "PROJECT ARCHIVE – Cosmic Crew Universe";
       }
 
       .link-primary {
-        background: linear-gradient(45deg, var(--pink), var(--cyan));
-        color: white;
+        background: #000000;
+        color: #FFFFFF;
       }
 
       .link-secondary {
-        background: rgba(255, 255, 255, 0.1);
-        color: var(--aqua);
-        border: 1px solid var(--aqua);
+        background: #FAFAFA;
+        color: #000000;
+        border: 1px solid #D9D9D9;
       }
 
       .project-link:hover {
         transform: scale(1.05);
-        box-shadow: 0 8px 20px rgba(255, 0, 128, 0.4);
+        box-shadow: none;
       }
 
       .section-title {
         font-size: 2.5rem;
         font-weight: 800;
-        color: var(--chartreuse);
+        color: #000000;
         margin-bottom: 2rem;
         text-align: center;
       }

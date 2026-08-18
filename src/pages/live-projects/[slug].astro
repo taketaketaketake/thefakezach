@@ -23,9 +23,9 @@ const statusDisplayMap: Record<string, string> = {
 };
 
 const statusBadgeClass: Record<string, string> = {
-  "live": "bg-green-500/20 text-green-400 border-green-500/30",
-  "in-progress": "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-  "paused": "bg-zinc-500/20 text-zinc-400 border-zinc-500/30",
+  "live": "bg-paper2 text-ink border-ink",
+  "in-progress": "bg-paper2 text-muted border-ink",
+  "paused": "bg-paper2 text-muted border-ink",
 };
 
 const formatDate = (iso: string) =>
@@ -44,24 +44,24 @@ const pageTitle = `${project.title} | Live Projects`;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{pageTitle}</title>
     <meta name="description" content={project.summary} />
-    <meta name="theme-color" content="#ec4899" />
+    <meta name="theme-color" content="#0000EE" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
 
-  <body class="bg-zinc-950 text-zinc-50 font-sans min-h-screen">
+  <body class="bg-paper text-ink font-sans min-h-screen">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
 
       <!-- Back link -->
       <a
         href="/live-projects"
-        class="inline-flex items-center gap-2 text-pink-400 hover:text-pink-300 text-sm font-semibold no-underline hover:no-underline mb-8"
+        class="inline-flex items-center gap-2 text-accent hover:text-accent text-sm font-semibold no-underline hover:no-underline mb-8"
       >
         ← Live Projects
       </a>
 
       <!-- Hero -->
       <header
-        class="relative grid grid-cols-1 md:grid-cols-[1fr_220px] gap-6 bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-6 sm:p-8 mb-6"
+        class="relative grid grid-cols-1 md:grid-cols-[1fr_220px] gap-6 bg-paper2 backdrop-blur border border-ink rounded-2xl p-6 sm:p-8 mb-6"
       >
         <span
           class={`absolute top-4 right-4 px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full border ${statusBadgeClass[project.status]}`}
@@ -72,15 +72,15 @@ const pageTitle = `${project.title} | Live Projects`;
         <div class="min-w-0">
           <div class="flex items-baseline gap-3 flex-wrap mb-2 pr-24">
             <span class="text-3xl leading-none">{project.emoji}</span>
-            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-ink">
               {project.title}
             </h1>
-            <span class="bg-zinc-800 text-pink-400 px-3 py-1 rounded-full text-xs font-medium">
+            <span class="bg-paper2 text-ink px-3 py-1 rounded-full text-xs font-medium">
               {project.year}
             </span>
           </div>
-          <p class="text-pink-400 font-medium mb-4">{project.tagline}</p>
-          <p class="text-zinc-300 leading-relaxed">{project.summary}</p>
+          <p class="text-muted font-medium mb-4">{project.tagline}</p>
+          <p class="text-ink leading-relaxed">{project.summary}</p>
         </div>
 
         <div class="flex items-center justify-center order-first md:order-none">
@@ -88,13 +88,13 @@ const pageTitle = `${project.title} | Live Projects`;
             <img
               src={project.image}
               alt={project.title}
-              class="w-full aspect-square object-cover rounded-xl border border-zinc-800"
+              class="w-full aspect-square object-cover rounded-xl border border-ink"
               style={project.imagePosition ? `object-position: ${project.imagePosition}` : undefined}
               loading="lazy"
             />
           ) : (
             <div
-              class="w-full aspect-square flex items-center justify-center bg-zinc-800/40 border border-dashed border-zinc-700 rounded-xl text-7xl"
+              class="w-full aspect-square flex items-center justify-center bg-paper2 border border-dashed border-ink rounded-xl text-7xl"
             >
               {project.emoji}
             </div>
@@ -104,20 +104,20 @@ const pageTitle = `${project.title} | Live Projects`;
 
       <!-- Operating model + Stack -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <section class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-6">
-          <h2 class="text-xs font-bold uppercase tracking-wider text-pink-400 mb-3">
+        <section class="bg-paper2 backdrop-blur border border-ink rounded-2xl p-6">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-muted mb-3">
             Operating Model
           </h2>
-          <p class="text-zinc-300 leading-relaxed">{project.model}</p>
+          <p class="text-ink leading-relaxed">{project.model}</p>
         </section>
 
-        <section class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-6">
-          <h2 class="text-xs font-bold uppercase tracking-wider text-pink-400 mb-3">
+        <section class="bg-paper2 backdrop-blur border border-ink rounded-2xl p-6">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-muted mb-3">
             Stack
           </h2>
           <ul class="flex flex-wrap gap-2">
             {project.stack.map((s) => (
-              <li class="px-3 py-1 text-sm bg-zinc-800 text-zinc-300 rounded-full border border-zinc-700">
+              <li class="px-3 py-1 text-sm bg-paper2 text-ink rounded-full border border-ink">
                 {s}
               </li>
             ))}
@@ -126,16 +126,16 @@ const pageTitle = `${project.title} | Live Projects`;
       </div>
 
       <!-- Business Metrics -->
-      <section class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-6 mb-6">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-pink-400 mb-4">
+      <section class="bg-paper2 backdrop-blur border border-ink rounded-2xl p-6 mb-6">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-muted mb-4">
           Business Metrics
         </h2>
         <MetricGrid metrics={project.metrics} />
       </section>
 
       <!-- Platform Metrics -->
-      <section class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-6 mb-6">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-pink-400 mb-4">
+      <section class="bg-paper2 backdrop-blur border border-ink rounded-2xl p-6 mb-6">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-muted mb-4">
           Platform Metrics
         </h2>
         <MetricGrid metrics={project.platformMetrics} />
@@ -143,29 +143,29 @@ const pageTitle = `${project.title} | Live Projects`;
 
       <!-- Focus + Activity -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <section class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-6">
-          <h2 class="text-xs font-bold uppercase tracking-wider text-pink-400 mb-3">
+        <section class="bg-paper2 backdrop-blur border border-ink rounded-2xl p-6">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-muted mb-3">
             Current Focus
           </h2>
-          <ul class="divide-y divide-zinc-800">
+          <ul class="divide-y divide-ink">
             {project.focus.map((f) => (
-              <li class="py-3 first:pt-0 last:pb-0 text-zinc-300 flex gap-3">
-                <span class="text-pink-400 font-bold leading-relaxed">›</span>
+              <li class="py-3 first:pt-0 last:pb-0 text-ink flex gap-3">
+                <span class="text-ink font-medium leading-relaxed">›</span>
                 <span class="leading-relaxed">{f}</span>
               </li>
             ))}
           </ul>
         </section>
 
-        <section class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-6">
-          <h2 class="text-xs font-bold uppercase tracking-wider text-pink-400 mb-3">
+        <section class="bg-paper2 backdrop-blur border border-ink rounded-2xl p-6">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-muted mb-3">
             Recent Activity
           </h2>
-          <ul class="divide-y divide-zinc-800">
+          <ul class="divide-y divide-ink">
             {project.activity.map((a) => (
               <li class="py-3 first:pt-0 last:pb-0 grid grid-cols-[100px_1fr] gap-4">
-                <span class="text-pink-400 font-mono text-xs pt-0.5">{formatDate(a.date)}</span>
-                <span class="text-zinc-300 leading-relaxed">{a.note}</span>
+                <span class="text-muted font-mono text-xs pt-0.5">{formatDate(a.date)}</span>
+                <span class="text-ink leading-relaxed">{a.note}</span>
               </li>
             ))}
           </ul>
@@ -174,8 +174,8 @@ const pageTitle = `${project.title} | Live Projects`;
 
       <!-- Links -->
       {(project.links.live || project.links.repo || project.links.dashboard) && (
-        <section class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-6 mb-6">
-          <h2 class="text-xs font-bold uppercase tracking-wider text-pink-400 mb-4">
+        <section class="bg-paper2 backdrop-blur border border-ink rounded-2xl p-6 mb-6">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-muted mb-4">
             Links
           </h2>
           <div class="flex flex-wrap gap-3">
@@ -184,7 +184,7 @@ const pageTitle = `${project.title} | Live Projects`;
                 href={project.links.live}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider no-underline hover:no-underline hover:scale-105 transition-transform"
+                class="inline-flex items-center gap-2 bg-ink text-white px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider no-underline hover:no-underline hover:scale-105 transition-transform"
               >
                 Live Site →
               </a>
@@ -194,7 +194,7 @@ const pageTitle = `${project.title} | Live Projects`;
                 href={project.links.dashboard}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider no-underline hover:no-underline hover:scale-105 transition-transform"
+                class="inline-flex items-center gap-2 bg-ink text-white px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider no-underline hover:no-underline hover:scale-105 transition-transform"
               >
                 Dashboard →
               </a>
@@ -204,7 +204,7 @@ const pageTitle = `${project.title} | Live Projects`;
                 href={project.links.repo}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="inline-flex items-center gap-2 bg-zinc-900 text-pink-400 border border-zinc-800 hover:border-pink-500/40 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider no-underline hover:no-underline transition-colors"
+                class="inline-flex items-center gap-2 bg-paper2 text-accent border border-ink hover:border-ink px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider no-underline hover:no-underline transition-colors"
               >
                 Source ↗
               </a>
@@ -214,7 +214,7 @@ const pageTitle = `${project.title} | Live Projects`;
       )}
 
       <!-- Footer -->
-      <footer class="mt-6 pt-8 border-t border-zinc-800 text-center text-xs text-zinc-500">
+      <footer class="mt-6 pt-8 border-t border-ink text-center text-xs text-muted">
         © {new Date().getFullYear()} Zachary Lewis
       </footer>
 

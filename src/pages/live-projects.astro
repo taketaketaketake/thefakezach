@@ -11,39 +11,39 @@ const pageTitle = "Live Projects | thefakezach";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{pageTitle}</title>
     <meta name="description" content="Real businesses I'm operating, in real time. Live metrics, current focus, and recent activity." />
-    <meta name="theme-color" content="#ec4899" />
+    <meta name="theme-color" content="#0000EE" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
 
-  <body class="bg-zinc-950 text-zinc-50 font-sans min-h-screen">
+  <body class="bg-paper text-ink font-sans min-h-screen">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
 
       <a
         href="/"
-        class="inline-flex items-center gap-2 text-pink-400 hover:text-pink-300 text-sm font-semibold no-underline hover:no-underline mb-8"
+        class="inline-flex items-center gap-2 text-accent hover:text-accent text-sm font-semibold no-underline hover:no-underline mb-8"
       >
         ← Home
       </a>
 
       <header
-        class="bg-zinc-900/50 backdrop-blur border border-zinc-800 rounded-2xl p-8 sm:p-10 mb-8 text-center"
+        class="bg-paper2 backdrop-blur border border-ink rounded-2xl p-8 sm:p-10 mb-8 text-center"
       >
         <h1
-          class="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-3 bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent"
+          class="text-4xl sm:text-5xl md:text-6xl font-semibold mb-3 text-ink"
         >
           Live Projects
         </h1>
-        <p class="text-pink-400 text-lg sm:text-xl font-medium mb-4">
+        <p class="text-muted text-lg sm:text-xl font-medium mb-4">
           Businesses I'm running, in real time
         </p>
-        <p class="text-zinc-400 max-w-2xl mx-auto">
+        <p class="text-muted max-w-2xl mx-auto">
           Each card is a real operating business. Metrics here are placeholders today — the data shape underneath each one declares where the live value will be read from once wired up.
         </p>
       </header>
 
       <LiveProjectsSection />
 
-      <footer class="mt-12 pt-8 border-t border-zinc-800 text-center text-xs text-zinc-500">
+      <footer class="mt-12 pt-8 border-t border-ink text-center text-xs text-muted">
         © {new Date().getFullYear()} Zachary Lewis
       </footer>
 
