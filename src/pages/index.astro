@@ -16,13 +16,6 @@ const services = [
   },
 ];
 
-const stats = [
-  { value: "12", label: "Production systems shipped" },
-  { value: "5", label: "Live products you can visit today" },
-  { value: "6", label: "Free & open-source tools" },
-  { value: "24/7", label: "Agents running real businesses" },
-];
-
 // Featured projects, framed as "originals" (logo shown when available; text mark otherwise).
 const featuredProjects = [
   { ep: "EP.01", category: "PLATFORM", name: "AgentlandOS", tagline: "Agents that run small-business operations", logo: "/project-logos/agentland-logo.png", cover: true, href: "/work#agentlandos" },
@@ -119,22 +112,10 @@ const testimonials = [
     </div>
   </div>
 
-  <!-- BY THE NUMBERS + ORIGINALS (one section) -->
+  <!-- ORIGINALS -->
   <section class="border-b border-ink bg-paper">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 md:py-20">
-      <!-- stats -->
-      <p class="font-mono text-[11px] font-medium uppercase tracking-widest text-muted mb-5">By the numbers</p>
-      <div class="grid grid-cols-2 md:grid-cols-4 border-t border-ink">
-        {stats.map((s) => (
-          <div class="pt-5 pr-6 pb-5 md:pb-0 border-b md:border-b-0 md:border-r border-ink last:border-r-0">
-            <div class="text-4xl md:text-5xl font-medium tracking-tight text-ink leading-none">{s.value}</div>
-            <div class="text-sm text-muted mt-3 max-w-[18ch]">{s.label}</div>
-          </div>
-        ))}
-      </div>
-
-      <!-- originals -->
-      <div class="flex items-end justify-between mb-6 mt-16 md:mt-24">
+      <div class="flex items-end justify-between mb-6">
         <h2 class="font-mono text-[11px] font-medium uppercase tracking-widest text-muted">Selected work</h2>
         <a href="/work" class="font-mono text-[11px] uppercase tracking-widest text-accent hover:text-accent-dark">All work →</a>
       </div>
